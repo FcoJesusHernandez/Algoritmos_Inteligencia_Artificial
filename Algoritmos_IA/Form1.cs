@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using NumSharp;
 
 namespace Algoritmos_IA
 {
@@ -36,14 +37,15 @@ namespace Algoritmos_IA
 
             Punto punto_generado = new Punto(click.X,click.Y,tipo);
             lista_puntos.Add(punto_generado);
-            label1.Text = punto_generado.getPosicionOriginalX().ToString() + " ( " + punto_generado.getPosicionAdaptadaX().ToString() + " ) ";
-            label2.Text = punto_generado.getPosicionOriginalY().ToString() + " ( " + punto_generado.getPosicionAdaptadaY().ToString() + " ) ";
+            labelCoordenadaXClick.Text = punto_generado.getPosicionAdaptadaX().ToString();
+            labelCoordenadaYClick.Text = punto_generado.getPosicionAdaptadaY().ToString();
             dibujar_punto(punto_generado);
 
         }
 
         private void dibujar_punto(Punto p)
         {
+            //lista_puntos.ToArray();
             Pen pluma;
             if (p.getTipo() == 0)
             {

@@ -32,6 +32,8 @@
             this.plano = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.labelCoordenadaXClick = new System.Windows.Forms.Label();
+            this.labelCoordenadaYClick = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.plano)).BeginInit();
             this.SuspendLayout();
             // 
@@ -49,26 +51,45 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(679, 43);
+            this.label1.Location = new System.Drawing.Point(12, 617);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(35, 13);
+            this.label1.Size = new System.Drawing.Size(21, 13);
             this.label1.TabIndex = 1;
-            this.label1.Text = "label1";
+            this.label1.Text = "x : ";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(791, 43);
+            this.label2.Location = new System.Drawing.Point(12, 630);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(35, 13);
+            this.label2.Size = new System.Drawing.Size(21, 13);
             this.label2.TabIndex = 2;
-            this.label2.Text = "label2";
+            this.label2.Text = "y : ";
+            // 
+            // labelCoordenadaXClick
+            // 
+            this.labelCoordenadaXClick.AutoSize = true;
+            this.labelCoordenadaXClick.Location = new System.Drawing.Point(29, 617);
+            this.labelCoordenadaXClick.Name = "labelCoordenadaXClick";
+            this.labelCoordenadaXClick.Size = new System.Drawing.Size(0, 13);
+            this.labelCoordenadaXClick.TabIndex = 3;
+            // 
+            // labelCoordenadaYClick
+            // 
+            this.labelCoordenadaYClick.AutoSize = true;
+            this.labelCoordenadaYClick.Location = new System.Drawing.Point(29, 630);
+            this.labelCoordenadaYClick.Name = "labelCoordenadaYClick";
+            this.labelCoordenadaYClick.Size = new System.Drawing.Size(21, 13);
+            this.labelCoordenadaYClick.TabIndex = 4;
+            this.labelCoordenadaYClick.Text = "y : ";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(879, 450);
+            this.ClientSize = new System.Drawing.Size(1283, 664);
+            this.Controls.Add(this.labelCoordenadaYClick);
+            this.Controls.Add(this.labelCoordenadaXClick);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.plano);
@@ -87,6 +108,8 @@
         private System.Windows.Forms.PictureBox plano;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label labelCoordenadaXClick;
+        private System.Windows.Forms.Label labelCoordenadaYClick;
     }
 }
 
