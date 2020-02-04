@@ -45,15 +45,17 @@ namespace Algoritmos_IA
         private void dibujar_punto(Punto p)
         {
             Pen pluma;
-            if (p.getTipo()==0)
+            if (p.getTipo() == 0)
             {
                 pluma = new Pen(Color.Green, 1);
+                plano_dibujar.DrawEllipse(pluma, new Rectangle(p.getPosicionOriginalX() - 2, p.getPosicionOriginalY() - 2, 4, 4));
             }
             else
             {
                 pluma = new Pen(Color.Red, 1);
+                plano_dibujar.DrawLine(pluma, p.getPosicionOriginalX() - 2, p.getPosicionOriginalY() - 2, p.getPosicionOriginalX() + 2, p.getPosicionOriginalY() + 2);
+                plano_dibujar.DrawLine(pluma, p.getPosicionOriginalX() - 2, p.getPosicionOriginalY() + 2, p.getPosicionOriginalX() + 2, p.getPosicionOriginalY() - 2);
             }
-            plano_dibujar.DrawRectangle(pluma, new Rectangle(p.getPosicionOriginalX(), p.getPosicionOriginalY(), 5, 5));
         }
 
         private void plano_Paint(object sender, PaintEventArgs e)
@@ -71,7 +73,7 @@ namespace Algoritmos_IA
 
             //e.Graphics.PageScale = .2f;  // investigar como funciona
 
-            for( int i = -x_centro; i <= x_centro; i += 30)
+            for( int i = -x_centro; i <= x_centro; i += 60)
             {
                 e.Graphics.DrawLine(lapiz, 4, i, -4, i );
                 e.Graphics.DrawLine(lapiz, i , 4, i, -4 );

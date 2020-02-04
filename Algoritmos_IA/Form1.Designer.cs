@@ -40,7 +40,7 @@
             this.plano.BackColor = System.Drawing.Color.White;
             this.plano.Location = new System.Drawing.Point(13, 13);
             this.plano.Name = "plano";
-            this.plano.Size = new System.Drawing.Size(300, 300);
+            this.plano.Size = new System.Drawing.Size(600, 600);
             this.plano.TabIndex = 0;
             this.plano.TabStop = false;
             this.plano.Click += new System.EventHandler(this.plano_Click);
@@ -49,7 +49,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(386, 55);
+            this.label1.Location = new System.Drawing.Point(679, 43);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(35, 13);
             this.label1.TabIndex = 1;
@@ -58,7 +58,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(428, 55);
+            this.label2.Location = new System.Drawing.Point(791, 43);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(35, 13);
             this.label2.TabIndex = 2;

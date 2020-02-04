@@ -18,36 +18,36 @@ public class Punto
 
     private void adaptarPunto()
     {
-        posicion_adaptada_x = ((float)posicion_original_x - 150) / 30;
+        posicion_adaptada_x = ((float)posicion_original_x - 300) / 60;
         if (posicion_adaptada_x < 0)
         {
             posicion_adaptada_x = posicion_adaptada_x * -1;
         }
 
-        posicion_adaptada_y = ((float)posicion_original_y - 150) / 30;
+        posicion_adaptada_y = ((float)posicion_original_y - 300) / 60;
         if (posicion_adaptada_y < 0)
         {
             posicion_adaptada_y = posicion_adaptada_y * -1;
         }
 
-        if (posicion_original_x <= 150 && posicion_original_y <= 150)
+        if (posicion_original_x <= 300 && posicion_original_y <= 300)
         {
             posicion_adaptada_x = posicion_adaptada_x * -1;
         }
-        else if (posicion_original_x <= 300 && posicion_original_y <= 150)
+        else if (posicion_original_x <= 600 && posicion_original_y <= 300)
         {
-            posicion_adaptada_y = (150 - (float)posicion_original_y) / 30;
-            if (posicion_adaptada_y < 0)
+            posicion_adaptada_y = (300 - (float)posicion_original_y) / 60;
+            /*if (posicion_adaptada_y < 0)
             {
                 posicion_adaptada_y = posicion_adaptada_y * -1;
-            }
+            }*/
         }
-        else if (posicion_original_x <= 150 && posicion_original_y <= 300)
+        else if (posicion_original_x <= 300 && posicion_original_y <= 600)
         {
             posicion_adaptada_x = posicion_adaptada_x * -1;
             posicion_adaptada_y = posicion_adaptada_y * -1;
         }
-        else if (posicion_original_x <= 300 && posicion_original_y <= 300)
+        else if (posicion_original_x <= 600 && posicion_original_y <= 600)
         {
             posicion_adaptada_y = posicion_adaptada_y * -1;
         }
