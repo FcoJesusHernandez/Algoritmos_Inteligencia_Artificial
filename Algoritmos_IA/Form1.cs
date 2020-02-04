@@ -90,7 +90,12 @@ namespace Algoritmos_IA
 
         private void buttonPerceptron_Click(object sender, EventArgs e)
         {
-            Perceptron p = new Perceptron(Int32.Parse(textBoxEpocasMaximas.Text), float.Parse(textBoxLR.Text), lista_puntos.ToArray()); 
+            int epoca_actual = 0;
+            Perceptron p = new Perceptron(Int32.Parse(textBoxEpocasMaximas.Text), float.Parse(textBoxLR.Text), lista_puntos.ToArray());
+            while (!p.getEntrenado() || epoca_actual <= p.getEpocas())
+            {
+
+            }
         }
     }
 }

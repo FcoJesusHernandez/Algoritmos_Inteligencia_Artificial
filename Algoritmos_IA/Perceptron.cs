@@ -26,5 +26,15 @@
         {
             return 1;
         }
+
+        public int getEpocas()
+        {
+            return epocas;
+        }
+
+        public bool getEntrenado()
+        {
+            return entrenado;
+        }
     }
 }
