@@ -34,6 +34,11 @@
             this.label2 = new System.Windows.Forms.Label();
             this.labelCoordenadaXClick = new System.Windows.Forms.Label();
             this.labelCoordenadaYClick = new System.Windows.Forms.Label();
+            this.buttonPerceptron = new System.Windows.Forms.Button();
+            this.textBoxLR = new System.Windows.Forms.TextBox();
+            this.textBoxEpocasMaximas = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.labelEpocasMaximas = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.plano)).BeginInit();
             this.SuspendLayout();
             // 
@@ -83,11 +88,60 @@
             this.labelCoordenadaYClick.TabIndex = 4;
             this.labelCoordenadaYClick.Text = "y : ";
             // 
+            // buttonPerceptron
+            // 
+            this.buttonPerceptron.Location = new System.Drawing.Point(633, 114);
+            this.buttonPerceptron.Name = "buttonPerceptron";
+            this.buttonPerceptron.Size = new System.Drawing.Size(147, 34);
+            this.buttonPerceptron.TabIndex = 5;
+            this.buttonPerceptron.Text = "Inicializador";
+            this.buttonPerceptron.UseVisualStyleBackColor = true;
+            this.buttonPerceptron.Click += new System.EventHandler(this.buttonPerceptron_Click);
+            // 
+            // textBoxLR
+            // 
+            this.textBoxLR.Location = new System.Drawing.Point(712, 35);
+            this.textBoxLR.Name = "textBoxLR";
+            this.textBoxLR.Size = new System.Drawing.Size(100, 20);
+            this.textBoxLR.TabIndex = 6;
+            this.textBoxLR.Text = "0.5";
+            // 
+            // textBoxEpocasMaximas
+            // 
+            this.textBoxEpocasMaximas.Location = new System.Drawing.Point(712, 76);
+            this.textBoxEpocasMaximas.Name = "textBoxEpocasMaximas";
+            this.textBoxEpocasMaximas.Size = new System.Drawing.Size(100, 20);
+            this.textBoxEpocasMaximas.TabIndex = 7;
+            this.textBoxEpocasMaximas.Text = "200";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(619, 38);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(35, 13);
+            this.label3.TabIndex = 8;
+            this.label3.Text = "label3";
+            // 
+            // labelEpocasMaximas
+            // 
+            this.labelEpocasMaximas.AutoSize = true;
+            this.labelEpocasMaximas.Location = new System.Drawing.Point(619, 79);
+            this.labelEpocasMaximas.Name = "labelEpocasMaximas";
+            this.labelEpocasMaximas.Size = new System.Drawing.Size(87, 13);
+            this.labelEpocasMaximas.TabIndex = 9;
+            this.labelEpocasMaximas.Text = "Epocas Maximas";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1283, 664);
+            this.Controls.Add(this.labelEpocasMaximas);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.textBoxEpocasMaximas);
+            this.Controls.Add(this.textBoxLR);
+            this.Controls.Add(this.buttonPerceptron);
             this.Controls.Add(this.labelCoordenadaYClick);
             this.Controls.Add(this.labelCoordenadaXClick);
             this.Controls.Add(this.label2);
@@ -110,6 +164,11 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label labelCoordenadaXClick;
         private System.Windows.Forms.Label labelCoordenadaYClick;
+        private System.Windows.Forms.Button buttonPerceptron;
+        private System.Windows.Forms.TextBox textBoxLR;
+        private System.Windows.Forms.TextBox textBoxEpocasMaximas;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label labelEpocasMaximas;
     }
 }
 

@@ -50,13 +50,13 @@ namespace Algoritmos_IA
             if (p.getTipo() == 0)
             {
                 pluma = new Pen(Color.Green, 1);
-                plano_dibujar.DrawEllipse(pluma, new Rectangle(p.getPosicionOriginalX() - 2, p.getPosicionOriginalY() - 2, 4, 4));
+                plano_dibujar.DrawEllipse(pluma, new Rectangle(p.getPosicionOriginalX() - 4, p.getPosicionOriginalY() - 4, 8, 8));
             }
             else
             {
                 pluma = new Pen(Color.Red, 1);
-                plano_dibujar.DrawLine(pluma, p.getPosicionOriginalX() - 2, p.getPosicionOriginalY() - 2, p.getPosicionOriginalX() + 2, p.getPosicionOriginalY() + 2);
-                plano_dibujar.DrawLine(pluma, p.getPosicionOriginalX() - 2, p.getPosicionOriginalY() + 2, p.getPosicionOriginalX() + 2, p.getPosicionOriginalY() - 2);
+                plano_dibujar.DrawLine(pluma, p.getPosicionOriginalX() - 4, p.getPosicionOriginalY() - 4, p.getPosicionOriginalX() + 4, p.getPosicionOriginalY() + 4);
+                plano_dibujar.DrawLine(pluma, p.getPosicionOriginalX() - 4, p.getPosicionOriginalY() + 4, p.getPosicionOriginalX() + 4, p.getPosicionOriginalY() - 4);
             }
         }
 
@@ -86,6 +86,11 @@ namespace Algoritmos_IA
         private void Form1_Load(object sender, EventArgs e)
         {
             
+        }
+
+        private void buttonPerceptron_Click(object sender, EventArgs e)
+        {
+            Perceptron p = new Perceptron(Int32.Parse(textBoxEpocasMaximas.Text), float.Parse(textBoxLR.Text), lista_puntos.ToArray()); 
         }
     }
 }
