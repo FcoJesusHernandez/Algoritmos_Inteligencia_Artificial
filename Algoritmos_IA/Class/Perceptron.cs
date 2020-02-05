@@ -1,13 +1,19 @@
-﻿namespace Algoritmos_IA
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Algoritmos_IA.Class
 {
-    internal class Perceptron
+    class Perceptron
     {
         float[] w;
         Punto[] puntos;
         int epocas;
         float LR;
         bool entrenado;
-        public Perceptron(int epocas, float LR, Punto[] puntosEntrenamiento )
+        public Perceptron(int epocas, float LR, Punto[] puntosEntrenamiento)
         {
             entrenado = false;
             this.epocas = epocas;

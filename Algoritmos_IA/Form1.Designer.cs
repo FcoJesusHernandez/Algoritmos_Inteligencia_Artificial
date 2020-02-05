@@ -28,6 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Title title1 = new System.Windows.Forms.DataVisualization.Charting.Title();
+            System.Windows.Forms.DataVisualization.Charting.Title title2 = new System.Windows.Forms.DataVisualization.Charting.Title();
+            System.Windows.Forms.DataVisualization.Charting.Title title3 = new System.Windows.Forms.DataVisualization.Charting.Title();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.plano = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -39,7 +45,9 @@
             this.textBoxEpocasMaximas = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.labelEpocasMaximas = new System.Windows.Forms.Label();
+            this.Error_cmp = new System.Windows.Forms.DataVisualization.Charting.Chart();
             ((System.ComponentModel.ISupportInitialize)(this.plano)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Error_cmp)).BeginInit();
             this.SuspendLayout();
             // 
             // plano
@@ -132,11 +140,43 @@
             this.labelEpocasMaximas.TabIndex = 9;
             this.labelEpocasMaximas.Text = "Epocas Maximas";
             // 
+            // Error_cmp
+            // 
+            chartArea1.Name = "ChartArea1";
+            this.Error_cmp.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            legend1.Title = "Algoritmos";
+            this.Error_cmp.Legends.Add(legend1);
+            this.Error_cmp.Location = new System.Drawing.Point(633, 313);
+            this.Error_cmp.Name = "Error_cmp";
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series1.Legend = "Legend1";
+            series1.Name = "Perceptron";
+            this.Error_cmp.Series.Add(series1);
+            this.Error_cmp.Size = new System.Drawing.Size(600, 300);
+            this.Error_cmp.TabIndex = 10;
+            this.Error_cmp.Text = "Error";
+            title1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            title1.Name = "Title1";
+            title1.Text = "Error por época";
+            title2.Docking = System.Windows.Forms.DataVisualization.Charting.Docking.Left;
+            title2.Name = "Title2";
+            title2.Text = "Error acumulado";
+            title3.Docking = System.Windows.Forms.DataVisualization.Charting.Docking.Bottom;
+            title3.Name = "Title3";
+            title3.Text = "Época";
+            this.Error_cmp.Titles.Add(title1);
+            this.Error_cmp.Titles.Add(title2);
+            this.Error_cmp.Titles.Add(title3);
+            this.Error_cmp.Click += new System.EventHandler(this.chart1_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1283, 664);
+            this.Controls.Add(this.Error_cmp);
             this.Controls.Add(this.labelEpocasMaximas);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.textBoxEpocasMaximas);
@@ -152,6 +192,7 @@
             this.Text = "Algoritmos Inteligencia Artificial";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.plano)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Error_cmp)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -169,6 +210,7 @@
         private System.Windows.Forms.TextBox textBoxEpocasMaximas;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label labelEpocasMaximas;
+        private System.Windows.Forms.DataVisualization.Charting.Chart Error_cmp;
     }
 }
 

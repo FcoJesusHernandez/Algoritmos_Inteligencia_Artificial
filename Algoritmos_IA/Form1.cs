@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Algoritmos_IA.Class;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -81,21 +82,54 @@ namespace Algoritmos_IA
                 e.Graphics.DrawLine(lapiz, i , 4, i, -4 );
             }
             plano_dibujar = plano.CreateGraphics();
+
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
             
         }
-
-        private void buttonPerceptron_Click(object sender, EventArgs e)
+        private async void buttonPerceptron_Click(object sender, EventArgs e)
         {
+            create_error_graphic();
+            this.Error_cmp.Series["Perceptron"].Points.Clear();
+
+           
+            await Task.Factory.StartNew(() =>
+            {
+                for (int i = 0; i < 100; i++)
+                {
+                    this.Invoke((MethodInvoker)(() => this.Error_cmp.Series["Perceptron"].Points.AddXY(i, i * 10) ));
+                    
+                }
+            });
+            
+                
+            /*
             int epoca_actual = 0;
             Perceptron p = new Perceptron(Int32.Parse(textBoxEpocasMaximas.Text), float.Parse(textBoxLR.Text), lista_puntos.ToArray());
+            
             while (!p.getEntrenado() || epoca_actual <= p.getEpocas())
             {
 
             }
+            */
+        }
+
+        private void create_error_graphic()
+        {
+            this.Error_cmp.Series["Perceptron"].Points.AddXY(1, 10);
+            this.Error_cmp.Series["Perceptron"].Points.AddXY(2, 20);
+            this.Error_cmp.Series["Perceptron"].Points.AddXY(3, 30);
+            this.Error_cmp.Series["Perceptron"].Points.AddXY(4, 40);
+            this.Error_cmp.Series["Perceptron"].Points.AddXY(5, 50);
+            this.Error_cmp.Series["Perceptron"].Points.AddXY(6, 40);
+            this.Error_cmp.Series["Perceptron"].Points.AddXY(7, 50);
+        }
+
+        private void chart1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
