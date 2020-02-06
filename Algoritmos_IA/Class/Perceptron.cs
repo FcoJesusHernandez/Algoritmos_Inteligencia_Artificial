@@ -15,6 +15,7 @@ namespace Algoritmos_IA.Class
         float LR;
         bool entrenado;
         bool completo; // puede estar completo pero no entrenado (cuando se cumplen las iteraciones y aun se mantiene un error
+        int error_acumulado;
 
         public Perceptron(int epocas, float LR, List<Punto> puntosEntrenamiento, int epoca_actual)
         {
@@ -24,8 +25,7 @@ namespace Algoritmos_IA.Class
             this.epocas = epocas;
             this.LR = LR;
             this.puntos = puntosEntrenamiento;
-
-            //int[] wTemp = { int.Parse(puntosEntrenamiento[0].ToString()), int.Parse(puntosEntrenamiento[1].ToString()), int.Parse(puntosEntrenamiento[4].ToString()) };
+            error_acumulado = 0;
         }
 
         public Array inicializar(){
@@ -87,6 +87,16 @@ namespace Algoritmos_IA.Class
         public float getLR()
         {
             return LR;
+        }
+
+        public void setErrorAcumulado(int error_acumulado)
+        {
+            this.error_acumulado = error_acumulado;
+        }
+
+        public int getErrorAcumulado()
+        {
+            return error_acumulado;
         }
     }
 }

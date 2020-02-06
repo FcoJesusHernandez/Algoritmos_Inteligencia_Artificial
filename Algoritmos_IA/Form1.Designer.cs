@@ -46,6 +46,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.labelEpocasMaximas = new System.Windows.Forms.Label();
             this.Error_cmp = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.plano)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Error_cmp)).BeginInit();
             this.SuspendLayout();
@@ -59,7 +60,6 @@
             this.plano.TabIndex = 0;
             this.plano.TabStop = false;
             this.plano.Click += new System.EventHandler(this.plano_Click);
-            this.plano.Paint += new System.Windows.Forms.PaintEventHandler(this.plano_Paint);
             // 
             // label1
             // 
@@ -108,7 +108,7 @@
             // 
             // textBoxLR
             // 
-            this.textBoxLR.Location = new System.Drawing.Point(712, 35);
+            this.textBoxLR.Location = new System.Drawing.Point(723, 35);
             this.textBoxLR.Name = "textBoxLR";
             this.textBoxLR.Size = new System.Drawing.Size(100, 20);
             this.textBoxLR.TabIndex = 6;
@@ -116,7 +116,7 @@
             // 
             // textBoxEpocasMaximas
             // 
-            this.textBoxEpocasMaximas.Location = new System.Drawing.Point(712, 76);
+            this.textBoxEpocasMaximas.Location = new System.Drawing.Point(723, 76);
             this.textBoxEpocasMaximas.Name = "textBoxEpocasMaximas";
             this.textBoxEpocasMaximas.Size = new System.Drawing.Size(100, 20);
             this.textBoxEpocasMaximas.TabIndex = 7;
@@ -125,16 +125,16 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(619, 38);
+            this.label3.Location = new System.Drawing.Point(696, 38);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(35, 13);
+            this.label3.Size = new System.Drawing.Size(21, 13);
             this.label3.TabIndex = 8;
-            this.label3.Text = "label3";
+            this.label3.Text = "LR";
             // 
             // labelEpocasMaximas
             // 
             this.labelEpocasMaximas.AutoSize = true;
-            this.labelEpocasMaximas.Location = new System.Drawing.Point(619, 79);
+            this.labelEpocasMaximas.Location = new System.Drawing.Point(630, 79);
             this.labelEpocasMaximas.Name = "labelEpocasMaximas";
             this.labelEpocasMaximas.Size = new System.Drawing.Size(87, 13);
             this.labelEpocasMaximas.TabIndex = 9;
@@ -169,13 +169,23 @@
             this.Error_cmp.Titles.Add(title1);
             this.Error_cmp.Titles.Add(title2);
             this.Error_cmp.Titles.Add(title3);
-            this.Error_cmp.Click += new System.EventHandler(this.chart1_Click);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(795, 114);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(147, 34);
+            this.button1.TabIndex = 11;
+            this.button1.Text = "Entrenar Perceptron";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1283, 664);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.Error_cmp);
             this.Controls.Add(this.labelEpocasMaximas);
             this.Controls.Add(this.label3);
@@ -211,6 +221,7 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label labelEpocasMaximas;
         private System.Windows.Forms.DataVisualization.Charting.Chart Error_cmp;
+        private System.Windows.Forms.Button button1;
     }
 }
 
