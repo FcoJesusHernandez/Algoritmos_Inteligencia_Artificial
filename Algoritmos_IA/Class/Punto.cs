@@ -42,10 +42,6 @@ namespace Algoritmos_IA.Class
             else if (posicion_original_x <= 600 && posicion_original_y <= 300)
             {
                 posicion_adaptada_y = (300 - (float)posicion_original_y) / 60;
-                /*if (posicion_adaptada_y < 0)
-                {
-                    posicion_adaptada_y = posicion_adaptada_y * -1;
-                }*/
             }
             else if (posicion_original_x <= 300 && posicion_original_y <= 600)
             {
