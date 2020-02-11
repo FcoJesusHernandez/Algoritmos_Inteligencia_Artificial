@@ -376,8 +376,7 @@ namespace Algoritmos_IA
 
             var tarea1 = perceptron_function();
             var tarea2 = adaline_function();
-            await Task.WhenAll(tarea1, tarea2);
-
+            await Task.WhenAny(tarea1, tarea2);
         }
 
         private void Form1_Load(object sender, EventArgs e)
