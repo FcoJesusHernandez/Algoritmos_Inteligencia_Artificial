@@ -52,6 +52,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.ErrorCmp = new System.Windows.Forms.TextBox();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.Competir = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.plano)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Error_cmp)).BeginInit();
             this.SuspendLayout();
@@ -224,11 +225,22 @@
             this.progressBar1.Size = new System.Drawing.Size(100, 23);
             this.progressBar1.TabIndex = 15;
             // 
+            // Competir
+            // 
+            this.Competir.Location = new System.Drawing.Point(633, 171);
+            this.Competir.Name = "Competir";
+            this.Competir.Size = new System.Drawing.Size(147, 30);
+            this.Competir.TabIndex = 16;
+            this.Competir.Text = "Competir";
+            this.Competir.UseVisualStyleBackColor = true;
+            this.Competir.Click += new System.EventHandler(this.Competir_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1283, 664);
+            this.Controls.Add(this.Competir);
             this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.ErrorCmp);
             this.Controls.Add(this.label4);
@@ -274,6 +286,7 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox ErrorCmp;
         private System.Windows.Forms.ProgressBar progressBar1;
+        private System.Windows.Forms.Button Competir;
     }
 }
 

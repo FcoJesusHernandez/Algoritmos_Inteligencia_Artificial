@@ -127,6 +127,7 @@ namespace Algoritmos_IA
             buttonPerceptron.Enabled = true;
             create_error_graphic();
             this.Error_cmp.Series["Perceptron"].Points.Clear();
+            this.Error_cmp.Series["Adaline"].Points.Clear();
 
             this.p = new Perceptron(Int32.Parse(textBoxEpocasMaximas.Text), float.Parse(textBoxLR.Text), lista_puntos, 0);
             p.inicializar();
@@ -139,49 +140,12 @@ namespace Algoritmos_IA
             this.a = new Adaline(Int32.Parse(textBoxEpocasMaximas.Text), float.Parse(textBoxLR.Text), lista_puntos, 0);
             a.inicializar();
             bitmap_plano = new Bitmap(respaldo);
-            dibujarLinea(false, "perceptron");
+            dibujarLinea(false, "adaline");
         }
 
         private async void button1_Click(object sender, EventArgs e)
         {
-            buttonPerceptron.Enabled = false;
-            button1.Enabled = false;
-            Pen lapiz = new Pen(Color.Red, 1);
-            //Array x = (Array)np.zeros(10);
-            //Array y = (Array)np.zeros(10);
-
-            await Task.Factory.StartNew(() =>
-            {
-                while (!p.getEntrenado() && p.getEpocaActual() < p.getEpocas())
-                {
-                    p.setEntrenado(true);
-                    for (int i = 0; i < p.getPuntos().Count; i++)
-                    { 
-                        float[,] xTemp = new float[3, 1];
-                        xTemp[0, 0] = -1;
-                        xTemp[1, 0] = p.getPuntos()[i].getPosicionAdaptadaX();
-                        xTemp[2, 0] = p.getPuntos()[i].getPosicionAdaptadaY();
-
-                        int error = p.getPuntos()[i].getTipo() - p.funcionEscalon(xTemp);
-
-                        
-                        if (error != 0)
-                        {
-                            p.setErrorAcumulado(p.getErrorAcumulado() + 1);
-                            p.setEntrenado(false);
-                            p.setPeso((Array)((NDArray)p.getPesos() + np.multiply(p.getLR(), np.multiply(error, np.transpose(xTemp)))));
-
-                            this.Invoke((MethodInvoker)(() => dibujarLinea(false, "perceptron")));
-                        }
-                    }
-                    this.Invoke((MethodInvoker)(() => this.Error_cmp.Series["Perceptron"].Points.AddXY(p.getEpocaActual(), p.getErrorAcumulado())));
-                    p.setEpocaActual(p.getEpocaActual() + 1);
-                }
-                this.Invoke((MethodInvoker)(() => buttonPerceptron.Enabled = true ));
-                
-            });
-
-            dibujarLinea(true, "perceptron");
+            await perceptron_function();
         }
 
         private void dibujarLinea(bool definitivo, string type){
@@ -286,7 +250,49 @@ namespace Algoritmos_IA
 
         }
 
-        private async void Adaline_Click(object sender, EventArgs e)
+        private async Task perceptron_function()
+        {
+            buttonPerceptron.Enabled = false;
+            button1.Enabled = false;
+            Pen lapiz = new Pen(Color.Red, 1);
+            //Array x = (Array)np.zeros(10);
+            //Array y = (Array)np.zeros(10);
+
+            await Task.Factory.StartNew(() =>
+            {
+                while (!p.getEntrenado() && p.getEpocaActual() < p.getEpocas())
+                {
+                    p.setEntrenado(true);
+                    for (int i = 0; i < p.getPuntos().Count; i++)
+                    {
+                        float[,] xTemp = new float[3, 1];
+                        xTemp[0, 0] = -1;
+                        xTemp[1, 0] = p.getPuntos()[i].getPosicionAdaptadaX();
+                        xTemp[2, 0] = p.getPuntos()[i].getPosicionAdaptadaY();
+
+                        int error = p.getPuntos()[i].getTipo() - p.funcionEscalon(xTemp);
+
+
+                        if (error != 0)
+                        {
+                            p.setErrorAcumulado(p.getErrorAcumulado() + 1);
+                            p.setEntrenado(false);
+                            p.setPeso((Array)((NDArray)p.getPesos() + np.multiply(p.getLR(), np.multiply(error, np.transpose(xTemp)))));
+
+                            this.Invoke((MethodInvoker)(() => dibujarLinea(false, "perceptron")));
+                        }
+                    }
+                    this.Invoke((MethodInvoker)(() => this.Error_cmp.Series["Perceptron"].Points.AddXY(p.getEpocaActual(), p.getErrorAcumulado())));
+                    p.setEpocaActual(p.getEpocaActual() + 1);
+                }
+                this.Invoke((MethodInvoker)(() => buttonPerceptron.Enabled = true));
+
+            });
+
+            dibujarLinea(true, "perceptron");
+        }
+
+        private async Task adaline_function()
         {
             buttonPerceptron.Enabled = false;
             button1.Enabled = false;
@@ -301,7 +307,7 @@ namespace Algoritmos_IA
                     //Console.WriteLine("Entra ciclo infinito");
 
                     // Si error medio^2 es mayor a 0 y mayor a error maximo entra
-                    if(a.getEpocaActual() == 0)
+                    if (a.getEpocaActual() == 0)
                     {
                         a.setErrorActualEpoca(1);
                     }
@@ -309,14 +315,14 @@ namespace Algoritmos_IA
                     {
                         a.setErrorActualEpoca(Math.Pow(a.getErrorAcumulado() / a.getPuntos().Count, 2));
                     }
-                    
+
 
                     Console.WriteLine(a.getErrorActualEpoca());
                     if (a.getErrorActualEpoca() > float.Parse(ErrorCmp.Text))
                     {
                         a.setEntrenado(true);
                         a.setErrorAcumulado(0);
-                        
+
                         for (int i = 0; i < a.getPuntos().Count; i++)
                         {
 
@@ -352,11 +358,26 @@ namespace Algoritmos_IA
 
                 }
                 this.Invoke((MethodInvoker)(() => buttonPerceptron.Enabled = true));
-                
+
 
             });
-            
+
             dibujarLinea(true, "adaline");
+
+        }
+
+        private async void Adaline_Click(object sender, EventArgs e)
+        {
+            await adaline_function();
+        }
+
+        private async void Competir_Click(object sender, EventArgs e)
+        {
+
+            var tarea1 = perceptron_function();
+            var tarea2 = adaline_function();
+            await Task.WhenAll(tarea1, tarea2);
+
         }
 
         private void Form1_Load(object sender, EventArgs e)

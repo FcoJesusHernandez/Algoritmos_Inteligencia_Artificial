@@ -30,7 +30,7 @@ namespace Algoritmos_IA.Class
 
         public Array inicializar(){
             w = (Array)np.random.rand(1,3);
-            w.SetValue(0,0,0);
+            w.SetValue(-1,0,0);
 
             return w;
         }
