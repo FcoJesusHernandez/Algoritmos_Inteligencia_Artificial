@@ -7,17 +7,19 @@ using NumSharp;
 
 namespace Algoritmos_IA.Class
 {
-    class Perceptron
+    class Adaline
     {
         Array w;
         List<Punto> puntos;
         int epocas, epoca_actual;
         float LR;
+        double error_esperado;
         bool entrenado;
         //bool completo; // puede estar completo pero no entrenado (cuando se cumplen las iteraciones y aun se mantiene un error
-        int error_acumulado;
+        double error_acumulado;
+        double error_actual_epoca;
 
-        public Perceptron(int epocas, float LR, List<Punto> puntosEntrenamiento, int epoca_actual)
+        public Adaline(int epocas, float LR, List<Punto> puntosEntrenamiento, int epoca_actual)
         {
             //completo = false;
             entrenado = false;
@@ -28,9 +30,10 @@ namespace Algoritmos_IA.Class
             error_acumulado = 0;
         }
 
-        public Array inicializar(){
-            w = (Array)np.random.rand(1,3);
-            w.SetValue(0,0,0);
+        public Array inicializar()
+        {
+            w = (Array)np.random.rand(1, 3);
+            w.SetValue(0, 0, 0);
 
             return w;
         }
@@ -40,14 +43,23 @@ namespace Algoritmos_IA.Class
             this.entrenado = entrenado;
         }
 
-        public int funcionEscalon(Array x)
+        public double funcion_sigmoide(Array x)
         {
-            if(np.matmul((NDArray)w, (NDArray)x).GetDouble() >= 0){
-                return 1;
-            }
-            else{
-                return 0;
-            }
+            return 1 / (1 + (Math.Exp(-np.matmul((NDArray)w, (NDArray)x).GetDouble())));
+        }
+
+        public double funcion_sigmoide_derivada(Array x)
+        {
+            return 1 / (1 + (Math.Exp(-np.matmul((NDArray)w, (NDArray)x).GetDouble())));
+        }
+
+        public double getError_esperado()
+        {
+            return error_esperado;
+        }
+        public void setError_esperado(double error_esperado_temp)
+        {
+            error_esperado = error_esperado_temp;
         }
 
         public int getEpocas()
@@ -60,7 +72,8 @@ namespace Algoritmos_IA.Class
             return entrenado;
         }
 
-        public Array getPesos(){
+        public Array getPesos()
+        {
             return w;
         }
 
@@ -89,14 +102,27 @@ namespace Algoritmos_IA.Class
             return LR;
         }
 
-        public void setErrorAcumulado(int error_acumulado)
+        public void setErrorAcumulado(double error_acumulado)
         {
             this.error_acumulado = error_acumulado;
         }
 
-        public int getErrorAcumulado()
+        public double getErrorAcumulado()
         {
             return error_acumulado;
         }
+
+        public void setErrorActualEpoca(double error_epoca)
+        {
+            error_actual_epoca = error_epoca;
+        }
+
+        public double getErrorActualEpoca()
+        {
+            return error_actual_epoca;
+        }
+
+
+
     }
 }

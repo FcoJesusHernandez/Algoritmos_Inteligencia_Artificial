@@ -31,6 +31,7 @@
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataVisualization.Charting.Title title1 = new System.Windows.Forms.DataVisualization.Charting.Title();
             System.Windows.Forms.DataVisualization.Charting.Title title2 = new System.Windows.Forms.DataVisualization.Charting.Title();
             System.Windows.Forms.DataVisualization.Charting.Title title3 = new System.Windows.Forms.DataVisualization.Charting.Title();
@@ -47,6 +48,10 @@
             this.labelEpocasMaximas = new System.Windows.Forms.Label();
             this.Error_cmp = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.button1 = new System.Windows.Forms.Button();
+            this.Adaline = new System.Windows.Forms.Button();
+            this.label4 = new System.Windows.Forms.Label();
+            this.ErrorCmp = new System.Windows.Forms.TextBox();
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
             ((System.ComponentModel.ISupportInitialize)(this.plano)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Error_cmp)).BeginInit();
             this.SuspendLayout();
@@ -153,7 +158,12 @@
             series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
             series1.Legend = "Legend1";
             series1.Name = "Perceptron";
+            series2.ChartArea = "ChartArea1";
+            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series2.Legend = "Legend1";
+            series2.Name = "Adaline";
             this.Error_cmp.Series.Add(series1);
+            this.Error_cmp.Series.Add(series2);
             this.Error_cmp.Size = new System.Drawing.Size(600, 300);
             this.Error_cmp.TabIndex = 10;
             this.Error_cmp.Text = "Error";
@@ -172,7 +182,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(795, 114);
+            this.button1.Location = new System.Drawing.Point(786, 114);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(147, 34);
             this.button1.TabIndex = 11;
@@ -180,11 +190,49 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // Adaline
+            // 
+            this.Adaline.Location = new System.Drawing.Point(939, 114);
+            this.Adaline.Name = "Adaline";
+            this.Adaline.Size = new System.Drawing.Size(147, 34);
+            this.Adaline.TabIndex = 12;
+            this.Adaline.Text = "Entrenar Adaline";
+            this.Adaline.UseVisualStyleBackColor = true;
+            this.Adaline.Click += new System.EventHandler(this.Adaline_Click);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(835, 38);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(29, 13);
+            this.label4.TabIndex = 13;
+            this.label4.Text = "Error";
+            // 
+            // ErrorCmp
+            // 
+            this.ErrorCmp.Location = new System.Drawing.Point(870, 35);
+            this.ErrorCmp.Name = "ErrorCmp";
+            this.ErrorCmp.Size = new System.Drawing.Size(100, 20);
+            this.ErrorCmp.TabIndex = 14;
+            this.ErrorCmp.Text = "0.5";
+            // 
+            // progressBar1
+            // 
+            this.progressBar1.Location = new System.Drawing.Point(633, 222);
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Size = new System.Drawing.Size(100, 23);
+            this.progressBar1.TabIndex = 15;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1283, 664);
+            this.Controls.Add(this.progressBar1);
+            this.Controls.Add(this.ErrorCmp);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.Adaline);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.Error_cmp);
             this.Controls.Add(this.labelEpocasMaximas);
@@ -222,6 +270,10 @@
         private System.Windows.Forms.Label labelEpocasMaximas;
         private System.Windows.Forms.DataVisualization.Charting.Chart Error_cmp;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button Adaline;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox ErrorCmp;
+        private System.Windows.Forms.ProgressBar progressBar1;
     }
 }
 

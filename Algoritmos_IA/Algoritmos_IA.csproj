@@ -69,6 +69,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Class\Adaline.cs" />
     <Compile Include="Class\Img_control.cs" />
     <Compile Include="Class\Perceptron.cs" />
     <Compile Include="Class\Punto.cs" />

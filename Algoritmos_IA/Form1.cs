@@ -15,9 +15,10 @@ namespace Algoritmos_IA
     public partial class Form1 : Form
     {
         List<Punto> lista_puntos;
-        Graphics plano_dibujar;
+        //Graphics plano_dibujar;
         Bitmap bitmap_plano, respaldo;
         Perceptron p;
+        Adaline a;
 
         public Form1()
         {
@@ -120,11 +121,7 @@ namespace Algoritmos_IA
             bitmap_plano = img;
         }
 
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
-        }
-        private async void buttonPerceptron_Click(object sender, EventArgs e)
+        private void buttonPerceptron_Click(object sender, EventArgs e)
         {
             button1.Enabled = true;
             buttonPerceptron.Enabled = true;
@@ -134,7 +131,15 @@ namespace Algoritmos_IA
             this.p = new Perceptron(Int32.Parse(textBoxEpocasMaximas.Text), float.Parse(textBoxLR.Text), lista_puntos, 0);
             p.inicializar();
             bitmap_plano = new Bitmap(respaldo);
-            dibujarLinea(false);
+            dibujarLinea(false, "perceptron");
+
+            
+            //this.Error_cmp.Series["Adaline"].Points.Clear();
+
+            this.a = new Adaline(Int32.Parse(textBoxEpocasMaximas.Text), float.Parse(textBoxLR.Text), lista_puntos, 0);
+            a.inicializar();
+            bitmap_plano = new Bitmap(respaldo);
+            dibujarLinea(false, "perceptron");
         }
 
         private async void button1_Click(object sender, EventArgs e)
@@ -142,8 +147,8 @@ namespace Algoritmos_IA
             buttonPerceptron.Enabled = false;
             button1.Enabled = false;
             Pen lapiz = new Pen(Color.Red, 1);
-            Array x = (Array)np.zeros(10);
-            Array y = (Array)np.zeros(10);
+            //Array x = (Array)np.zeros(10);
+            //Array y = (Array)np.zeros(10);
 
             await Task.Factory.StartNew(() =>
             {
@@ -158,13 +163,15 @@ namespace Algoritmos_IA
                         xTemp[2, 0] = p.getPuntos()[i].getPosicionAdaptadaY();
 
                         int error = p.getPuntos()[i].getTipo() - p.funcionEscalon(xTemp);
+
+                        
                         if (error != 0)
                         {
                             p.setErrorAcumulado(p.getErrorAcumulado() + 1);
                             p.setEntrenado(false);
                             p.setPeso((Array)((NDArray)p.getPesos() + np.multiply(p.getLR(), np.multiply(error, np.transpose(xTemp)))));
 
-                            this.Invoke((MethodInvoker)(() => dibujarLinea(false)));
+                            this.Invoke((MethodInvoker)(() => dibujarLinea(false, "perceptron")));
                         }
                     }
                     this.Invoke((MethodInvoker)(() => this.Error_cmp.Series["Perceptron"].Points.AddXY(p.getEpocaActual(), p.getErrorAcumulado())));
@@ -174,11 +181,12 @@ namespace Algoritmos_IA
                 
             });
 
-            dibujarLinea(true);
+            dibujarLinea(true, "perceptron");
         }
 
-        private async void dibujarLinea(bool definitivo){
+        private void dibujarLinea(bool definitivo, string type){
             Bitmap bm_temp;
+            Color color_pen; 
             if (definitivo)
             {
                 bm_temp = bitmap_plano;
@@ -195,9 +203,25 @@ namespace Algoritmos_IA
             
             for(int i = 0, j = -5; i<10; i++, j++){
                 x.SetValue(j,i);
-                y.SetValue((-(double)p.getPesos().GetValue(0,0) +(double)p.getPesos().GetValue(0,1)*(double)x.GetValue(i))/(double)p.getPesos().GetValue(0,2),i);
+                if(type == "perceptron")
+                {
+                    y.SetValue((-(double)p.getPesos().GetValue(0, 0) + (double)p.getPesos().GetValue(0, 1) * (double)x.GetValue(i)) / (double)p.getPesos().GetValue(0, 2), i);
+                }
+                else
+                {
+                    y.SetValue((-(double)a.getPesos().GetValue(0, 0) + (double)a.getPesos().GetValue(0, 1) * (double)x.GetValue(i)) / (double)a.getPesos().GetValue(0, 2), i);
+                }
+                
             }
-            Pen lapiz = new Pen(Color.Red, 1);
+            if (type == "perceptron")
+            {
+                color_pen = Color.Red;
+            }
+            else
+            {
+                color_pen = Color.Violet;
+            }
+            Pen lapiz = new Pen(color_pen, 1);
             bitmap_temp.DrawLine(lapiz, coordenadaAdaptadaToReal((double)x.GetValue(0)), coordenadaAdaptadaToReal((double)y.GetValue(0)), coordenadaAdaptadaToReal((double)x.GetValue(9)), coordenadaAdaptadaToReal((double)y.GetValue(9)));
 
             plano.Image = bm_temp;
@@ -258,6 +282,84 @@ namespace Algoritmos_IA
         }
 
         private void chart1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private async void Adaline_Click(object sender, EventArgs e)
+        {
+            buttonPerceptron.Enabled = false;
+            button1.Enabled = false;
+            Pen lapiz = new Pen(Color.BlueViolet, 1);
+            Array x = (Array)np.zeros(10);
+            Array y = (Array)np.zeros(10);
+
+            await Task.Factory.StartNew(() =>
+            {
+                while (!a.getEntrenado() && a.getEpocaActual() < a.getEpocas())
+                {
+                    //Console.WriteLine("Entra ciclo infinito");
+
+                    // Si error medio^2 es mayor a 0 y mayor a error maximo entra
+                    if(a.getEpocaActual() == 0)
+                    {
+                        a.setErrorActualEpoca(1);
+                    }
+                    else
+                    {
+                        a.setErrorActualEpoca(Math.Pow(a.getErrorAcumulado() / a.getPuntos().Count, 2));
+                    }
+                    
+
+                    Console.WriteLine(a.getErrorActualEpoca());
+                    if (a.getErrorActualEpoca() > float.Parse(ErrorCmp.Text))
+                    {
+                        a.setEntrenado(true);
+                        a.setErrorAcumulado(0);
+                        
+                        for (int i = 0; i < a.getPuntos().Count; i++)
+                        {
+
+                            float[,] xTemp = new float[3, 1];
+                            xTemp[0, 0] = -1;
+                            xTemp[1, 0] = a.getPuntos()[i].getPosicionAdaptadaX();
+                            xTemp[2, 0] = a.getPuntos()[i].getPosicionAdaptadaY();
+
+                            double sigmoide = a.funcion_sigmoide(xTemp);
+                            double error = a.getPuntos()[i].getTipo() - sigmoide;
+                            //Console.WriteLine(error);
+
+                            a.setErrorAcumulado(a.getErrorAcumulado() + error);
+
+                            a.setEntrenado(false);
+
+                            a.setPeso((Array)((NDArray)a.getPesos() + np.multiply(a.getLR(), np.multiply(error, np.multiply(sigmoide * (1 - sigmoide), np.transpose(xTemp))))));
+
+                            a.setErrorAcumulado(a.getErrorAcumulado() + error);
+
+                            this.Invoke((MethodInvoker)(() => dibujarLinea(false, "adaline")));
+                        }
+
+                        this.Invoke((MethodInvoker)(() => this.Error_cmp.Series["Adaline"].Points.AddXY(a.getEpocaActual(), a.getErrorActualEpoca())));
+
+                        a.setEpocaActual(a.getEpocaActual() + 1);
+                    }
+                    else
+                    {
+                        a.setEpocaActual(a.getEpocas());
+
+                    }
+
+                }
+                this.Invoke((MethodInvoker)(() => buttonPerceptron.Enabled = true));
+                
+
+            });
+            
+            dibujarLinea(true, "adaline");
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
         {
 
         }
