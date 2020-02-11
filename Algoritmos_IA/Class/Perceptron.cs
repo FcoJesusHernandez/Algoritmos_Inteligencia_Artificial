@@ -14,7 +14,7 @@ namespace Algoritmos_IA.Class
         int epocas, epoca_actual;
         float LR;
         bool entrenado;
-        //bool completo; // puede estar completo pero no entrenado (cuando se cumplen las iteraciones y aun se mantiene un error
+        bool completo; // puede estar completo pero no entrenado (cuando se cumplen las iteraciones y aun se mantiene un error
         int error_acumulado;
 
         public Perceptron(int epocas, float LR, List<Punto> puntosEntrenamiento, int epoca_actual)
@@ -97,6 +97,16 @@ namespace Algoritmos_IA.Class
         public int getErrorAcumulado()
         {
             return error_acumulado;
+        }
+
+        public bool getCompletado()
+        {
+            return completo;
+        }
+
+        public void setCompletado(bool completado)
+        {
+            completo = completado;
         }
     }
 }
