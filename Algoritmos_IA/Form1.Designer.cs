@@ -53,6 +53,8 @@
             this.ErrorCmp = new System.Windows.Forms.TextBox();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.Competir = new System.Windows.Forms.Button();
+            this.buttonLimpiar = new System.Windows.Forms.Button();
+            this.labelAlerta = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.plano)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Error_cmp)).BeginInit();
             this.SuspendLayout();
@@ -98,9 +100,8 @@
             this.labelCoordenadaYClick.AutoSize = true;
             this.labelCoordenadaYClick.Location = new System.Drawing.Point(29, 630);
             this.labelCoordenadaYClick.Name = "labelCoordenadaYClick";
-            this.labelCoordenadaYClick.Size = new System.Drawing.Size(21, 13);
+            this.labelCoordenadaYClick.Size = new System.Drawing.Size(0, 13);
             this.labelCoordenadaYClick.TabIndex = 4;
-            this.labelCoordenadaYClick.Text = "y : ";
             // 
             // buttonPerceptron
             // 
@@ -224,6 +225,7 @@
             this.progressBar1.Name = "progressBar1";
             this.progressBar1.Size = new System.Drawing.Size(100, 23);
             this.progressBar1.TabIndex = 15;
+            this.progressBar1.Visible = false;
             // 
             // Competir
             // 
@@ -235,11 +237,33 @@
             this.Competir.UseVisualStyleBackColor = true;
             this.Competir.Click += new System.EventHandler(this.Competir_Click);
             // 
+            // buttonLimpiar
+            // 
+            this.buttonLimpiar.Location = new System.Drawing.Point(786, 171);
+            this.buttonLimpiar.Name = "buttonLimpiar";
+            this.buttonLimpiar.Size = new System.Drawing.Size(147, 30);
+            this.buttonLimpiar.TabIndex = 17;
+            this.buttonLimpiar.Text = "Limpiar";
+            this.buttonLimpiar.UseVisualStyleBackColor = true;
+            this.buttonLimpiar.Click += new System.EventHandler(this.buttonLimpiar_Click);
+            // 
+            // labelAlerta
+            // 
+            this.labelAlerta.AutoSize = true;
+            this.labelAlerta.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelAlerta.ForeColor = System.Drawing.Color.OrangeRed;
+            this.labelAlerta.Location = new System.Drawing.Point(187, 617);
+            this.labelAlerta.Name = "labelAlerta";
+            this.labelAlerta.Size = new System.Drawing.Size(0, 20);
+            this.labelAlerta.TabIndex = 18;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1283, 664);
+            this.Controls.Add(this.labelAlerta);
+            this.Controls.Add(this.buttonLimpiar);
             this.Controls.Add(this.Competir);
             this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.ErrorCmp);
@@ -287,6 +311,8 @@
         private System.Windows.Forms.TextBox ErrorCmp;
         private System.Windows.Forms.ProgressBar progressBar1;
         private System.Windows.Forms.Button Competir;
+        private System.Windows.Forms.Button buttonLimpiar;
+        private System.Windows.Forms.Label labelAlerta;
     }
 }
 

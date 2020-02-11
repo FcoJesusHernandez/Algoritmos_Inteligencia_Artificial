@@ -15,7 +15,7 @@ namespace Algoritmos_IA.Class
         float LR;
         double error_esperado;
         bool entrenado;
-        //bool completo; // puede estar completo pero no entrenado (cuando se cumplen las iteraciones y aun se mantiene un error
+        bool completo; // puede estar completo pero no entrenado (cuando se cumplen las iteraciones y aun se mantiene un error
         double error_acumulado;
         double error_actual_epoca;
 
@@ -122,7 +122,15 @@ namespace Algoritmos_IA.Class
             return error_actual_epoca;
         }
 
+        public bool getCompletado()
+        {
+            return completo;
+        }
 
+        public void setCompletado(bool completado)
+        {
+            completo = completado;
+        }
 
     }
 }

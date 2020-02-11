@@ -16,7 +16,7 @@ namespace Algoritmos_IA
     {
         List<Punto> lista_puntos;
         //Graphics plano_dibujar;
-        Bitmap bitmap_plano, respaldo;
+        Bitmap bitmap_plano, respaldo, bitmap_solo_plano;
         Perceptron p;
         Adaline a;
 
@@ -28,13 +28,39 @@ namespace Algoritmos_IA
 
             button1.Enabled = false;
             buttonPerceptron.Enabled = false;
+            buttonLimpiar.Enabled = false;
+            Competir.Enabled = false;
+            Adaline.Enabled = false;
         }
 
-        private void plano_Click(object sender, EventArgs e)
+        private async void plano_Click(object sender, EventArgs e)
         {
             MouseEventArgs click = (MouseEventArgs)e;
             int tipo;
-            if (p != null && p.getEntrenado())
+
+            if (a != null && a.getCompletado())  /// nota: deberia ir a.getEntrenado(), pero causa errores cuando no se alcanza el error minimo
+            {
+                if (!p.getEntrenado())
+                {
+                    labelAlerta.Text = "La clasificación puede ser incorrecta ya que no se alcanzó el error mínimo";
+                }
+                float[] coordenadasAdaptadas = coordenadaRealToAdaptada(click.X, click.Y);
+                float[,] xTemp = new float[3, 1];
+                xTemp[0, 0] = -1;
+                xTemp[1, 0] = coordenadasAdaptadas[0];
+                xTemp[2, 0] = coordenadasAdaptadas[1];
+
+                double sigmoide = a.funcion_sigmoide(xTemp);
+                if (sigmoide > .5)
+                {
+                    tipo = 1;
+                }
+                else
+                {
+                    tipo = 0;
+                }
+            }
+            else if (p != null && p.getEntrenado())
             {
                 float[] coordenadasAdaptadas = coordenadaRealToAdaptada(click.X, click.Y);
                 float[,] xTemp = new float[3, 1];
@@ -57,8 +83,14 @@ namespace Algoritmos_IA
             }
             Punto punto_generado = new Punto(click.X, click.Y, tipo);
             lista_puntos.Add(punto_generado);
-            labelCoordenadaXClick.Text = punto_generado.getPosicionAdaptadaX().ToString();
-            labelCoordenadaYClick.Text = punto_generado.getPosicionAdaptadaY().ToString();
+            await Task.Factory.StartNew(() =>
+                this.Invoke((MethodInvoker)(() => labelCoordenadaXClick.Text = punto_generado.getPosicionAdaptadaX().ToString()))
+            );
+
+            await Task.Factory.StartNew(() =>
+                this.Invoke((MethodInvoker)(() => labelCoordenadaYClick.Text = punto_generado.getPosicionAdaptadaY().ToString()))
+            );
+
             dibujar_punto(punto_generado);
             if (lista_puntos.Count>2)
             {
@@ -74,13 +106,13 @@ namespace Algoritmos_IA
             Pen pluma;
             if (p.getTipo() == 0)
             {
-                pluma = new Pen(Color.Green, 1);
+                pluma = new Pen(Color.Green, 3);
                 bitmap_temp.DrawEllipse(pluma, new Rectangle(p.getPosicionOriginalX() - 4, p.getPosicionOriginalY() - 4, 8, 8));
                 bitmap_temp_respaldo.DrawEllipse(pluma, new Rectangle(p.getPosicionOriginalX() - 4, p.getPosicionOriginalY() - 4, 8, 8));
             }
             else
             {
-                pluma = new Pen(Color.Red, 1);
+                pluma = new Pen(Color.Red, 3);
                 bitmap_temp.DrawLine(pluma, p.getPosicionOriginalX() - 4, p.getPosicionOriginalY() - 4, p.getPosicionOriginalX() + 4, p.getPosicionOriginalY() + 4);
                 bitmap_temp.DrawLine(pluma, p.getPosicionOriginalX() - 4, p.getPosicionOriginalY() + 4, p.getPosicionOriginalX() + 4, p.getPosicionOriginalY() - 4);
 
@@ -119,12 +151,17 @@ namespace Algoritmos_IA
             plano.Image = img;
             respaldo = new Bitmap(img);
             bitmap_plano = img;
+            bitmap_solo_plano = new Bitmap(img);
         }
 
         private void buttonPerceptron_Click(object sender, EventArgs e)
         {
+            labelAlerta.Text = "";
+            buttonLimpiar.Enabled = true;
             button1.Enabled = true;
             buttonPerceptron.Enabled = true;
+            Adaline.Enabled = true;
+            Competir.Enabled = true;
             create_error_graphic();
             this.Error_cmp.Series["Perceptron"].Points.Clear();
             this.Error_cmp.Series["Adaline"].Points.Clear();
@@ -179,13 +216,13 @@ namespace Algoritmos_IA
             }
             if (type == "perceptron")
             {
-                color_pen = Color.Red;
+                color_pen = Color.Blue;
             }
             else
             {
-                color_pen = Color.Violet;
+                color_pen = Color.Yellow;
             }
-            Pen lapiz = new Pen(color_pen, 1);
+            Pen lapiz = new Pen(color_pen, 3);
             bitmap_temp.DrawLine(lapiz, coordenadaAdaptadaToReal((double)x.GetValue(0)), coordenadaAdaptadaToReal((double)y.GetValue(0)), coordenadaAdaptadaToReal((double)x.GetValue(9)), coordenadaAdaptadaToReal((double)y.GetValue(9)));
 
             plano.Image = bm_temp;
@@ -254,7 +291,9 @@ namespace Algoritmos_IA
         {
             buttonPerceptron.Enabled = false;
             button1.Enabled = false;
-            Pen lapiz = new Pen(Color.Red, 1);
+            Competir.Enabled = false;
+
+            Pen lapiz = new Pen(Color.Red, 3);
             //Array x = (Array)np.zeros(10);
             //Array y = (Array)np.zeros(10);
 
@@ -263,6 +302,7 @@ namespace Algoritmos_IA
                 while (!p.getEntrenado() && p.getEpocaActual() < p.getEpocas())
                 {
                     p.setEntrenado(true);
+                    p.setErrorAcumulado(0);
                     for (int i = 0; i < p.getPuntos().Count; i++)
                     {
                         float[,] xTemp = new float[3, 1];
@@ -294,16 +334,19 @@ namespace Algoritmos_IA
 
         private async Task adaline_function()
         {
-            buttonPerceptron.Enabled = false;
-            button1.Enabled = false;
-            Pen lapiz = new Pen(Color.BlueViolet, 1);
+            Adaline.Enabled = false;
+            Competir.Enabled = false;
+            //button1.Enabled = false;
+            Pen lapiz = new Pen(Color.BlueViolet, 3);
             Array x = (Array)np.zeros(10);
             Array y = (Array)np.zeros(10);
 
             await Task.Factory.StartNew(() =>
             {
+                a.setCompletado(false);
                 while (!a.getEntrenado() && a.getEpocaActual() < a.getEpocas())
                 {
+                    a.setEntrenado(true);
                     //Console.WriteLine("Entra ciclo infinito");
 
                     // Si error medio^2 es mayor a 0 y mayor a error maximo entra
@@ -353,17 +396,21 @@ namespace Algoritmos_IA
                     else
                     {
                         a.setEpocaActual(a.getEpocas());
-
+                        a.setEntrenado(true);
                     }
 
                 }
+                if(a.getEpocaActual() < a.getEpocas())
+                {
+                    a.setEntrenado(true);
+                }
+                a.setCompletado(true);
                 this.Invoke((MethodInvoker)(() => buttonPerceptron.Enabled = true));
 
 
             });
 
             dibujarLinea(true, "adaline");
-
         }
 
         private async void Adaline_Click(object sender, EventArgs e)
@@ -373,11 +420,37 @@ namespace Algoritmos_IA
 
         private async void Competir_Click(object sender, EventArgs e)
         {
+            Competir.Enabled = false;
+            buttonPerceptron.Enabled = false;
+            Adaline.Enabled = false;
 
             var tarea1 = perceptron_function();
             var tarea2 = adaline_function();
             await Task.WhenAll(tarea1, tarea2);
 
+        }
+
+        private void buttonLimpiar_Click(object sender, EventArgs e)
+        {
+            if ((p != null && p.getCompletado()) || (a!=null && a.getCompletado()))
+            {
+                labelAlerta.Text = "";
+                this.Error_cmp.Series["Perceptron"].Points.Clear();
+                this.Error_cmp.Series["Adaline"].Points.Clear();
+                buttonLimpiar.Enabled = false;
+                p = null;
+                a = null;
+                button1.Enabled = false;
+                buttonPerceptron.Enabled = false;
+                Competir.Enabled = false;
+                Adaline.Enabled = false;
+
+                lista_puntos = new List<Punto>();
+                bitmap_plano = new Bitmap(bitmap_solo_plano);
+                respaldo = new Bitmap(bitmap_solo_plano);
+                plano.Image = bitmap_solo_plano;
+                plano.Refresh();
+            }
         }
 
         private void Form1_Load(object sender, EventArgs e)
