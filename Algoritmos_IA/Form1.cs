@@ -26,11 +26,11 @@ namespace Algoritmos_IA
             plano_Paint();
             lista_puntos = new List<Punto>();
 
-            button1.Enabled = false;
             buttonPerceptron.Enabled = false;
+            buttonInicializacion.Enabled = false;
             buttonLimpiar.Enabled = false;
-            Competir.Enabled = false;
-            Adaline.Enabled = false;
+            buttonCompetir.Enabled = false;
+            buttonAdaline.Enabled = false;
         }
 
         private async void plano_Click(object sender, EventArgs e)
@@ -94,7 +94,7 @@ namespace Algoritmos_IA
             dibujar_punto(punto_generado);
             if (lista_puntos.Count>2)
             {
-                buttonPerceptron.Enabled = true;
+                buttonInicializacion.Enabled = true;
             }
         }
 
@@ -154,14 +154,14 @@ namespace Algoritmos_IA
             bitmap_solo_plano = new Bitmap(img);
         }
 
-        private void buttonPerceptron_Click(object sender, EventArgs e)
+        private void buttonInicializacion_Click(object sender, EventArgs e)
         {
             labelAlerta.Text = "";
             buttonLimpiar.Enabled = true;
-            button1.Enabled = true;
             buttonPerceptron.Enabled = true;
-            Adaline.Enabled = true;
-            Competir.Enabled = true;
+            buttonInicializacion.Enabled = true;
+            buttonAdaline.Enabled = true;
+            buttonCompetir.Enabled = true;
             create_error_graphic();
             this.Error_cmp.Series["Perceptron"].Points.Clear();
             this.Error_cmp.Series["Adaline"].Points.Clear();
@@ -180,7 +180,7 @@ namespace Algoritmos_IA
             dibujarLinea(false, "adaline");
         }
 
-        private async void button1_Click(object sender, EventArgs e)
+        private async void buttonPerceptron_Click(object sender, EventArgs e)
         {
             await perceptron_function();
         }
@@ -289,9 +289,9 @@ namespace Algoritmos_IA
 
         private async Task perceptron_function()
         {
+            buttonInicializacion.Enabled = false;
             buttonPerceptron.Enabled = false;
-            button1.Enabled = false;
-            Competir.Enabled = false;
+            buttonCompetir.Enabled = false;
 
             Pen lapiz = new Pen(Color.Red, 3);
             //Array x = (Array)np.zeros(10);
@@ -325,7 +325,7 @@ namespace Algoritmos_IA
                     this.Invoke((MethodInvoker)(() => this.Error_cmp.Series["Perceptron"].Points.AddXY(p.getEpocaActual(), p.getErrorAcumulado())));
                     p.setEpocaActual(p.getEpocaActual() + 1);
                 }
-                this.Invoke((MethodInvoker)(() => buttonPerceptron.Enabled = true));
+                this.Invoke((MethodInvoker)(() => buttonInicializacion.Enabled = true));
 
             });
 
@@ -334,8 +334,8 @@ namespace Algoritmos_IA
 
         private async Task adaline_function()
         {
-            Adaline.Enabled = false;
-            Competir.Enabled = false;
+            buttonAdaline.Enabled = false;
+            buttonCompetir.Enabled = false;
             //button1.Enabled = false;
             Pen lapiz = new Pen(Color.BlueViolet, 3);
             Array x = (Array)np.zeros(10);
@@ -405,7 +405,7 @@ namespace Algoritmos_IA
                     a.setEntrenado(true);
                 }
                 a.setCompletado(true);
-                this.Invoke((MethodInvoker)(() => buttonPerceptron.Enabled = true));
+                this.Invoke((MethodInvoker)(() => buttonInicializacion.Enabled = true));
 
 
             });
@@ -413,16 +413,16 @@ namespace Algoritmos_IA
             dibujarLinea(true, "adaline");
         }
 
-        private async void Adaline_Click(object sender, EventArgs e)
+        private async void buttonAdaline_Click(object sender, EventArgs e)
         {
             await adaline_function();
         }
 
-        private async void Competir_Click(object sender, EventArgs e)
+        private async void buttonCompetir_Click(object sender, EventArgs e)
         {
-            Competir.Enabled = false;
-            buttonPerceptron.Enabled = false;
-            Adaline.Enabled = false;
+            buttonCompetir.Enabled = false;
+            buttonInicializacion.Enabled = false;
+            buttonAdaline.Enabled = false;
 
             var tarea1 = perceptron_function();
             var tarea2 = adaline_function();
@@ -440,10 +440,10 @@ namespace Algoritmos_IA
                 buttonLimpiar.Enabled = false;
                 p = null;
                 a = null;
-                button1.Enabled = false;
                 buttonPerceptron.Enabled = false;
-                Competir.Enabled = false;
-                Adaline.Enabled = false;
+                buttonInicializacion.Enabled = false;
+                buttonCompetir.Enabled = false;
+                buttonAdaline.Enabled = false;
 
                 lista_puntos = new List<Punto>();
                 bitmap_plano = new Bitmap(bitmap_solo_plano);

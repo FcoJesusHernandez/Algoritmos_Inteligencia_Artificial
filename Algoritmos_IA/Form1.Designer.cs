@@ -41,18 +41,18 @@
             this.label2 = new System.Windows.Forms.Label();
             this.labelCoordenadaXClick = new System.Windows.Forms.Label();
             this.labelCoordenadaYClick = new System.Windows.Forms.Label();
-            this.buttonPerceptron = new System.Windows.Forms.Button();
+            this.buttonInicializacion = new System.Windows.Forms.Button();
             this.textBoxLR = new System.Windows.Forms.TextBox();
             this.textBoxEpocasMaximas = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.labelEpocasMaximas = new System.Windows.Forms.Label();
             this.Error_cmp = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.button1 = new System.Windows.Forms.Button();
-            this.Adaline = new System.Windows.Forms.Button();
+            this.buttonPerceptron = new System.Windows.Forms.Button();
+            this.buttonAdaline = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.ErrorCmp = new System.Windows.Forms.TextBox();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
-            this.Competir = new System.Windows.Forms.Button();
+            this.buttonCompetir = new System.Windows.Forms.Button();
             this.buttonLimpiar = new System.Windows.Forms.Button();
             this.labelAlerta = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.plano)).BeginInit();
@@ -103,15 +103,15 @@
             this.labelCoordenadaYClick.Size = new System.Drawing.Size(0, 13);
             this.labelCoordenadaYClick.TabIndex = 4;
             // 
-            // buttonPerceptron
+            // buttonInicializacion
             // 
-            this.buttonPerceptron.Location = new System.Drawing.Point(633, 114);
-            this.buttonPerceptron.Name = "buttonPerceptron";
-            this.buttonPerceptron.Size = new System.Drawing.Size(147, 34);
-            this.buttonPerceptron.TabIndex = 5;
-            this.buttonPerceptron.Text = "Inicializador";
-            this.buttonPerceptron.UseVisualStyleBackColor = true;
-            this.buttonPerceptron.Click += new System.EventHandler(this.buttonPerceptron_Click);
+            this.buttonInicializacion.Location = new System.Drawing.Point(633, 114);
+            this.buttonInicializacion.Name = "buttonInicializacion";
+            this.buttonInicializacion.Size = new System.Drawing.Size(147, 34);
+            this.buttonInicializacion.TabIndex = 5;
+            this.buttonInicializacion.Text = "Inicializador";
+            this.buttonInicializacion.UseVisualStyleBackColor = true;
+            this.buttonInicializacion.Click += new System.EventHandler(this.buttonInicializacion_Click);
             // 
             // textBoxLR
             // 
@@ -182,25 +182,25 @@
             this.Error_cmp.Titles.Add(title2);
             this.Error_cmp.Titles.Add(title3);
             // 
-            // button1
+            // buttonPerceptron
             // 
-            this.button1.Location = new System.Drawing.Point(786, 114);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(147, 34);
-            this.button1.TabIndex = 11;
-            this.button1.Text = "Entrenar Perceptron";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.buttonPerceptron.Location = new System.Drawing.Point(786, 114);
+            this.buttonPerceptron.Name = "buttonPerceptron";
+            this.buttonPerceptron.Size = new System.Drawing.Size(147, 34);
+            this.buttonPerceptron.TabIndex = 11;
+            this.buttonPerceptron.Text = "Entrenar Perceptron";
+            this.buttonPerceptron.UseVisualStyleBackColor = true;
+            this.buttonPerceptron.Click += new System.EventHandler(this.buttonPerceptron_Click);
             // 
-            // Adaline
+            // buttonAdaline
             // 
-            this.Adaline.Location = new System.Drawing.Point(939, 114);
-            this.Adaline.Name = "Adaline";
-            this.Adaline.Size = new System.Drawing.Size(147, 34);
-            this.Adaline.TabIndex = 12;
-            this.Adaline.Text = "Entrenar Adaline";
-            this.Adaline.UseVisualStyleBackColor = true;
-            this.Adaline.Click += new System.EventHandler(this.Adaline_Click);
+            this.buttonAdaline.Location = new System.Drawing.Point(939, 114);
+            this.buttonAdaline.Name = "buttonAdaline";
+            this.buttonAdaline.Size = new System.Drawing.Size(147, 34);
+            this.buttonAdaline.TabIndex = 12;
+            this.buttonAdaline.Text = "Entrenar Adaline";
+            this.buttonAdaline.UseVisualStyleBackColor = true;
+            this.buttonAdaline.Click += new System.EventHandler(this.buttonAdaline_Click);
             // 
             // label4
             // 
@@ -227,15 +227,15 @@
             this.progressBar1.TabIndex = 15;
             this.progressBar1.Visible = false;
             // 
-            // Competir
+            // buttonCompetir
             // 
-            this.Competir.Location = new System.Drawing.Point(633, 171);
-            this.Competir.Name = "Competir";
-            this.Competir.Size = new System.Drawing.Size(147, 30);
-            this.Competir.TabIndex = 16;
-            this.Competir.Text = "Competir";
-            this.Competir.UseVisualStyleBackColor = true;
-            this.Competir.Click += new System.EventHandler(this.Competir_Click);
+            this.buttonCompetir.Location = new System.Drawing.Point(633, 171);
+            this.buttonCompetir.Name = "buttonCompetir";
+            this.buttonCompetir.Size = new System.Drawing.Size(147, 30);
+            this.buttonCompetir.TabIndex = 16;
+            this.buttonCompetir.Text = "Competir";
+            this.buttonCompetir.UseVisualStyleBackColor = true;
+            this.buttonCompetir.Click += new System.EventHandler(this.buttonCompetir_Click);
             // 
             // buttonLimpiar
             // 
@@ -264,18 +264,18 @@
             this.ClientSize = new System.Drawing.Size(1283, 664);
             this.Controls.Add(this.labelAlerta);
             this.Controls.Add(this.buttonLimpiar);
-            this.Controls.Add(this.Competir);
+            this.Controls.Add(this.buttonCompetir);
             this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.ErrorCmp);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.Adaline);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.buttonAdaline);
+            this.Controls.Add(this.buttonPerceptron);
             this.Controls.Add(this.Error_cmp);
             this.Controls.Add(this.labelEpocasMaximas);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.textBoxEpocasMaximas);
             this.Controls.Add(this.textBoxLR);
-            this.Controls.Add(this.buttonPerceptron);
+            this.Controls.Add(this.buttonInicializacion);
             this.Controls.Add(this.labelCoordenadaYClick);
             this.Controls.Add(this.labelCoordenadaXClick);
             this.Controls.Add(this.label2);
@@ -299,18 +299,18 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label labelCoordenadaXClick;
         private System.Windows.Forms.Label labelCoordenadaYClick;
-        private System.Windows.Forms.Button buttonPerceptron;
+        private System.Windows.Forms.Button buttonInicializacion;
         private System.Windows.Forms.TextBox textBoxLR;
         private System.Windows.Forms.TextBox textBoxEpocasMaximas;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label labelEpocasMaximas;
         private System.Windows.Forms.DataVisualization.Charting.Chart Error_cmp;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button Adaline;
+        private System.Windows.Forms.Button buttonPerceptron;
+        private System.Windows.Forms.Button buttonAdaline;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox ErrorCmp;
         private System.Windows.Forms.ProgressBar progressBar1;
-        private System.Windows.Forms.Button Competir;
+        private System.Windows.Forms.Button buttonCompetir;
         private System.Windows.Forms.Button buttonLimpiar;
         private System.Windows.Forms.Label labelAlerta;
     }
