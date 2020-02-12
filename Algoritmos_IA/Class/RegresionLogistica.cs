@@ -7,7 +7,7 @@ using NumSharp;
 
 namespace Algoritmos_IA.Class
 {
-    class Adaline
+    class RegresionLogistica
     {
         Array w;
         List<Punto> puntos;
@@ -19,7 +19,7 @@ namespace Algoritmos_IA.Class
         double error_acumulado;
         double error_actual_epoca;
 
-        public Adaline(int epocas, float LR, List<Punto> puntosEntrenamiento, int epoca_actual)
+        public RegresionLogistica(int epocas, float LR, List<Punto> puntosEntrenamiento, int epoca_actual)
         {
             completo = false;
             entrenado = false;
@@ -131,6 +131,5 @@ namespace Algoritmos_IA.Class
         {
             completo = completado;
         }
-
     }
 }

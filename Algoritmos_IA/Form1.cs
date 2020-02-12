@@ -15,10 +15,10 @@ namespace Algoritmos_IA
     public partial class Form1 : Form
     {
         List<Punto> lista_puntos;
-        //Graphics plano_dibujar;
         Bitmap bitmap_plano, respaldo, bitmap_solo_plano;
         Perceptron p;
         Adaline a;
+        RegresionLogistica rl;
 
         public Form1()
         {
@@ -167,19 +167,22 @@ namespace Algoritmos_IA
             create_error_graphic();
             this.Error_cmp.Series["Perceptron"].Points.Clear();
             this.Error_cmp.Series["Adaline"].Points.Clear();
+            this.Error_cmp.Series["Regresión logistica"].Points.Clear();
 
             this.p = new Perceptron(Int32.Parse(textBoxEpocasMaximas.Text), float.Parse(textBoxLR.Text.ToString()), lista_puntos, 0);
             p.inicializar();
             bitmap_plano = new Bitmap(respaldo);
             dibujarLinea(false, "perceptron");
 
-
-            //this.Error_cmp.Series["Adaline"].Points.Clear();
-
             this.a = new Adaline(Int32.Parse(textBoxEpocasMaximas.Text), float.Parse(textBoxLR.Text), lista_puntos, 0);
             a.inicializar();
             bitmap_plano = new Bitmap(respaldo);
             dibujarLinea(false, "adaline");
+
+            this.rl = new RegresionLogistica(Int32.Parse(textBoxEpocasMaximas.Text), float.Parse(textBoxLR.Text), lista_puntos, 0);
+            rl.inicializar();
+            bitmap_plano = new Bitmap(respaldo);
+            dibujarLinea(false, "regresion_logistica");
         }
 
         private async void button1_Click(object sender, EventArgs e)
@@ -210,9 +213,12 @@ namespace Algoritmos_IA
                 {
                     y.SetValue((-(double)p.getPesos().GetValue(0, 0) + (double)p.getPesos().GetValue(0, 1) * (double)x.GetValue(i)) / (double)p.getPesos().GetValue(0, 2), i);
                 }
-                else
+                else if(type == "adaline")
                 {
                     y.SetValue((-(double)a.getPesos().GetValue(0, 0) + (double)a.getPesos().GetValue(0, 1) * (double)x.GetValue(i)) / (double)a.getPesos().GetValue(0, 2), i);
+                }
+                else if(type == "regresion_logistica"){
+                    y.SetValue((-(double)rl.getPesos().GetValue(0, 0) + (double)rl.getPesos().GetValue(0, 1) * (double)x.GetValue(i)) / (double)rl.getPesos().GetValue(0, 2), i);
                 }
                 
             }
@@ -220,9 +226,15 @@ namespace Algoritmos_IA
             {
                 color_pen = Color.Blue;
             }
-            else
+            else if(type == "adaline")
             {
                 color_pen = Color.Yellow;
+            }
+            else if(type == "regresion_logistica"){
+                color_pen = Color.Red;
+            }
+            else{
+                color_pen = Color.DarkGreen;
             }
             Pen lapiz = new Pen(color_pen, 3);
             bitmap_temp.DrawLine(lapiz, coordenadaAdaptadaToReal((double)x.GetValue(0)), coordenadaAdaptadaToReal((double)y.GetValue(0)), coordenadaAdaptadaToReal((double)x.GetValue(9)), coordenadaAdaptadaToReal((double)y.GetValue(9)));
@@ -414,6 +426,86 @@ namespace Algoritmos_IA
             dibujarLinea(true, "adaline");
         }
 
+        private async Task RegresionLogistica_function()
+        {
+            //buttonAdaline.Enabled = false;  // cambiar por boton regresionLogistica
+            Competir.Enabled = false;
+            //button1.Enabled = false;
+            Pen lapiz = new Pen(Color.BlueViolet, 3);
+            Array x = (Array)np.zeros(10);
+            Array y = (Array)np.zeros(10);
+
+            await Task.Factory.StartNew(() =>
+            {
+                rl.setCompletado(false);
+                while (!rl.getEntrenado() && rl.getEpocaActual() < rl.getEpocas())
+                {
+                    rl.setEntrenado(true);
+                    //Console.WriteLine("Entra ciclo infinito");
+
+                    // Si error medio^2 es mayor a 0 y mayor a error maximo entra
+                    if (rl.getEpocaActual() == 0)
+                    {
+                        rl.setErrorActualEpoca(1);
+                    }
+                    else
+                    {
+                        rl.setErrorActualEpoca(Math.Pow(rl.getErrorAcumulado() / rl.getPuntos().Count, 2));
+                    }
+
+                    //Console.WriteLine(a.getErrorActualEpoca());
+                    if (rl.getErrorActualEpoca() > float.Parse(ErrorCmp.Text))
+                    {
+                        rl.setEntrenado(true);
+                        rl.setErrorAcumulado(0);
+
+                        for (int i = 0; i < rl.getPuntos().Count; i++)
+                        {
+
+                            float[,] xTemp = new float[3, 1];
+                            xTemp[0, 0] = -1;
+                            xTemp[1, 0] = rl.getPuntos()[i].getPosicionAdaptadaX();
+                            xTemp[2, 0] = rl.getPuntos()[i].getPosicionAdaptadaY();
+
+                            double sigmoide = rl.funcion_sigmoide(xTemp);
+                            double error = rl.getPuntos()[i].getTipo() - sigmoide;
+                            //Console.WriteLine(error);
+
+                            rl.setErrorAcumulado(rl.getErrorAcumulado() + error);
+
+                            rl.setEntrenado(false);
+
+                            rl.setPeso((Array)((NDArray)rl.getPesos() + np.multiply(rl.getLR(), np.multiply(error, np.transpose(xTemp)))));
+
+                            rl.setErrorAcumulado(rl.getErrorAcumulado() + error);
+
+                            this.Invoke((MethodInvoker)(() => dibujarLinea(false, "regresion_logistica")));
+                        }
+
+                        this.Invoke((MethodInvoker)(() => this.Error_cmp.Series["Regresión logistica"].Points.AddXY(rl.getEpocaActual(), rl.getErrorActualEpoca())));
+
+                        rl.setEpocaActual(rl.getEpocaActual() + 1);
+                    }
+                    else
+                    {
+                        rl.setEpocaActual(rl.getEpocas());
+                        rl.setEntrenado(true);
+                    }
+
+                }
+                if(rl.getEpocaActual() < rl.getEpocas())
+                {
+                    rl.setEntrenado(true);
+                }
+                rl.setCompletado(true);
+                this.Invoke((MethodInvoker)(() => buttonPerceptron.Enabled = true));
+
+
+            });
+
+            dibujarLinea(true, "regresion_logistica");
+        }
+
         private async void Adaline_Click(object sender, EventArgs e)
         {
             await adaline_function();
@@ -427,7 +519,8 @@ namespace Algoritmos_IA
 
             var tarea1 = perceptron_function();
             var tarea2 = adaline_function();
-            await Task.WhenAny(tarea1, tarea2);
+            var tarea3 = RegresionLogistica_function();
+            await Task.WhenAny(tarea1, tarea2, tarea3);
         }
 
         private void buttonLimpiar_Click(object sender, EventArgs e)
@@ -437,9 +530,12 @@ namespace Algoritmos_IA
                 labelAlerta.Text = "";
                 this.Error_cmp.Series["Perceptron"].Points.Clear();
                 this.Error_cmp.Series["Adaline"].Points.Clear();
+                this.Error_cmp.Series["Regresión logistica"].Points.Clear();
+
                 buttonLimpiar.Enabled = false;
                 p = null;
                 a = null;
+                rl = null;
                 button1.Enabled = false;
                 buttonPerceptron.Enabled = false;
                 Competir.Enabled = false;
