@@ -12,6 +12,11 @@ namespace Algoritmos_IA.Class.MLP
         public Double sensibilidad { get; set; }
         public Double salida { get; set; }
 
+        public Neurona() 
+        {
+            
+        }
+
         public void inicializaPesos(int entradas) 
         {
             Random r = new Random();

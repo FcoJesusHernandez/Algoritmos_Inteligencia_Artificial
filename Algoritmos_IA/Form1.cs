@@ -39,9 +39,19 @@ namespace Algoritmos_IA
             bunifuFlatButtonEntrenarRegresionLogistica.Enabled = false;
             llenarPlumas();
             Console.WriteLine("Di algo");
+
+            //Borrar esto
+            List<int> hola = new List<int>();
+
+            hola.Add(2);
+            hola.Add(3);
+
+            MLP caca = new MLP(2, hola);
+            caca.Forward();
+            //fin de borrar esto
         }
 
-        
+
         public void llenarPlumas()
         {
             // n = numero de clases 
@@ -358,14 +368,7 @@ namespace Algoritmos_IA
             button1.Enabled = false;
             Competir.Enabled = false;
 
-            //Borrar esto
-            /*List<int> hola = new List<int>();
-
-            hola.Add(2);
-            hola.Add(3);
-
-            MLP caca = new MLP(2, hola);*/
-            //fin de borrar esto
+            
 
 
             Pen lapiz = new Pen(Color.Red, 3);
