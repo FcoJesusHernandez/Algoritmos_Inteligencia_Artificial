@@ -20,7 +20,7 @@ namespace Algoritmos_IA
         Adaline a;
         RegresionLogistica rl;
         List<Pen> plumas;
-        List<Pen> lista_plumas = new List<Pen>();
+        //List<Pen> lista_plumas = new List<Pen>();
 
         public Form1()
         {
@@ -29,7 +29,7 @@ namespace Algoritmos_IA
 
             lista_puntos = new List<Punto>();
             plumas = new List<Pen>();
-            llenarPlumas();
+            //llenarPlumas();
             button1.Enabled = false;
             buttonPerceptron.Enabled = false;
             buttonLimpiar.Enabled = false;
@@ -39,16 +39,23 @@ namespace Algoritmos_IA
             llenarPlumas();
         }
 
+        
         public void llenarPlumas()
         {
             // n = numero de clases 
-            for(int i=0; i < 10; i++)
+            //clase.get_Pluma().ToString();
+            Random random = new Random();
+            for (int i=0; i < 10; i++)
             {
-                Clases clase = new Clases();
-                lista_plumas.Add(clase.getPluma());
+                Clases clase = new Clases(random);
+                plumas.Add(clase.get_Pluma());
+                
             }
+            
 
         }
+        
+        
 
         private async void plano_Click(object sender, EventArgs e)
         {
@@ -263,21 +270,21 @@ namespace Algoritmos_IA
             if (type == "perceptron")
             {
                 color_pen = Color.Blue;
-                b = 1;
+                b = 0;
             }
             else if(type == "adaline")
             {
                 color_pen = Color.Yellow;
-                b = 2;
+                b = 1;
             }
             else if(type == "regresion_logistica"){
                 color_pen = Color.Red;
-                b = 3;
+                b = 2;
             }
             else{
                 color_pen = Color.DarkGreen;
             }
-            Pen lapiz = lista_plumas[b];
+            Pen lapiz = plumas[b];
             //Pen lapiz = new Pen(color_pen, 3);
             bitmap_temp.DrawLine(lapiz, coordenadaAdaptadaToReal((double)x.GetValue(0)), coordenadaAdaptadaToReal((double)y.GetValue(0)), coordenadaAdaptadaToReal((double)x.GetValue(9)), coordenadaAdaptadaToReal((double)y.GetValue(9)));
 
@@ -552,6 +559,10 @@ namespace Algoritmos_IA
         {
             await adaline_function();
         }
+        public void esto_Arreglara_todo()
+        {
+
+        }
 
         private async void Competir_Click(object sender, EventArgs e)
         {
@@ -577,6 +588,11 @@ namespace Algoritmos_IA
         private async void bunifuFlatButtonEntrenarRegresionLogistica_Click(object sender, EventArgs e)
         {
             await RegresionLogistica_function();
+        }
+
+        private void bunifuGradientPanel2_Paint(object sender, PaintEventArgs e)
+        {
+
         }
 
         private void buttonLimpiar_Click(object sender, EventArgs e)

@@ -9,25 +9,29 @@ namespace Algoritmos_IA.Class
 {
     public class Clases
     {
-        Color Color_Pluma = new Color();
-        Pen Pluma;
-        int Dureza = 5;
-        List<int> lista_colores = new List<int>();
-        public Clases()
+        Color Color_Pluma;
+
+        int Dureza;
+        List<int> lista_colores;
+        Random Color_random;
+        public Clases(Random random)
         {
-            Generador_Plumas();
+            Color_random = random;
+            Color_Pluma = new Color();
+            Dureza = 2;
+            lista_colores = new List<int>();
         }
-        public void Generador_Plumas()
+        public Pen get_Pluma()
         {
-             
-            Random Color_random = new Random();
+            
             int suma = 0;
             while (suma < 300)
             {
                 suma = 0;
+                lista_colores.Clear();
                 for (int i = 0; i < 3; i++)
                 {
-                    Color_random.Next(0, 255);
+                    lista_colores.Add(Color_random.Next(0, 255));
                 }
                 foreach (int i in lista_colores)
                 {
@@ -36,12 +40,14 @@ namespace Algoritmos_IA.Class
             }
 
             Color_Pluma = Color.FromArgb(lista_colores[0], lista_colores[1], lista_colores[2]);
+            Console.WriteLine(Color_Pluma);
             Pen Pluma = new Pen(Color_Pluma, Dureza );
+            return Pluma;
         }
 
-        public Pen getPluma()
+        public void funcion_prueba()
         {
-            return Pluma;
+            Console.WriteLine("funciona");
         }
     }
 }
