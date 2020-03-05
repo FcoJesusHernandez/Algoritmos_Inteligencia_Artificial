@@ -593,7 +593,6 @@
             this.Controls.Add(this.labelAlerta);
             this.Name = "Form1";
             this.Text = "Algoritmos Inteligencia Artificial";
-            this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.plano)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Error_cmp)).EndInit();
             this.bunifuGradientPanel1.ResumeLayout(false);

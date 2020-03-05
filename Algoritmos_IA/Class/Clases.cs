@@ -40,7 +40,7 @@ namespace Algoritmos_IA.Class
             }
 
             Color_Pluma = Color.FromArgb(lista_colores[0], lista_colores[1], lista_colores[2]);
-            Console.WriteLine(Color_Pluma);
+            //Console.WriteLine(Color_Pluma);
             Pen Pluma = new Pen(Color_Pluma, Dureza );
             return Pluma;
         }

@@ -19,6 +19,10 @@ namespace Algoritmos_IA.Class
         double error_acumulado;
         double error_actual_epoca;
 
+
+
+
+
         public Adaline(int epocas, float LR, List<Punto> puntosEntrenamiento, int epoca_actual)
         {
             completo = false;
@@ -28,7 +32,11 @@ namespace Algoritmos_IA.Class
             this.LR = LR;
             this.puntos = puntosEntrenamiento;
             error_acumulado = 0;
+            
         }
+        
+
+        
 
         public Array inicializar()
         {

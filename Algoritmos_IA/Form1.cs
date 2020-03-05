@@ -1,4 +1,5 @@
 ﻿using Algoritmos_IA.Class;
+using Algoritmos_IA.Class.MLP;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -37,6 +38,7 @@ namespace Algoritmos_IA
             buttonAdaline.Enabled = false;
             bunifuFlatButtonEntrenarRegresionLogistica.Enabled = false;
             llenarPlumas();
+            Console.WriteLine("Di algo");
         }
 
         
@@ -356,6 +358,16 @@ namespace Algoritmos_IA
             button1.Enabled = false;
             Competir.Enabled = false;
 
+            //Borrar esto
+            /*List<int> hola = new List<int>();
+
+            hola.Add(2);
+            hola.Add(3);
+
+            MLP caca = new MLP(2, hola);*/
+            //fin de borrar esto
+
+
             Pen lapiz = new Pen(Color.Red, 3);
             //Array x = (Array)np.zeros(10);
             //Array y = (Array)np.zeros(10);
@@ -399,6 +411,9 @@ namespace Algoritmos_IA
         {
             buttonAdaline.Enabled = false;
             Competir.Enabled = false;
+
+
+
             //button1.Enabled = false;
             Pen lapiz = new Pen(Color.BlueViolet, 3);
             Array x = (Array)np.zeros(10);
@@ -622,9 +637,5 @@ namespace Algoritmos_IA
             }
         }
 
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
-        }
     }
 }
