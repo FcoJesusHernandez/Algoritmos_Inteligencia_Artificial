@@ -37,18 +37,7 @@ namespace Algoritmos_IA
             Competir.Enabled = false;
             buttonAdaline.Enabled = false;
             bunifuFlatButtonEntrenarRegresionLogistica.Enabled = false;
-            llenarPlumas();
-            Console.WriteLine("Di algo");
-
-            //Borrar esto
-            List<int> hola = new List<int>();
-
-            hola.Add(2);
-            hola.Add(3);
-
-            MLP caca = new MLP(2, hola);
-            caca.Forward();
-            //fin de borrar esto
+            llenarPlumas();            
         }
 
 
@@ -214,7 +203,19 @@ namespace Algoritmos_IA
             buttonPerceptron.Enabled = true;
             buttonAdaline.Enabled = true;
             Competir.Enabled = true;
-            
+
+
+            //Borrar esto
+            List<int> hola = new List<int>();
+
+            hola.Add(2);
+            hola.Add(3);
+
+            MLP caca = new MLP(2, hola, float.Parse(textBoxLR.Text) , lista_puntos);
+            caca.Forward_Backward();
+            //fin de borrar esto
+
+
             create_error_graphic();
             this.Error_cmp.Series["Perceptron"].Points.Clear();
             this.Error_cmp.Series["Adaline"].Points.Clear();
