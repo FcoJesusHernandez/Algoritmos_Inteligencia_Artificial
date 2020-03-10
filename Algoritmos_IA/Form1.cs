@@ -46,8 +46,8 @@ namespace Algoritmos_IA
             hola.Add(2);
             hola.Add(3);
 
-            MLP caca = new MLP(2, hola);
-            caca.Forward();
+            //MLP caca = new MLP(2, hola);
+            //caca.Forward();
             //fin de borrar esto
         }
 

@@ -15,7 +15,7 @@ namespace Algoritmos_IA.Class.MLP
             for (int i = 0; i < nNeuronas; i++) 
             {
                 Neurona n = new Neurona();
-                Console.WriteLine()
+                Console.WriteLine();
                 this.listaNeuronas.Add(n);
             }
         }
