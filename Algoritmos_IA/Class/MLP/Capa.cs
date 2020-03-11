@@ -34,14 +34,15 @@ namespace Algoritmos_IA.Class.MLP
                 pesosNeurona = a.pesos.ToArray();
                 if (pesos.size == 0)
                 {
-                    pesos = pesosNeurona;
+                    this.pesos = pesosNeurona;
                 }
                 else
                 {
-                    pesos = np.vstack(new NDArray[] { pesos, pesosNeurona });
+                    this.pesos = np.vstack(new NDArray[] { pesos, pesosNeurona });
                 }
             }
-            return pesos;
+            
+            return (NDArray)this.pesos;
         }
         public NDArray getPesosSinCero() 
         {
@@ -64,7 +65,19 @@ namespace Algoritmos_IA.Class.MLP
         {
             var s_a = np.multiply(sensibilidadCapa, np.transpose(a));
             var w_incremento = np.multiply(-lr, s_a);
-            pesos = pesos + w_incremento;
+            
+            this.pesos = pesos + w_incremento;
+            for (int i = 0; i < pesos.Shape[0]; i++) 
+            {
+                foreach(Neurona n in listaNeuronas) 
+                {
+                    n.pesos = new List<double>();
+                    foreach (double peso in pesos[i]) 
+                    {
+                        n.pesos.Add(peso);
+                    }
+                }
+            }
         }
     }
 }

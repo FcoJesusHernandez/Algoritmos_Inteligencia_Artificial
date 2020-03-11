@@ -208,11 +208,13 @@ namespace Algoritmos_IA
             //Borrar esto
             List<int> hola = new List<int>();
 
+            hola.Add(1);
             hola.Add(2);
-            hola.Add(3);
 
-            MLP caca = new MLP(2, hola, float.Parse(textBoxLR.Text) , lista_puntos);
+            MLP caca = new MLP(Int32.Parse(textBoxEpocasMaximas.Text), 2, hola, float.Parse(textBoxLR.Text) , lista_puntos);
             caca.Forward_Backward();
+            Punto prueba = new Punto(3, 4, 2);
+            caca.Forward(prueba, true);
             //fin de borrar esto
 
 

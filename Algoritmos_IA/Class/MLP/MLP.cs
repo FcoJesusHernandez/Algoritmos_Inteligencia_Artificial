@@ -14,9 +14,12 @@ namespace Algoritmos_IA.Class.MLP
         bool primerForward = true;
         NDArray matrizDeseadas;
         float learningRate;
+        int epocas;
+        double errorAcumulado;
 
-        public MLP(int nCapas, List<int> neuronaXCapa, float lr, List<Punto> puntos)
+        public MLP(int epocas, int nCapas, List<int> neuronaXCapa, float lr, List<Punto> puntos)
         {
+            this.epocas = epocas;
             this.entradas = puntos;
             this.learningRate = lr;
             capas = new List<Capa>();
@@ -42,13 +45,22 @@ namespace Algoritmos_IA.Class.MLP
 
         public void Forward_Backward() 
         {
-            foreach (Punto p in entradas)
+            
+            for(int i = 0; i < epocas; i++) 
             {
-                Forward(p);
-                BackPropagation(p);
+                //if error
+                errorAcumulado = 0;
+                foreach (Punto p in entradas)
+                {
+                    Forward(p,false);
+                    BackPropagation(p);
+                }
+                Console.WriteLine("Error Acumulado por Epoca: ");
+                Console.WriteLine(errorAcumulado/entradas.Count);
             }
+            
         }
-        public void Forward( Punto p) 
+        public void Forward( Punto p, bool evaluar) 
         {
             double[] entrada;
             entrada = new double[3];
@@ -56,9 +68,12 @@ namespace Algoritmos_IA.Class.MLP
             entrada[1] = p.getPosicionAdaptadaX();
             entrada[2] = p.getPosicionAdaptadaY();
             NDArray net;
+            
+
 
             foreach (Capa c in capas)
             {
+
                 if (primerForward)
                 {
                     foreach (Neurona a in c.listaNeuronas)
@@ -66,27 +81,44 @@ namespace Algoritmos_IA.Class.MLP
                         a.inicializaPesos(entrada.Length);
                     }
                 }
-                else 
+                else if (!evaluar)
                 {
+                    /*List<double> salida = new List<double>();
+                    for (int i = 1; i < entrada.Length; i++) 
+                    {
+                        salida.Add(entrada[i]);
+                    }*/
                     c.actualizaPesos(learningRate, entrada);
+                    
                 }
-
-                net = np.matmul(c.getPesosCapa(), entrada);
+                net = np.dot(c.getPesosCapa(), entrada);
 
                 c.netCapa = net;
-
+                
                 List<double> a_salida = new List<double>();
 
-
-                for (int i = 0; i < net.Shape[0]; i++)
+                if (net.Shape.Size == 1) 
                 {
-                    a_salida.Add(funcion_sigmoide(net[i][0]));
+                    a_salida.Add(funcion_sigmoide(net));
                 }
+                else 
+                {
+                    for (int i = 0; i < net.Shape.Dimensions[0]; i++)
+                    {
+                        a_salida.Add(funcion_sigmoide(net[i]));
+                    }
+                }
+                
                 c.salidaCapa = a_salida.ToArray();
 
                 a_salida.Insert(0, -1);
 
                 entrada = a_salida.ToArray();
+
+                if (evaluar) 
+                {
+                    Console.WriteLine(c.salidaCapa.ToString());
+                }
             }
             primerForward = false;
         }
@@ -106,10 +138,16 @@ namespace Algoritmos_IA.Class.MLP
                 {
                     NDArray deseada = matrizDeseadas[p.getTipo()];
                     var error = deseada - c.salidaCapa;
-                    List<double> gradiente = new List<double>();
-                    for (int i = 0; i < c.netCapa.Shape[0]; i++)
+                    double acum = 0;
+                    for (int i = 0; i < error.size; i++) 
                     {
-                        gradiente.Add(funcion_sigmoide_derivada(c.netCapa[i][0]));
+                        acum += error[i];
+                    }
+                    errorAcumulado += Math.Pow(acum, 2);
+                    List<double> gradiente = new List<double>();
+                    for (int i = 0; i < c.netCapa.Shape.Dimensions[0]; i++)
+                    {
+                        gradiente.Add(funcion_sigmoide_derivada(c.netCapa[i]));
                     }
                     var s = np.multiply(-2, gradiente.ToArray());
                     var sensibilidad = np.multiply(s, error);
@@ -120,9 +158,16 @@ namespace Algoritmos_IA.Class.MLP
                 else 
                 {
                     List<double> gradiente = new List<double>();
-                    for (int i = 0; i < c.netCapa.Shape[0]; i++)
+                    if (c.netCapa.Shape.Size == 1)
                     {
-                        gradiente.Add(funcion_sigmoide_derivada(c.netCapa[i][0]));
+                        gradiente.Add(funcion_sigmoide_derivada(c.netCapa));
+                    }
+                    else
+                    {
+                        for (int i = 0; i < c.netCapa.Shape.Dimensions[0]; i++)
+                        {
+                            gradiente.Add(funcion_sigmoide_derivada(c.netCapa[i]));
+                        }
                     }
                     var unos = np.eye(gradiente.Count);
                     var identidad = np.multiply(gradiente.ToArray(), unos);
