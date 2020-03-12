@@ -14,9 +14,13 @@ namespace Algoritmos_IA.Class.MLP
         bool primerForward = true;
         NDArray matrizDeseadas;
         float learningRate;
+        int epocas;
+        double errorAcumulado;
 
-        public MLP(int nCapas, List<int> neuronaXCapa, float lr, List<Punto> puntos)
+        public MLP(int epocas, int nCapas, List<int> neuronaXCapa, float lr, List<Punto> puntos)
         {
+            this.epocas = epocas;
+            this.entradas = puntos;
             this.entradas = puntos;
             this.learningRate = lr;
             capas = new List<Capa>();
@@ -42,51 +46,86 @@ namespace Algoritmos_IA.Class.MLP
 
         public void Forward_Backward() 
         {
-            foreach (Punto p in entradas)
+            for(int i = 0; i < epocas; i++) 
             {
-                Forward(p);
-                BackPropagation(p);
+                //if error
+                errorAcumulado = 0;
+                foreach (Punto p in entradas)
+                {
+                    Forward(p, false);
+                    BackPropagation(p);
+                }
+                Console.WriteLine("Error Acumulado por Epoca: ");
+                Console.WriteLine(errorAcumulado / entradas.Count);
             }
         }
-        public void Forward( Punto p) 
+        public void Forward( Punto p, bool evaluar) 
         {
-            double[] entrada;
-            entrada = new double[3];
-            entrada[0] = -1;
-            entrada[1] = p.getPosicionAdaptadaX();
-            entrada[2] = p.getPosicionAdaptadaY();
+            double[,] primerEntrada= new double[3,1];
+            if (evaluar)
+            {
+                primerEntrada[0, 0] = -1;
+                primerEntrada[1, 0] = p.getPosicionOriginalX();
+                primerEntrada[2, 0] = p.getPosicionOriginalY();
+            }
+            else 
+            {
+                primerEntrada[0, 0] = -1;
+                primerEntrada[1, 0] = p.getPosicionAdaptadaX();
+                primerEntrada[2, 0] = p.getPosicionAdaptadaY();
+            }
+            
             NDArray net;
-
+            NDArray entrada = new NDArray(primerEntrada);
+            
             foreach (Capa c in capas)
             {
                 if (primerForward)
                 {
                     foreach (Neurona a in c.listaNeuronas)
                     {
-                        a.inicializaPesos(entrada.Length);
+                        a.inicializaPesos(entrada.size);
                     }
                 }
-                else 
+                else if (!evaluar)
                 {
                     c.actualizaPesos(learningRate, entrada);
                 }
 
-                net = np.matmul(c.getPesosCapa(), entrada);
+                /*NDArray uno = new NDArray(typeof(Double), new Shape(3, 1));
+                NDArray dos = new NDArray(typeof(Double), new Shape(1, 3));
+                Random r = new Random();
+                for (int i = 0; i < 3; i++) 
+                {
+                    uno[i, 0] = r.Next();
+                    dos[0, i] = r.Next();
+                }
+                var tres = np.dot(dos, uno);*/
+
+                net = np.dot(c.getPesosCapa(), entrada);
 
                 c.netCapa = net;
 
-                List<double> a_salida = new List<double>();
+                double[,] a_salida = new double[net.size, 1];
 
-
-                for (int i = 0; i < net.Shape[0]; i++)
+                for (int i = 0; i < net.size; i++)
                 {
-                    a_salida.Add(funcion_sigmoide(net[i][0]));
+                    a_salida[i, 0] = net[i, 0];
                 }
-                c.salidaCapa = a_salida.ToArray();
+                c.salidaCapa = a_salida;
 
-                a_salida.Insert(0, -1);
+                double[,] bias =new double[1,1];
 
-                entrada = a_salida.ToArray();
+                bias[0, 0] = -1;
+
+                NDArray s = np.vstack( bias, a_salida );
+
+                entrada = s;
+
+                if (evaluar && capas.Last<Capa>()==c)
+                {
+                    Console.WriteLine("C: "+c.salidaCapa.ToString());
+                }
             }
             primerForward = false;
         }
@@ -104,14 +143,20 @@ namespace Algoritmos_IA.Class.MLP
                 
                 if (primerCapa)
                 {
-                    NDArray deseada = matrizDeseadas[p.getTipo()];
-                    var error = deseada - c.salidaCapa;
-                    List<double> gradiente = new List<double>();
-                    for (int i = 0; i < c.netCapa.Shape[0]; i++)
+                    NDArray deseada = new NDArray((Array)matrizDeseadas[p.getTipo()],new Shape(matrizDeseadas.Shape[0],1));
+                    var error = np.subtract(deseada, c.salidaCapa);
+                    double acum = 0;
+                    for (int i = 0; i < error.size; i++)
                     {
-                        gradiente.Add(funcion_sigmoide_derivada(c.netCapa[i][0]));
+                        acum += error[i][0];
                     }
-                    var s = np.multiply(-2, gradiente.ToArray());
+                    errorAcumulado += Math.Pow(acum, 2);
+                    NDArray gradiente = new NDArray(typeof(Double), new Shape(c.netCapa.size, 1));
+                    for (int i = 0; i < c.netCapa.size; i++)
+                    {
+                        gradiente[i,0]=funcion_sigmoide_derivada(c.netCapa[i,0]);
+                    }
+                    var s = np.multiply(-2, gradiente);
                     var sensibilidad = np.multiply(s, error);
                     c.sensibilidadCapa = sensibilidad;
                     anterior = c;
@@ -119,16 +164,16 @@ namespace Algoritmos_IA.Class.MLP
                 }
                 else 
                 {
-                    List<double> gradiente = new List<double>();
-                    for (int i = 0; i < c.netCapa.Shape[0]; i++)
+                    NDArray gradiente = new NDArray(typeof(Double), new Shape(c.netCapa.size, 1));
+                    for (int i = 0; i < c.netCapa.size; i++)
                     {
-                        gradiente.Add(funcion_sigmoide_derivada(c.netCapa[i][0]));
+                        gradiente[i, 0] = funcion_sigmoide_derivada(c.netCapa[i, 0]);
                     }
-                    var unos = np.eye(gradiente.Count);
-                    var identidad = np.multiply(gradiente.ToArray(), unos);
+                    var unos = np.eye(gradiente.size);
+                    var identidad = np.multiply(gradiente, unos);
                     var transpuesta = anterior.getPesosSinCero();
-                    var ws = np.matmul(transpuesta, anterior.sensibilidadCapa);
-                    var sensibilidad = np.matmul(identidad, ws);
+                    var ws = np.dot(transpuesta, anterior.sensibilidadCapa);
+                    var sensibilidad = np.dot(identidad, ws);
                     c.sensibilidadCapa = sensibilidad;
                     anterior = c;
                 }
