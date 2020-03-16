@@ -21,28 +21,56 @@ namespace Algoritmos_IA
         Adaline a;
         RegresionLogistica rl;
         readonly List<Pen> plumas;
-
+        List<int> neuronasXcapa;
+        int CapaActual = 1;
+        int Capas;
         public Form1()
         {
             InitializeComponent();
-            Plano_Paint();
+            
+            Capas = Int32.Parse(CapasTb.Text);
+            neuronasXcapa = new List<int>();
             lista_puntos = new List<Punto>();
             plumas = new List<Pen>();
+            MlpBtn.Enabled = false;
+            Plano_Paint();
+            ClasesSelected();
             //LlenarPlumas();
         }
 
         protected void ClasesTb_TextChanged(object sender, EventArgs e)
         {
             ClaseSelected.Clear();
-            
+            plumas.Clear();
             if (ClasesTb.Text != "")
             {
-                for (int i = 0; i < Int32.Parse(ClasesTb.Text); i++)
-                {
-                    ClaseSelected.AddItem(i.ToString());
-                }
-                ClaseSelected.selectedIndex = 0;
-                LlenarPlumas(Int32.Parse(ClasesTb.Text));
+                ClasesSelected();
+            }
+            else
+            {
+
+            }
+            
+        }
+
+        private void ClasesSelected()
+        {
+            for (int i = 0; i < Int32.Parse(ClasesTb.Text); i++)
+            {
+                ClaseSelected.AddItem(i.ToString());
+            }
+            ClaseSelected.selectedIndex = 0;
+            LlenarPlumas(Int32.Parse(ClasesTb.Text));
+        }
+
+        protected void CapasTb_TextChanged(object sender, EventArgs e)
+        {
+            if (CapasTb.Text != "")
+            {
+                neuronasXcapa.Clear();
+                CapaActual = 0;
+                Capas = Int32.Parse(CapasTb.Text);
+                NextBtn.Enabled = true;
             }
             else
             {
@@ -217,25 +245,6 @@ namespace Algoritmos_IA
         private void InicializarBtn_Click(object sender, EventArgs e)
         {
             labelAlerta.Text = "";
-
-            List<int> neuronasXcapa = new List<int>();
-
-            neuronasXcapa.Add(2);
-            neuronasXcapa.Add(4);
-            var capas = 2;
-
-            MLP mlp = new MLP(Int32.Parse(EpocasMaximasTb.Text), capas, neuronasXcapa, float.Parse(LearningRateTb.Text), lista_puntos, double.Parse(ErrorTb.Text));
-            mlp.Forward_Backward();
-
-            //Datos de prueba, hay que quitarlos
-            Punto prueba = new Punto(2, 2, 6);
-            mlp.Forward(prueba, true);
-            Punto prueba2 = new Punto(2, -2, 5);
-            mlp.Forward(prueba2, true);
-            Punto prueba3 = new Punto(-2, -2, 5);
-            mlp.Forward(prueba3, true);
-            Punto prueba4 = new Punto(-2, 2, 5);
-            mlp.Forward(prueba4, true);
 
             this.Error_cmp.Series["Perceptron"].Points.Clear();
             this.Error_cmp.Series["Adaline"].Points.Clear();
@@ -573,6 +582,47 @@ namespace Algoritmos_IA
             });
 
             DibujarLinea(true, "regresion_logistica");
+        }
+
+        private void NextBtn_Click(object sender, EventArgs e)
+        {
+            if(CapaActual == Int32.Parse(CapasTb.Text))
+            {  
+                neuronasXcapa.Add(Int32.Parse(ClasesTb.Text));
+                NeuronaPcTb.Text = "0";
+                NextBtn.Enabled = false;
+                MlpBtn.Enabled = true;
+                //var capas = 2;
+            }
+            else
+            {
+                neuronasXcapa.Add(Int32.Parse(NeuronaPcTb.Text));// NeuronaPcTb);
+                if(CapaActual+1 == Int32.Parse(CapasTb.Text))
+                {
+                    NeuronaPcTb.Text = ClasesTb.Text;
+                }
+                else
+                {
+                    NeuronaPcTb.Text = "1";
+                }
+            }
+            CapaActual++;
+        }
+
+        private void MlpBtn_Click(object sender, EventArgs e)
+        {
+            MLP mlp = new MLP(Int32.Parse(EpocasMaximasTb.Text), Capas, neuronasXcapa, float.Parse(LearningRateTb.Text), lista_puntos, double.Parse(ErrorTb.Text));
+            mlp.Forward_Backward();
+
+            //Datos de prueba, hay que quitarlos
+            Punto prueba = new Punto(2, 2, 6);
+            mlp.Forward(prueba, true);
+            Punto prueba2 = new Punto(2, -2, 5);
+            mlp.Forward(prueba2, true);
+            Punto prueba3 = new Punto(-2, -2, 5);
+            mlp.Forward(prueba3, true);
+            Punto prueba4 = new Punto(-2, 2, 5);
+            mlp.Forward(prueba4, true);
         }
 
         private async void CompetirBtn_Click(object sender, EventArgs e)

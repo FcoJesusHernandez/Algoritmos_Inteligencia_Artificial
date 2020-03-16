@@ -16,8 +16,9 @@ namespace Algoritmos_IA.Class.MLP
         float learningRate;
         int epocas;
         double errorAcumulado;
+        double errorDeseado;
 
-        public MLP(int epocas, int nCapas, List<int> neuronaXCapa, float lr, List<Punto> puntos)
+        public MLP(int epocas, int nCapas, List<int> neuronaXCapa, float lr, List<Punto> puntos, double errorDeseado)
         {
             this.epocas = epocas;
             this.entradas = puntos;
@@ -41,14 +42,19 @@ namespace Algoritmos_IA.Class.MLP
         public double funcion_sigmoide_derivada(double net)
         {
             double sigmoide = funcion_sigmoide(net);
-            return sigmoide*(1-sigmoide);
+            return sigmoide * (1 - sigmoide);
         }
 
-        public void Forward_Backward() 
+        public void Forward_Backward()
         {
-            for(int i = 0; i < epocas; i++) 
+            for (int i = 0; i < epocas; i++)
             {
-                //if error
+                if (errorDeseado > errorAcumulado / entradas.Count)
+                {
+                    Console.WriteLine("Error Acumulado por Epoca: ");
+                    Console.WriteLine(errorAcumulado / entradas.Count);
+                    break;
+                }
                 errorAcumulado = 0;
                 foreach (Punto p in entradas)
                 {
@@ -59,25 +65,26 @@ namespace Algoritmos_IA.Class.MLP
                 Console.WriteLine(errorAcumulado / entradas.Count);
             }
         }
-        public void Forward( Punto p, bool evaluar) 
+        public void Forward(Punto p, bool evaluar)
         {
-            double[,] primerEntrada= new double[3,1];
+            double[,] primerEntrada = new double[3, 1];
+            //Este if y el bool evaluar es solo para los casos de prueba, hay que quitarlos
             if (evaluar)
             {
                 primerEntrada[0, 0] = -1;
                 primerEntrada[1, 0] = p.getPosicionOriginalX();
                 primerEntrada[2, 0] = p.getPosicionOriginalY();
             }
-            else 
+            else //lo que esta en este else si se ocupa
             {
                 primerEntrada[0, 0] = -1;
                 primerEntrada[1, 0] = p.getPosicionAdaptadaX();
                 primerEntrada[2, 0] = p.getPosicionAdaptadaY();
             }
-            
+
             NDArray net;
             NDArray entrada = new NDArray(primerEntrada);
-            
+
             foreach (Capa c in capas)
             {
                 if (primerForward)
@@ -92,16 +99,6 @@ namespace Algoritmos_IA.Class.MLP
                     c.actualizaPesos(learningRate, entrada);
                 }
 
-                /*NDArray uno = new NDArray(typeof(Double), new Shape(3, 1));
-                NDArray dos = new NDArray(typeof(Double), new Shape(1, 3));
-                Random r = new Random();
-                for (int i = 0; i < 3; i++) 
-                {
-                    uno[i, 0] = r.Next();
-                    dos[0, i] = r.Next();
-                }
-                var tres = np.dot(dos, uno);*/
-
                 net = np.dot(c.getPesosCapa(), entrada);
 
                 c.netCapa = net;
@@ -114,36 +111,59 @@ namespace Algoritmos_IA.Class.MLP
                 }
                 c.salidaCapa = a_salida;
 
-                double[,] bias =new double[1,1];
+                double[,] bias = new double[1, 1];
 
                 bias[0, 0] = -1;
 
-                NDArray s = np.vstack( bias, a_salida );
+                NDArray s = np.vstack(bias, a_salida);
 
                 entrada = s;
 
-                if (evaluar && capas.Last<Capa>()==c)
+                //Esta parte creo que conviene hacerla una funciona aparte, para que devuelva el valor de la clase
+
+                if (evaluar && capas.Last<Capa>() == c)
                 {
-                    Console.WriteLine("C: "+c.salidaCapa.ToString());
+                    Console.WriteLine("C_salida: " + c.salidaCapa.ToString());
+                    int clase = 0;
+                    for (int i = 0; i < c.salidaCapa.Shape[0]; i++)
+                    {
+
+                        if (c.salidaCapa[i][0] >= 0.5)
+                        {
+                            c.salidaCapa[i][0] = 1;
+                            clase = i;
+                        }
+                        else
+                        {
+                            c.salidaCapa[i][0] = 0;
+                        }
+
+
+                    }
+                    Console.WriteLine("C: " + c.salidaCapa.ToString());
+                    Console.WriteLine("Clase: " + clase.ToString());
+
                 }
+
+                //
             }
             primerForward = false;
         }
 
-        public void BackPropagation(Punto p) 
+        public void BackPropagation(Punto p)
         {
             bool primerCapa = true;
-            
+
             capas.Reverse();
 
-            Capa anterior=capas.First<Capa>();
+            Capa anterior = capas.First<Capa>();
 
             foreach (Capa c in capas)
             {
-                
+
                 if (primerCapa)
                 {
-                    NDArray deseada = new NDArray((Array)matrizDeseadas[p.getTipo()],new Shape(matrizDeseadas.Shape[0],1));
+                    NDArray deseada = new NDArray((Array)matrizDeseadas[p.getTipo()], new Shape(matrizDeseadas.Shape[0], 1));
                     var error = np.subtract(deseada, c.salidaCapa);
                     double acum = 0;
                     for (int i = 0; i < error.size; i++)
@@ -154,7 +174,7 @@ namespace Algoritmos_IA.Class.MLP
                     NDArray gradiente = new NDArray(typeof(Double), new Shape(c.netCapa.size, 1));
                     for (int i = 0; i < c.netCapa.size; i++)
                     {
-                        gradiente[i,0]=funcion_sigmoide_derivada(c.netCapa[i,0]);
+                        gradiente[i, 0] = funcion_sigmoide_derivada(c.netCapa[i, 0]);
                     }
                     var s = np.multiply(-2, gradiente);
                     var sensibilidad = np.multiply(s, error);
@@ -162,7 +182,7 @@ namespace Algoritmos_IA.Class.MLP
                     anterior = c;
                     primerCapa = false;
                 }
-                else 
+                else
                 {
                     NDArray gradiente = new NDArray(typeof(Double), new Shape(c.netCapa.size, 1));
                     for (int i = 0; i < c.netCapa.size; i++)
@@ -179,6 +199,6 @@ namespace Algoritmos_IA.Class.MLP
                 }
             }
             capas.Reverse();
-        }  
+        }
     }
 }
