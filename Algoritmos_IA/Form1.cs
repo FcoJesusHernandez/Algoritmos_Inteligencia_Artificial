@@ -31,12 +31,12 @@ namespace Algoritmos_IA
             lista_puntos = new List<Punto>();
             plumas = new List<Pen>();
             //llenarPlumas();
-            button1.Enabled = false;
-            buttonPerceptron.Enabled = false;
-            buttonLimpiar.Enabled = false;
-            Competir.Enabled = false;
-            buttonAdaline.Enabled = false;
-            bunifuFlatButtonEntrenarRegresionLogistica.Enabled = false;
+            //buttonPerceptron.Enabled = false;
+            //InicializarBtn.Enabled = false;
+            //LimpiarBtn.Enabled = false;
+            //CompetirBtn.Enabled = false;
+            //buttonAdaline.Enabled = false;
+            //buttonEntrenarRegresionLogistica.Enabled = false;
             llenarPlumas();            
         }
 
@@ -119,7 +119,7 @@ namespace Algoritmos_IA
             dibujar_punto(punto_generado);
             if (lista_puntos.Count>2)
             {
-                buttonPerceptron.Enabled = true;
+                InicializarBtn.Enabled = true;
             }
         }
 
@@ -198,20 +198,13 @@ namespace Algoritmos_IA
         private void buttonPerceptron_Click(object sender, EventArgs e)
         {
             labelAlerta.Text = "";
-            buttonLimpiar.Enabled = true;
-            button1.Enabled = true;
-            buttonPerceptron.Enabled = true;
-            buttonAdaline.Enabled = true;
-            Competir.Enabled = true;
 
-
-            //Borrar esto
             List<int> hola = new List<int>();
 
             hola.Add(2);
             hola.Add(3);
 
-            MLP caca = new MLP(2, hola, float.Parse(textBoxLR.Text) , lista_puntos);
+            MLP caca = new MLP(2, hola, float.Parse(LearningRateTb.Text) , lista_puntos);
             caca.Forward_Backward();
             //fin de borrar esto
 
@@ -221,23 +214,23 @@ namespace Algoritmos_IA
             this.Error_cmp.Series["Adaline"].Points.Clear();
             this.Error_cmp.Series["Regresión logistica"].Points.Clear();
 
-            this.p = new Perceptron(Int32.Parse(textBoxEpocasMaximas.Text), float.Parse(textBoxLR.Text.ToString()), lista_puntos, 0);
+            this.p = new Perceptron(Int32.Parse(EpocasMaximasTb.Text), float.Parse(LearningRateTb.Text.ToString()), lista_puntos, 0);
             p.inicializar();
             bitmap_plano = new Bitmap(respaldo);
             dibujarLinea(false, "perceptron");
 
-            this.a = new Adaline(Int32.Parse(textBoxEpocasMaximas.Text), float.Parse(textBoxLR.Text), lista_puntos, 0);
+            this.a = new Adaline(Int32.Parse(EpocasMaximasTb.Text), float.Parse(LearningRateTb.Text), lista_puntos, 0);
             a.inicializar();
             bitmap_plano = new Bitmap(respaldo);
             dibujarLinea(false, "adaline");
             
-            if (bunifuiOSSwitch1.Value == true)
+            if (PerceptronSwitch.Value == true)
             {
-                this.rl = new RegresionLogistica(Int32.Parse(textBoxEpocasMaximas.Text), float.Parse(textBoxLR.Text), lista_puntos, 0);
+                this.rl = new RegresionLogistica(Int32.Parse(EpocasMaximasTb.Text), float.Parse(LearningRateTb.Text), lista_puntos, 0);
                 rl.inicializar();
                 bitmap_plano = new Bitmap(respaldo);
                 dibujarLinea(false, "regresion_logistica");
-                bunifuFlatButtonEntrenarRegresionLogistica.Enabled = true;
+                //buttonEntrenarRegresionLogistica.Enabled = true;
             }
         }
 
@@ -365,9 +358,9 @@ namespace Algoritmos_IA
 
         private async Task perceptron_function()
         {
-            buttonPerceptron.Enabled = false;
-            button1.Enabled = false;
-            Competir.Enabled = false;
+            //InicializarBtn.Enabled = false;
+            //buttonPerceptron.Enabled = false;
+            //CompetirBtn.Enabled = false;
 
             
 
@@ -404,7 +397,7 @@ namespace Algoritmos_IA
                     this.Invoke((MethodInvoker)(() => this.Error_cmp.Series["Perceptron"].Points.AddXY(p.getEpocaActual(), p.getErrorAcumulado())));
                     p.setEpocaActual(p.getEpocaActual() + 1);
                 }
-                this.Invoke((MethodInvoker)(() => buttonPerceptron.Enabled = true));
+                this.Invoke((MethodInvoker)(() => InicializarBtn.Enabled = true));
 
             });
 
@@ -413,12 +406,6 @@ namespace Algoritmos_IA
 
         private async Task adaline_function()
         {
-            buttonAdaline.Enabled = false;
-            Competir.Enabled = false;
-
-
-
-            //button1.Enabled = false;
             Pen lapiz = new Pen(Color.BlueViolet, 3);
             Array x = (Array)np.zeros(10);
             Array y = (Array)np.zeros(10);
@@ -442,7 +429,7 @@ namespace Algoritmos_IA
                     }
 
                     //Console.WriteLine(a.getErrorActualEpoca());
-                    if (a.getErrorActualEpoca() > float.Parse(ErrorCmp.Text))
+                    if (a.getErrorActualEpoca() > float.Parse(ErrorTb.Text))
                     {
                         a.setEntrenado(true);
                         a.setErrorAcumulado(0);
@@ -486,7 +473,7 @@ namespace Algoritmos_IA
                     a.setEntrenado(true);
                 }
                 a.setCompletado(true);
-                this.Invoke((MethodInvoker)(() => buttonPerceptron.Enabled = true));
+                this.Invoke((MethodInvoker)(() => InicializarBtn.Enabled = true));
 
 
             });
@@ -496,8 +483,8 @@ namespace Algoritmos_IA
 
         private async Task RegresionLogistica_function()
         {
-            Competir.Enabled = false;
-            bunifuFlatButtonEntrenarRegresionLogistica.Enabled = false;
+            //CompetirBtn.Enabled = false;
+            //buttonEntrenarRegresionLogistica.Enabled = false;
             
             Pen lapiz = new Pen(Color.BlueViolet, 3);
             Array x = (Array)np.zeros(10);
@@ -522,7 +509,7 @@ namespace Algoritmos_IA
                     }
 
                     //Console.WriteLine(a.getErrorActualEpoca());
-                    if (rl.getErrorActualEpoca() > float.Parse(ErrorCmp.Text))
+                    if (rl.getErrorActualEpoca() > float.Parse(ErrorTb.Text))
                     {
                         rl.setEntrenado(true);
                         rl.setErrorAcumulado(0);
@@ -566,7 +553,7 @@ namespace Algoritmos_IA
                     rl.setEntrenado(true);
                 }
                 rl.setCompletado(true);
-                this.Invoke((MethodInvoker)(() => buttonPerceptron.Enabled = true));
+                this.Invoke((MethodInvoker)(() => InicializarBtn.Enabled = true));
 
 
             });
@@ -578,22 +565,17 @@ namespace Algoritmos_IA
         {
             await adaline_function();
         }
-        public void esto_Arreglara_todo()
-        {
-
-        }
 
         private async void Competir_Click(object sender, EventArgs e)
         {
-
-            Competir.Enabled = false;
-            buttonPerceptron.Enabled = false;
-            buttonAdaline.Enabled = false;
-            bunifuFlatButtonEntrenarRegresionLogistica.Enabled = false;
+            //CompetirBtn.Enabled = false;
+            //InicializarBtn.Enabled = false;
+            //buttonAdaline.Enabled = false;
+            //buttonEntrenarRegresionLogistica.Enabled = false;
 
             var tarea1 = perceptron_function();
             var tarea2 = adaline_function();
-            if (bunifuiOSSwitch1.Value==true)
+            if (PerceptronSwitch.Value==true)
             {
                 var tarea3 = RegresionLogistica_function();
                 await Task.WhenAny(tarea1, tarea2, tarea3);
@@ -623,15 +605,15 @@ namespace Algoritmos_IA
                 this.Error_cmp.Series["Adaline"].Points.Clear();
                 this.Error_cmp.Series["Regresión logistica"].Points.Clear();
 
-                buttonLimpiar.Enabled = false;
+                LimpiarBtn.Enabled = false;
                 p = null;
                 a = null;
                 rl = null;
-                button1.Enabled = false;
-                buttonPerceptron.Enabled = false;
-                Competir.Enabled = false;
-                buttonAdaline.Enabled = false;
-                bunifuFlatButtonEntrenarRegresionLogistica.Enabled = false;
+                //buttonPerceptron.Enabled = false;
+                //InicializarBtn.Enabled = false;
+                //CompetirBtn.Enabled = false;
+                //buttonAdaline.Enabled = false;
+                //buttonEntrenarRegresionLogistica.Enabled = false;
 
                 lista_puntos = new List<Punto>();
                 bitmap_plano = new Bitmap(bitmap_solo_plano);

@@ -43,24 +43,24 @@ namespace Algoritmos_IA.Class.MLP
             }
             return pesos;
         }
-        public NDArray getPesosSinCero() 
+        public NDArray getPesosSinCero()
         {
             var transpuesta = np.transpose(pesos);
             NDArray pesosSinCero = new NDArray(typeof(Double));
-            for (int i = 1; i < transpuesta.Shape[0]; i++) 
+            for (int i = 1; i < transpuesta.Shape[0]; i++)
             {
                 if (pesosSinCero.size == 0)
                 {
                     pesosSinCero = transpuesta[i];
                 }
-                else 
+                else
                 {
-                    pesosSinCero= np.vstack(new NDArray[] { pesosSinCero, transpuesta[i] });
+                    pesosSinCero = np.vstack(new NDArray[] { pesosSinCero, transpuesta[i] });
                 }
             }
-            return pesosSinCero;   
+            return pesosSinCero;
         }
-        public void actualizaPesos(float lr, double[] a) 
+        public void actualizaPesos(float lr, double[] a)
         {
             var s_a = np.multiply(sensibilidadCapa, np.transpose(a));
             var w_incremento = np.multiply(-lr, s_a);
