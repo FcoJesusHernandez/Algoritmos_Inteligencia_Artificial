@@ -12,22 +12,18 @@ namespace Algoritmos_IA.Class.MLP
         public Double sensibilidad { get; set; }
         public Double salida { get; set; }
 
+        static Random r = new Random();
+
         public Neurona() 
         {
-            
+            pesos = new List<Double>();
         }
 
         public void inicializaPesos(int entradas) 
         {
-            Random r = new Random();
             for (int i = 0; i < entradas; i++) 
             {
-                if (i == 0)
-                {
-                    pesos.Add(-1);
-                }
-                else
-                {
+                
                     if (r.Next(0, 50) > 25)
                     {
                         pesos.Add(r.NextDouble() * -1);
@@ -36,7 +32,6 @@ namespace Algoritmos_IA.Class.MLP
                     {
                         pesos.Add(r.NextDouble());
                     }
-                }
                 
             }
         }
