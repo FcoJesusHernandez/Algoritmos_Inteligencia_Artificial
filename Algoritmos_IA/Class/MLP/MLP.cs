@@ -137,14 +137,11 @@ namespace Algoritmos_IA.Class.MLP
                         {
                             c.salidaCapa[i][0] = 0;
                         }
-
-
                     }
                     Console.WriteLine("C: " + c.salidaCapa.ToString());
                     Console.WriteLine("Clase: " + clase.ToString());
 
                 }
-
                 //
             }
             primerForward = false;

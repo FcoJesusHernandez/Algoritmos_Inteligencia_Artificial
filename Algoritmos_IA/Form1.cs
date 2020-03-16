@@ -33,6 +33,7 @@ namespace Algoritmos_IA
             lista_puntos = new List<Punto>();
             plumas = new List<Pen>();
             MlpBtn.Enabled = false;
+            GuiaCapasLabel.Text = "Capa " + CapaActual.ToString() + "/" + CapasTb.Text;
             Plano_Paint();
             ClasesSelected();
             //LlenarPlumas();
@@ -68,15 +69,21 @@ namespace Algoritmos_IA
             if (CapasTb.Text != "")
             {
                 neuronasXcapa.Clear();
-                CapaActual = 0;
+                CapaActual = 1;
                 Capas = Int32.Parse(CapasTb.Text);
                 NextBtn.Enabled = true;
+                GuiaCapasLabel.Text = "Capa "+ CapaActual.ToString() + "/" + CapasTb.Text;
+                GuiaCapasLabel.ForeColor = SystemColors.Control;
+                NeuronaPcTb.Visible = true;
+                NextBtn.Visible = true;
             }
             else
             {
-
+                GuiaCapasLabel.Text = "Error de capas";
+                GuiaCapasLabel.ForeColor = Color.OrangeRed;
+                NeuronaPcTb.Visible = false;
+                NextBtn.Visible = false;
             }
-            
         }
 
         public void LlenarPlumas(int cantClases)
@@ -607,6 +614,17 @@ namespace Algoritmos_IA
                 }
             }
             CapaActual++;
+            if (CapaActual <= Int32.Parse(CapasTb.Text))
+            {
+                GuiaCapasLabel.Text = "Capa " + CapaActual.ToString() + "/" + CapasTb.Text;
+            }
+            else
+            {
+                GuiaCapasLabel.Text = "Configuración completa";
+                GuiaCapasLabel.ForeColor = Color.Green;
+                NeuronaPcTb.Visible = false;
+                NextBtn.Visible = false;
+            }
         }
 
         private void MlpBtn_Click(object sender, EventArgs e)
@@ -623,6 +641,26 @@ namespace Algoritmos_IA
             mlp.Forward(prueba3, true);
             Punto prueba4 = new Punto(-2, 2, 5);
             mlp.Forward(prueba4, true);
+        }
+
+        private void ClaseSelected_onItemSelected(object sender, EventArgs e)
+        {
+
+        }
+
+        private void bunifuCustomLabel7_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void bunifuSeparator1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void bunifuGradientPanel2_Paint(object sender, PaintEventArgs e)
+        {
+
         }
 
         private async void CompetirBtn_Click(object sender, EventArgs e)
