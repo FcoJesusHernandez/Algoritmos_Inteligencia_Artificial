@@ -28,14 +28,34 @@ namespace Algoritmos_IA
             Plano_Paint();
             lista_puntos = new List<Punto>();
             plumas = new List<Pen>();
-            LlenarPlumas();
+            //LlenarPlumas();
         }
 
-
-        public void LlenarPlumas()
+        protected void ClasesTb_TextChanged(object sender, EventArgs e)
         {
+            ClaseSelected.Clear();
+            
+            if (ClasesTb.Text != "")
+            {
+                for (int i = 0; i < Int32.Parse(ClasesTb.Text); i++)
+                {
+                    ClaseSelected.AddItem(i.ToString());
+                }
+                ClaseSelected.selectedIndex = 0;
+                LlenarPlumas(Int32.Parse(ClasesTb.Text));
+            }
+            else
+            {
+
+            }
+            
+        }
+
+        public void LlenarPlumas(int cantClases)
+        {
+            plumas.Clear();
             Random random = new Random();
-            for (int i=0; i < 10; i++)
+            for (int i=0; i < cantClases; i++)
             {
                 Clases clase = new Clases(random);
                 plumas.Add(clase.Get_Pluma());   
@@ -81,10 +101,7 @@ namespace Algoritmos_IA
             }
             else
             {
-                if ()
-                {
-
-                }
+                tipo = Int32.Parse(ClaseSelected.selectedValue);
                 /*
                 if (click.Button.ToString() == "Right")
                 {
@@ -95,6 +112,7 @@ namespace Algoritmos_IA
                     tipo = 0;
                 }
                 */
+                //tipo = 0;
             }
             Punto punto_generado = new Punto(click.X, click.Y, tipo);
             lista_puntos.Add(punto_generado);
@@ -116,7 +134,18 @@ namespace Algoritmos_IA
 
         private void Dibujar_Clases(Punto p)
         {
+            Graphics bitmap_temp = Graphics.FromImage(bitmap_plano);
+            Graphics bitmap_temp_respaldo = Graphics.FromImage(respaldo);
 
+            //Pen pluma;
+
+            Pen pluma = plumas[p.getTipo()]; //new Pen(Color.Green, 3);
+
+            bitmap_temp.DrawEllipse(pluma, new Rectangle(p.getPosicionOriginalX() - 4, p.getPosicionOriginalY() - 4, 8, 8));
+            bitmap_temp_respaldo.DrawEllipse(pluma, new Rectangle(p.getPosicionOriginalX() - 4, p.getPosicionOriginalY() - 4, 8, 8));
+
+            plano.Image = bitmap_plano;
+            plano.Refresh();
         }
 
         private void Dibujar_punto(Punto p)
@@ -178,6 +207,11 @@ namespace Algoritmos_IA
             respaldo = new Bitmap(img);
             bitmap_plano = img;
             bitmap_solo_plano = new Bitmap(img);
+        }
+
+        private void UC_ControlsTank_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            Console.Write("You pressed:" + e.KeyChar.ToString());
         }
 
         private void InicializarBtn_Click(object sender, EventArgs e)

@@ -486,6 +486,7 @@
             this.ClasesTb.TabIndex = 27;
             this.ClasesTb.Text = "2";
             this.ClasesTb.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.ClasesTb.OnValueChanged += new System.EventHandler(this.ClasesTb_TextChanged);
             // 
             // bunifuCustomLabel7
             // 
@@ -635,8 +636,10 @@
             this.ClientSize = new System.Drawing.Size(1312, 711);
             this.Controls.Add(this.bunifuGradientPanel1);
             this.Controls.Add(this.labelAlerta);
+            this.KeyPreview = true;
             this.Name = "Form1";
             this.Text = "Algoritmos Inteligencia Artificial";
+            this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.UC_ControlsTank_KeyPress);
             ((System.ComponentModel.ISupportInitialize)(this.plano)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Error_cmp)).EndInit();
             this.bunifuGradientPanel1.ResumeLayout(false);
