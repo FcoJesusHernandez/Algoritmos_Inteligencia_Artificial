@@ -218,24 +218,25 @@ namespace Algoritmos_IA
         {
             labelAlerta.Text = "";
 
-            List<int> hola = new List<int>
-            {
-                2,
-                2
-            };
+            List<int> neuronasXcapa = new List<int>();
 
-            //MLP caca = new MLP(Int32.Parse(EpocasMaximasTb.Text), 2, hola, float.Parse(LearningRateTb.Text), lista_puntos);
-            //caca.Forward_Backward();
-            //fin de borrar esto
-            //Punto prueba = new Punto(2, 2, 6);
-            //caca.Forward(prueba, true);
-            //Punto prueba2 = new Punto(2, -2, 5);
-            //caca.Forward(prueba2, true);
-            //Punto prueba3 = new Punto(-2, -2, 5);
-            //caca.Forward(prueba3, true);
-            //Punto prueba4 = new Punto(-2, 2, 5);
-            //caca.Forward(prueba4, true);
-            //Create_error_graphic();
+            neuronasXcapa.Add(2);
+            neuronasXcapa.Add(4);
+            var capas = 2;
+
+            MLP mlp = new MLP(Int32.Parse(EpocasMaximasTb.Text), capas, neuronasXcapa, float.Parse(LearningRateTb.Text), lista_puntos, double.Parse(ErrorTb.Text));
+            mlp.Forward_Backward();
+
+            //Datos de prueba, hay que quitarlos
+            Punto prueba = new Punto(2, 2, 6);
+            mlp.Forward(prueba, true);
+            Punto prueba2 = new Punto(2, -2, 5);
+            mlp.Forward(prueba2, true);
+            Punto prueba3 = new Punto(-2, -2, 5);
+            mlp.Forward(prueba3, true);
+            Punto prueba4 = new Punto(-2, 2, 5);
+            mlp.Forward(prueba4, true);
+
             this.Error_cmp.Series["Perceptron"].Points.Clear();
             this.Error_cmp.Series["Adaline"].Points.Clear();
             this.Error_cmp.Series["Regresión logistica"].Points.Clear();
