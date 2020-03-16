@@ -84,7 +84,7 @@
             this.label1.ForeColor = System.Drawing.Color.White;
             this.label1.Location = new System.Drawing.Point(34, 219);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(31, 18);
+            this.label1.Size = new System.Drawing.Size(38, 22);
             this.label1.TabIndex = 1;
             this.label1.Text = "x : ";
             // 
@@ -96,7 +96,7 @@
             this.label2.ForeColor = System.Drawing.Color.White;
             this.label2.Location = new System.Drawing.Point(34, 237);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(31, 18);
+            this.label2.Size = new System.Drawing.Size(38, 22);
             this.label2.TabIndex = 2;
             this.label2.Text = "y : ";
             // 
@@ -108,7 +108,7 @@
             this.labelCoordenadaXClick.ForeColor = System.Drawing.Color.White;
             this.labelCoordenadaXClick.Location = new System.Drawing.Point(57, 219);
             this.labelCoordenadaXClick.Name = "labelCoordenadaXClick";
-            this.labelCoordenadaXClick.Size = new System.Drawing.Size(0, 18);
+            this.labelCoordenadaXClick.Size = new System.Drawing.Size(0, 22);
             this.labelCoordenadaXClick.TabIndex = 3;
             // 
             // labelCoordenadaYClick
@@ -119,7 +119,7 @@
             this.labelCoordenadaYClick.ForeColor = System.Drawing.Color.White;
             this.labelCoordenadaYClick.Location = new System.Drawing.Point(57, 240);
             this.labelCoordenadaYClick.Name = "labelCoordenadaYClick";
-            this.labelCoordenadaYClick.Size = new System.Drawing.Size(0, 18);
+            this.labelCoordenadaYClick.Size = new System.Drawing.Size(0, 22);
             this.labelCoordenadaYClick.TabIndex = 4;
             // 
             // Error_cmp
@@ -201,7 +201,7 @@
             this.labelAlerta.ForeColor = System.Drawing.Color.OrangeRed;
             this.labelAlerta.Location = new System.Drawing.Point(187, 617);
             this.labelAlerta.Name = "labelAlerta";
-            this.labelAlerta.Size = new System.Drawing.Size(0, 20);
+            this.labelAlerta.Size = new System.Drawing.Size(0, 24);
             this.labelAlerta.TabIndex = 18;
             // 
             // bunifuGradientPanel1
@@ -294,7 +294,7 @@
             // 
             // bunifuCustomLabel1
             // 
-            this.bunifuCustomLabel1.Font = new System.Drawing.Font("Segoe Script", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bunifuCustomLabel1.Font = new System.Drawing.Font("Consolas", 11.12727F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.bunifuCustomLabel1.ForeColor = System.Drawing.SystemColors.Control;
             this.bunifuCustomLabel1.Location = new System.Drawing.Point(113, 162);
             this.bunifuCustomLabel1.Name = "bunifuCustomLabel1";
@@ -305,11 +305,11 @@
             // bunifuCustomLabel3
             // 
             this.bunifuCustomLabel3.AutoSize = true;
-            this.bunifuCustomLabel3.Font = new System.Drawing.Font("Segoe Script", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bunifuCustomLabel3.Font = new System.Drawing.Font("Consolas", 11.12727F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.bunifuCustomLabel3.ForeColor = System.Drawing.SystemColors.Control;
-            this.bunifuCustomLabel3.Location = new System.Drawing.Point(45, 75);
+            this.bunifuCustomLabel3.Location = new System.Drawing.Point(46, 75);
             this.bunifuCustomLabel3.Name = "bunifuCustomLabel3";
-            this.bunifuCustomLabel3.Size = new System.Drawing.Size(127, 25);
+            this.bunifuCustomLabel3.Size = new System.Drawing.Size(126, 20);
             this.bunifuCustomLabel3.TabIndex = 21;
             this.bunifuCustomLabel3.Text = "Learning Rate";
             // 
@@ -330,17 +330,17 @@
             this.textBoxLR.Name = "textBoxLR";
             this.textBoxLR.Size = new System.Drawing.Size(151, 38);
             this.textBoxLR.TabIndex = 20;
-            this.textBoxLR.Text = "0.5";
+            this.textBoxLR.Text = "0.1";
             this.textBoxLR.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             // 
             // bunifuCustomLabel2
             // 
             this.bunifuCustomLabel2.AutoSize = true;
-            this.bunifuCustomLabel2.Font = new System.Drawing.Font("Segoe Script", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bunifuCustomLabel2.Font = new System.Drawing.Font("Consolas", 11.12727F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.bunifuCustomLabel2.ForeColor = System.Drawing.SystemColors.Control;
             this.bunifuCustomLabel2.Location = new System.Drawing.Point(116, 121);
             this.bunifuCustomLabel2.Name = "bunifuCustomLabel2";
-            this.bunifuCustomLabel2.Size = new System.Drawing.Size(56, 25);
+            this.bunifuCustomLabel2.Size = new System.Drawing.Size(54, 20);
             this.bunifuCustomLabel2.TabIndex = 19;
             this.bunifuCustomLabel2.Text = "Error";
             // 
@@ -367,13 +367,13 @@
             // textoxEpocasMaximas
             // 
             this.textoxEpocasMaximas.AutoSize = true;
-            this.textoxEpocasMaximas.Font = new System.Drawing.Font("Segoe Script", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textoxEpocasMaximas.Font = new System.Drawing.Font("Consolas", 11.12727F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textoxEpocasMaximas.ForeColor = System.Drawing.SystemColors.Control;
-            this.textoxEpocasMaximas.Location = new System.Drawing.Point(2, 21);
+            this.textoxEpocasMaximas.Location = new System.Drawing.Point(37, 31);
             this.textoxEpocasMaximas.Name = "textoxEpocasMaximas";
-            this.textoxEpocasMaximas.Size = new System.Drawing.Size(144, 25);
+            this.textoxEpocasMaximas.Size = new System.Drawing.Size(135, 20);
             this.textoxEpocasMaximas.TabIndex = 17;
-            this.textoxEpocasMaximas.Text = "Épocas máximas";
+            this.textoxEpocasMaximas.Text = "Épocas Máximas";
             // 
             // textBoxEpocasMaximas
             // 

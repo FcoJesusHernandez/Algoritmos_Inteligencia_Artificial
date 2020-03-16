@@ -205,23 +205,25 @@ namespace Algoritmos_IA
             Competir.Enabled = true;
 
 
-            //Borrar esto
-            List<int> hola = new List<int>();
+            
+            List<int> neuronasXcapa = new List<int>();
 
-            hola.Add(2);
-            hola.Add(2);
+            neuronasXcapa.Add(2);
+            neuronasXcapa.Add(4);
+            var capas = 2;
 
-            MLP caca = new MLP(Int32.Parse(textBoxEpocasMaximas.Text), 2, hola, float.Parse(textBoxLR.Text), lista_puntos);
-            caca.Forward_Backward();
-            //fin de borrar esto
+            MLP mlp = new MLP(Int32.Parse(textBoxEpocasMaximas.Text), capas, neuronasXcapa, float.Parse(textBoxLR.Text), lista_puntos, double.Parse(ErrorCmp.Text));
+            mlp.Forward_Backward();
+            
+            //Datos de prueba, hay que quitarlos
             Punto prueba = new Punto(2, 2, 6);
-            caca.Forward(prueba, true);
+            mlp.Forward(prueba, true);
             Punto prueba2 = new Punto(2, -2, 5);
-            caca.Forward(prueba2, true);
+            mlp.Forward(prueba2, true);
             Punto prueba3 = new Punto(-2, -2, 5);
-            caca.Forward(prueba3, true);
+            mlp.Forward(prueba3, true);
             Punto prueba4 = new Punto(-2, 2, 5);
-            caca.Forward(prueba4, true);
+            mlp.Forward(prueba4, true);
 
 
             create_error_graphic();

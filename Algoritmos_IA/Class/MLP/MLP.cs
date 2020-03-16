@@ -16,8 +16,9 @@ namespace Algoritmos_IA.Class.MLP
         float learningRate;
         int epocas;
         double errorAcumulado;
+        double errorDeseado;
 
-        public MLP(int epocas, int nCapas, List<int> neuronaXCapa, float lr, List<Punto> puntos)
+        public MLP(int epocas, int nCapas, List<int> neuronaXCapa, float lr, List<Punto> puntos, double errorDeseado)
         {
             this.epocas = epocas;
             this.entradas = puntos;
@@ -48,7 +49,12 @@ namespace Algoritmos_IA.Class.MLP
         {
             for(int i = 0; i < epocas; i++) 
             {
-                //if error
+                if (errorDeseado > errorAcumulado / entradas.Count) 
+                {
+                    Console.WriteLine("Error Acumulado por Epoca: ");
+                    Console.WriteLine(errorAcumulado / entradas.Count);
+                    break;
+                }
                 errorAcumulado = 0;
                 foreach (Punto p in entradas)
                 {
@@ -62,13 +68,14 @@ namespace Algoritmos_IA.Class.MLP
         public void Forward( Punto p, bool evaluar) 
         {
             double[,] primerEntrada= new double[3,1];
+            //Este if y el bool evaluar es solo para los casos de prueba, hay que quitarlos
             if (evaluar)
             {
                 primerEntrada[0, 0] = -1;
                 primerEntrada[1, 0] = p.getPosicionOriginalX();
                 primerEntrada[2, 0] = p.getPosicionOriginalY();
             }
-            else 
+            else //lo que esta en este else si se ocupa
             {
                 primerEntrada[0, 0] = -1;
                 primerEntrada[1, 0] = p.getPosicionAdaptadaX();
@@ -92,16 +99,6 @@ namespace Algoritmos_IA.Class.MLP
                     c.actualizaPesos(learningRate, entrada);
                 }
 
-                /*NDArray uno = new NDArray(typeof(Double), new Shape(3, 1));
-                NDArray dos = new NDArray(typeof(Double), new Shape(1, 3));
-                Random r = new Random();
-                for (int i = 0; i < 3; i++) 
-                {
-                    uno[i, 0] = r.Next();
-                    dos[0, i] = r.Next();
-                }
-                var tres = np.dot(dos, uno);*/
-
                 net = np.dot(c.getPesosCapa(), entrada);
 
                 c.netCapa = net;
@@ -122,10 +119,33 @@ namespace Algoritmos_IA.Class.MLP
 
                 entrada = s;
 
+                //Esta parte creo que conviene hacerla una funciona aparte, para que devuelva el valor de la clase
+                
                 if (evaluar && capas.Last<Capa>()==c)
                 {
-                    Console.WriteLine("C: "+c.salidaCapa.ToString());
+                    Console.WriteLine("C_salida: " + c.salidaCapa.ToString());
+                    int clase=0;
+                    for (int i = 0; i < c.salidaCapa.Shape[0]; i++)
+                    {
+                        
+                        if (c.salidaCapa[i][0] >= 0.5)
+                        {
+                            c.salidaCapa[i][0] = 1;
+                            clase = i;
+                        }
+                        else
+                        {
+                            c.salidaCapa[i][0] = 0;
+                        }
+                        
+
+                    }
+                    Console.WriteLine("C: " + c.salidaCapa.ToString());
+                    Console.WriteLine("Clase: " + clase.ToString());
+
                 }
+
+                //
             }
             primerForward = false;
         }
