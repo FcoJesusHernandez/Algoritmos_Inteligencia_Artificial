@@ -45,40 +45,40 @@
             this.Error_cmp = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.labelAlerta = new System.Windows.Forms.Label();
             this.bunifuGradientPanel1 = new Bunifu.Framework.UI.BunifuGradientPanel();
-            this.bunifuGradientPanel2 = new Bunifu.Framework.UI.BunifuGradientPanel();
+            this.bunifuGradientPanel3 = new Bunifu.Framework.UI.BunifuGradientPanel();
+            this.bunifuSeparator2 = new Bunifu.Framework.UI.BunifuSeparator();
+            this.RegresionLogisticaSwitch = new Bunifu.Framework.UI.BunifuiOSSwitch();
+            this.bunifuCustomLabel5 = new Bunifu.Framework.UI.BunifuCustomLabel();
+            this.AdalineSwitch = new Bunifu.Framework.UI.BunifuiOSSwitch();
+            this.bunifuCustomLabel4 = new Bunifu.Framework.UI.BunifuCustomLabel();
+            this.InicializarBtn = new Bunifu.Framework.UI.BunifuImageButton();
+            this.LimpiarBtn = new Bunifu.Framework.UI.BunifuImageButton();
+            this.PerceptronSwitch = new Bunifu.Framework.UI.BunifuiOSSwitch();
             this.bunifuCustomLabel1 = new Bunifu.Framework.UI.BunifuCustomLabel();
+            this.CompetirBtn = new Bunifu.Framework.UI.BunifuImageButton();
+            this.bunifuGradientPanel2 = new Bunifu.Framework.UI.BunifuGradientPanel();
+            this.NextBtn = new Bunifu.Framework.UI.BunifuImageButton();
+            this.NeuronaPcTb = new Bunifu.Framework.UI.BunifuMaterialTextbox();
+            this.NeuronaPcLabel = new Bunifu.Framework.UI.BunifuCustomLabel();
+            this.ClasesTb = new Bunifu.Framework.UI.BunifuMaterialTextbox();
+            this.bunifuCustomLabel7 = new Bunifu.Framework.UI.BunifuCustomLabel();
+            this.ClaseSelected = new Bunifu.Framework.UI.BunifuDropdown();
+            this.bunifuSeparator1 = new Bunifu.Framework.UI.BunifuSeparator();
+            this.ClasesLabel = new Bunifu.Framework.UI.BunifuCustomLabel();
             this.LearningRateLabel = new Bunifu.Framework.UI.BunifuCustomLabel();
             this.LearningRateTb = new Bunifu.Framework.UI.BunifuMaterialTextbox();
             this.ErrorLabel = new Bunifu.Framework.UI.BunifuCustomLabel();
             this.ErrorTb = new Bunifu.Framework.UI.BunifuMaterialTextbox();
             this.textoxEpocasMaximas = new Bunifu.Framework.UI.BunifuCustomLabel();
             this.EpocasMaximasTb = new Bunifu.Framework.UI.BunifuMaterialTextbox();
-            this.PerceptronSwitch = new Bunifu.Framework.UI.BunifuiOSSwitch();
-            this.CompetirBtn = new Bunifu.Framework.UI.BunifuImageButton();
-            this.LimpiarBtn = new Bunifu.Framework.UI.BunifuImageButton();
-            this.InicializarBtn = new Bunifu.Framework.UI.BunifuImageButton();
-            this.bunifuGradientPanel3 = new Bunifu.Framework.UI.BunifuGradientPanel();
-            this.AdalineSwitch = new Bunifu.Framework.UI.BunifuiOSSwitch();
-            this.bunifuCustomLabel4 = new Bunifu.Framework.UI.BunifuCustomLabel();
-            this.RegresionLogisticaSwitch = new Bunifu.Framework.UI.BunifuiOSSwitch();
-            this.bunifuCustomLabel5 = new Bunifu.Framework.UI.BunifuCustomLabel();
-            this.ClasesLabel = new Bunifu.Framework.UI.BunifuCustomLabel();
-            this.bunifuSeparator1 = new Bunifu.Framework.UI.BunifuSeparator();
-            this.ClaseSelected = new Bunifu.Framework.UI.BunifuDropdown();
-            this.bunifuCustomLabel7 = new Bunifu.Framework.UI.BunifuCustomLabel();
-            this.ClasesTb = new Bunifu.Framework.UI.BunifuMaterialTextbox();
-            this.bunifuSeparator2 = new Bunifu.Framework.UI.BunifuSeparator();
-            this.NeuronaPcLabel = new Bunifu.Framework.UI.BunifuCustomLabel();
-            this.NeuronaPcTb = new Bunifu.Framework.UI.BunifuMaterialTextbox();
-            this.NextBtn = new Bunifu.Framework.UI.BunifuImageButton();
             ((System.ComponentModel.ISupportInitialize)(this.plano)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Error_cmp)).BeginInit();
             this.bunifuGradientPanel1.SuspendLayout();
-            this.bunifuGradientPanel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.CompetirBtn)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.LimpiarBtn)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.InicializarBtn)).BeginInit();
             this.bunifuGradientPanel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.InicializarBtn)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.LimpiarBtn)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CompetirBtn)).BeginInit();
+            this.bunifuGradientPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NextBtn)).BeginInit();
             this.SuspendLayout();
             // 
@@ -90,7 +90,7 @@
             this.plano.Size = new System.Drawing.Size(600, 600);
             this.plano.TabIndex = 0;
             this.plano.TabStop = false;
-            this.plano.Click += new System.EventHandler(this.plano_Click);
+            this.plano.Click += new System.EventHandler(this.Plano_Click);
             // 
             // label1
             // 
@@ -240,6 +240,156 @@
             this.bunifuGradientPanel1.Size = new System.Drawing.Size(1315, 713);
             this.bunifuGradientPanel1.TabIndex = 19;
             // 
+            // bunifuGradientPanel3
+            // 
+            this.bunifuGradientPanel3.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("bunifuGradientPanel3.BackgroundImage")));
+            this.bunifuGradientPanel3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.bunifuGradientPanel3.Controls.Add(this.bunifuSeparator2);
+            this.bunifuGradientPanel3.Controls.Add(this.RegresionLogisticaSwitch);
+            this.bunifuGradientPanel3.Controls.Add(this.bunifuCustomLabel5);
+            this.bunifuGradientPanel3.Controls.Add(this.AdalineSwitch);
+            this.bunifuGradientPanel3.Controls.Add(this.bunifuCustomLabel4);
+            this.bunifuGradientPanel3.Controls.Add(this.InicializarBtn);
+            this.bunifuGradientPanel3.Controls.Add(this.LimpiarBtn);
+            this.bunifuGradientPanel3.Controls.Add(this.PerceptronSwitch);
+            this.bunifuGradientPanel3.Controls.Add(this.bunifuCustomLabel1);
+            this.bunifuGradientPanel3.Controls.Add(this.CompetirBtn);
+            this.bunifuGradientPanel3.GradientBottomLeft = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(46)))));
+            this.bunifuGradientPanel3.GradientBottomRight = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(46)))));
+            this.bunifuGradientPanel3.GradientTopLeft = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(46)))));
+            this.bunifuGradientPanel3.GradientTopRight = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(46)))));
+            this.bunifuGradientPanel3.Location = new System.Drawing.Point(1039, 40);
+            this.bunifuGradientPanel3.Name = "bunifuGradientPanel3";
+            this.bunifuGradientPanel3.Quality = 15;
+            this.bunifuGradientPanel3.Size = new System.Drawing.Size(229, 284);
+            this.bunifuGradientPanel3.TabIndex = 24;
+            // 
+            // bunifuSeparator2
+            // 
+            this.bunifuSeparator2.BackColor = System.Drawing.Color.Transparent;
+            this.bunifuSeparator2.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(105)))), ((int)(((byte)(105)))), ((int)(((byte)(105)))));
+            this.bunifuSeparator2.LineThickness = 1;
+            this.bunifuSeparator2.Location = new System.Drawing.Point(11, 177);
+            this.bunifuSeparator2.Name = "bunifuSeparator2";
+            this.bunifuSeparator2.Size = new System.Drawing.Size(204, 21);
+            this.bunifuSeparator2.TabIndex = 30;
+            this.bunifuSeparator2.Transparency = 255;
+            this.bunifuSeparator2.Vertical = false;
+            // 
+            // RegresionLogisticaSwitch
+            // 
+            this.RegresionLogisticaSwitch.BackColor = System.Drawing.Color.Transparent;
+            this.RegresionLogisticaSwitch.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("RegresionLogisticaSwitch.BackgroundImage")));
+            this.RegresionLogisticaSwitch.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.RegresionLogisticaSwitch.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.RegresionLogisticaSwitch.Location = new System.Drawing.Point(172, 149);
+            this.RegresionLogisticaSwitch.Name = "RegresionLogisticaSwitch";
+            this.RegresionLogisticaSwitch.OffColor = System.Drawing.Color.DarkRed;
+            this.RegresionLogisticaSwitch.OnColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(202)))), ((int)(((byte)(94)))));
+            this.RegresionLogisticaSwitch.Size = new System.Drawing.Size(43, 25);
+            this.RegresionLogisticaSwitch.TabIndex = 28;
+            this.RegresionLogisticaSwitch.Value = false;
+            // 
+            // bunifuCustomLabel5
+            // 
+            this.bunifuCustomLabel5.Font = new System.Drawing.Font("Lucida Sans Unicode", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bunifuCustomLabel5.ForeColor = System.Drawing.SystemColors.Control;
+            this.bunifuCustomLabel5.Location = new System.Drawing.Point(13, 152);
+            this.bunifuCustomLabel5.Name = "bunifuCustomLabel5";
+            this.bunifuCustomLabel5.Size = new System.Drawing.Size(153, 22);
+            this.bunifuCustomLabel5.TabIndex = 29;
+            this.bunifuCustomLabel5.Text = "Regresión Logística";
+            // 
+            // AdalineSwitch
+            // 
+            this.AdalineSwitch.BackColor = System.Drawing.Color.Transparent;
+            this.AdalineSwitch.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("AdalineSwitch.BackgroundImage")));
+            this.AdalineSwitch.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.AdalineSwitch.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.AdalineSwitch.Location = new System.Drawing.Point(172, 118);
+            this.AdalineSwitch.Name = "AdalineSwitch";
+            this.AdalineSwitch.OffColor = System.Drawing.Color.DarkRed;
+            this.AdalineSwitch.OnColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(202)))), ((int)(((byte)(94)))));
+            this.AdalineSwitch.Size = new System.Drawing.Size(43, 25);
+            this.AdalineSwitch.TabIndex = 26;
+            this.AdalineSwitch.Value = false;
+            // 
+            // bunifuCustomLabel4
+            // 
+            this.bunifuCustomLabel4.Font = new System.Drawing.Font("Lucida Sans Unicode", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bunifuCustomLabel4.ForeColor = System.Drawing.SystemColors.Control;
+            this.bunifuCustomLabel4.Location = new System.Drawing.Point(100, 121);
+            this.bunifuCustomLabel4.Name = "bunifuCustomLabel4";
+            this.bunifuCustomLabel4.Size = new System.Drawing.Size(66, 22);
+            this.bunifuCustomLabel4.TabIndex = 27;
+            this.bunifuCustomLabel4.Text = "Adaline";
+            // 
+            // InicializarBtn
+            // 
+            this.InicializarBtn.BackColor = System.Drawing.Color.Transparent;
+            this.InicializarBtn.Image = ((System.Drawing.Image)(resources.GetObject("InicializarBtn.Image")));
+            this.InicializarBtn.ImageActive = null;
+            this.InicializarBtn.Location = new System.Drawing.Point(21, 13);
+            this.InicializarBtn.Name = "InicializarBtn";
+            this.InicializarBtn.Size = new System.Drawing.Size(50, 50);
+            this.InicializarBtn.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.InicializarBtn.TabIndex = 23;
+            this.InicializarBtn.TabStop = false;
+            this.InicializarBtn.Zoom = 10;
+            this.InicializarBtn.Click += new System.EventHandler(this.InicializarBtn_Click);
+            // 
+            // LimpiarBtn
+            // 
+            this.LimpiarBtn.BackColor = System.Drawing.Color.Transparent;
+            this.LimpiarBtn.Image = ((System.Drawing.Image)(resources.GetObject("LimpiarBtn.Image")));
+            this.LimpiarBtn.ImageActive = null;
+            this.LimpiarBtn.Location = new System.Drawing.Point(165, 13);
+            this.LimpiarBtn.Name = "LimpiarBtn";
+            this.LimpiarBtn.Size = new System.Drawing.Size(50, 50);
+            this.LimpiarBtn.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.LimpiarBtn.TabIndex = 25;
+            this.LimpiarBtn.TabStop = false;
+            this.LimpiarBtn.Zoom = 10;
+            this.LimpiarBtn.Click += new System.EventHandler(this.LimpiarBtn_Click);
+            // 
+            // PerceptronSwitch
+            // 
+            this.PerceptronSwitch.BackColor = System.Drawing.Color.Transparent;
+            this.PerceptronSwitch.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("PerceptronSwitch.BackgroundImage")));
+            this.PerceptronSwitch.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.PerceptronSwitch.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.PerceptronSwitch.Location = new System.Drawing.Point(172, 87);
+            this.PerceptronSwitch.Name = "PerceptronSwitch";
+            this.PerceptronSwitch.OffColor = System.Drawing.Color.DarkRed;
+            this.PerceptronSwitch.OnColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(202)))), ((int)(((byte)(94)))));
+            this.PerceptronSwitch.Size = new System.Drawing.Size(43, 25);
+            this.PerceptronSwitch.TabIndex = 15;
+            this.PerceptronSwitch.Value = false;
+            // 
+            // bunifuCustomLabel1
+            // 
+            this.bunifuCustomLabel1.Font = new System.Drawing.Font("Lucida Sans Unicode", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bunifuCustomLabel1.ForeColor = System.Drawing.SystemColors.Control;
+            this.bunifuCustomLabel1.Location = new System.Drawing.Point(77, 90);
+            this.bunifuCustomLabel1.Name = "bunifuCustomLabel1";
+            this.bunifuCustomLabel1.Size = new System.Drawing.Size(89, 22);
+            this.bunifuCustomLabel1.TabIndex = 22;
+            this.bunifuCustomLabel1.Text = "Perceptrón";
+            // 
+            // CompetirBtn
+            // 
+            this.CompetirBtn.BackColor = System.Drawing.Color.Transparent;
+            this.CompetirBtn.Image = ((System.Drawing.Image)(resources.GetObject("CompetirBtn.Image")));
+            this.CompetirBtn.ImageActive = null;
+            this.CompetirBtn.Location = new System.Drawing.Point(94, 13);
+            this.CompetirBtn.Name = "CompetirBtn";
+            this.CompetirBtn.Size = new System.Drawing.Size(50, 50);
+            this.CompetirBtn.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.CompetirBtn.TabIndex = 24;
+            this.CompetirBtn.TabStop = false;
+            this.CompetirBtn.Zoom = 10;
+            this.CompetirBtn.Click += new System.EventHandler(this.CompetirBtn_Click);
+            // 
             // bunifuGradientPanel2
             // 
             this.bunifuGradientPanel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(46)))));
@@ -272,17 +422,118 @@
             this.bunifuGradientPanel2.Quality = 10;
             this.bunifuGradientPanel2.Size = new System.Drawing.Size(364, 284);
             this.bunifuGradientPanel2.TabIndex = 22;
-            this.bunifuGradientPanel2.Paint += new System.Windows.Forms.PaintEventHandler(this.bunifuGradientPanel2_Paint);
             // 
-            // bunifuCustomLabel1
+            // NextBtn
             // 
-            this.bunifuCustomLabel1.Font = new System.Drawing.Font("Lucida Sans Unicode", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bunifuCustomLabel1.ForeColor = System.Drawing.SystemColors.Control;
-            this.bunifuCustomLabel1.Location = new System.Drawing.Point(77, 90);
-            this.bunifuCustomLabel1.Name = "bunifuCustomLabel1";
-            this.bunifuCustomLabel1.Size = new System.Drawing.Size(89, 22);
-            this.bunifuCustomLabel1.TabIndex = 22;
-            this.bunifuCustomLabel1.Text = "Perceptrón";
+            this.NextBtn.BackColor = System.Drawing.Color.Transparent;
+            this.NextBtn.Image = ((System.Drawing.Image)(resources.GetObject("NextBtn.Image")));
+            this.NextBtn.ImageActive = null;
+            this.NextBtn.Location = new System.Drawing.Point(322, 211);
+            this.NextBtn.Name = "NextBtn";
+            this.NextBtn.Size = new System.Drawing.Size(25, 25);
+            this.NextBtn.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.NextBtn.TabIndex = 30;
+            this.NextBtn.TabStop = false;
+            this.NextBtn.Zoom = 10;
+            // 
+            // NeuronaPcTb
+            // 
+            this.NeuronaPcTb.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.NeuronaPcTb.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
+            this.NeuronaPcTb.ForeColor = System.Drawing.SystemColors.Control;
+            this.NeuronaPcTb.HintForeColor = System.Drawing.Color.Empty;
+            this.NeuronaPcTb.HintText = "";
+            this.NeuronaPcTb.isPassword = false;
+            this.NeuronaPcTb.LineFocusedColor = System.Drawing.Color.Blue;
+            this.NeuronaPcTb.LineIdleColor = System.Drawing.Color.Gray;
+            this.NeuronaPcTb.LineMouseHoverColor = System.Drawing.Color.Blue;
+            this.NeuronaPcTb.LineThickness = 3;
+            this.NeuronaPcTb.Location = new System.Drawing.Point(277, 177);
+            this.NeuronaPcTb.Margin = new System.Windows.Forms.Padding(4);
+            this.NeuronaPcTb.Name = "NeuronaPcTb";
+            this.NeuronaPcTb.Size = new System.Drawing.Size(70, 27);
+            this.NeuronaPcTb.TabIndex = 29;
+            this.NeuronaPcTb.Text = "1";
+            this.NeuronaPcTb.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            // 
+            // NeuronaPcLabel
+            // 
+            this.NeuronaPcLabel.AutoSize = true;
+            this.NeuronaPcLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.NeuronaPcLabel.ForeColor = System.Drawing.SystemColors.Control;
+            this.NeuronaPcLabel.Location = new System.Drawing.Point(166, 180);
+            this.NeuronaPcLabel.Name = "NeuronaPcLabel";
+            this.NeuronaPcLabel.Size = new System.Drawing.Size(104, 18);
+            this.NeuronaPcLabel.TabIndex = 28;
+            this.NeuronaPcLabel.Text = "Neuronas/pc";
+            // 
+            // ClasesTb
+            // 
+            this.ClasesTb.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.ClasesTb.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
+            this.ClasesTb.ForeColor = System.Drawing.SystemColors.Control;
+            this.ClasesTb.HintForeColor = System.Drawing.Color.Empty;
+            this.ClasesTb.HintText = "";
+            this.ClasesTb.isPassword = false;
+            this.ClasesTb.LineFocusedColor = System.Drawing.Color.Blue;
+            this.ClasesTb.LineIdleColor = System.Drawing.Color.Gray;
+            this.ClasesTb.LineMouseHoverColor = System.Drawing.Color.Blue;
+            this.ClasesTb.LineThickness = 3;
+            this.ClasesTb.Location = new System.Drawing.Point(277, 142);
+            this.ClasesTb.Margin = new System.Windows.Forms.Padding(4);
+            this.ClasesTb.Name = "ClasesTb";
+            this.ClasesTb.Size = new System.Drawing.Size(70, 27);
+            this.ClasesTb.TabIndex = 27;
+            this.ClasesTb.Text = "2";
+            this.ClasesTb.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            // 
+            // bunifuCustomLabel7
+            // 
+            this.bunifuCustomLabel7.AutoSize = true;
+            this.bunifuCustomLabel7.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bunifuCustomLabel7.ForeColor = System.Drawing.SystemColors.Control;
+            this.bunifuCustomLabel7.Location = new System.Drawing.Point(10, 147);
+            this.bunifuCustomLabel7.Name = "bunifuCustomLabel7";
+            this.bunifuCustomLabel7.Size = new System.Drawing.Size(102, 18);
+            this.bunifuCustomLabel7.TabIndex = 26;
+            this.bunifuCustomLabel7.Text = "Clase Actual";
+            // 
+            // ClaseSelected
+            // 
+            this.ClaseSelected.BackColor = System.Drawing.Color.Transparent;
+            this.ClaseSelected.BorderRadius = 3;
+            this.ClaseSelected.ForeColor = System.Drawing.Color.White;
+            this.ClaseSelected.Items = new string[0];
+            this.ClaseSelected.Location = new System.Drawing.Point(118, 147);
+            this.ClaseSelected.Name = "ClaseSelected";
+            this.ClaseSelected.NomalColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(139)))), ((int)(((byte)(87)))));
+            this.ClaseSelected.onHoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(129)))), ((int)(((byte)(77)))));
+            this.ClaseSelected.selectedIndex = -1;
+            this.ClaseSelected.Size = new System.Drawing.Size(70, 18);
+            this.ClaseSelected.TabIndex = 25;
+            // 
+            // bunifuSeparator1
+            // 
+            this.bunifuSeparator1.BackColor = System.Drawing.Color.Transparent;
+            this.bunifuSeparator1.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(105)))), ((int)(((byte)(105)))), ((int)(((byte)(105)))));
+            this.bunifuSeparator1.LineThickness = 1;
+            this.bunifuSeparator1.Location = new System.Drawing.Point(13, 123);
+            this.bunifuSeparator1.Name = "bunifuSeparator1";
+            this.bunifuSeparator1.Size = new System.Drawing.Size(334, 21);
+            this.bunifuSeparator1.TabIndex = 24;
+            this.bunifuSeparator1.Transparency = 255;
+            this.bunifuSeparator1.Vertical = false;
+            // 
+            // ClasesLabel
+            // 
+            this.ClasesLabel.AutoSize = true;
+            this.ClasesLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ClasesLabel.ForeColor = System.Drawing.SystemColors.Control;
+            this.ClasesLabel.Location = new System.Drawing.Point(210, 147);
+            this.ClasesLabel.Name = "ClasesLabel";
+            this.ClasesLabel.Size = new System.Drawing.Size(60, 18);
+            this.ClasesLabel.TabIndex = 23;
+            this.ClasesLabel.Text = "Clases";
             // 
             // LearningRateLabel
             // 
@@ -377,255 +628,6 @@
             this.EpocasMaximasTb.Text = "200";
             this.EpocasMaximasTb.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             // 
-            // PerceptronSwitch
-            // 
-            this.PerceptronSwitch.BackColor = System.Drawing.Color.Transparent;
-            this.PerceptronSwitch.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("PerceptronSwitch.BackgroundImage")));
-            this.PerceptronSwitch.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.PerceptronSwitch.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.PerceptronSwitch.Location = new System.Drawing.Point(172, 87);
-            this.PerceptronSwitch.Name = "PerceptronSwitch";
-            this.PerceptronSwitch.OffColor = System.Drawing.Color.DarkRed;
-            this.PerceptronSwitch.OnColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(202)))), ((int)(((byte)(94)))));
-            this.PerceptronSwitch.Size = new System.Drawing.Size(43, 25);
-            this.PerceptronSwitch.TabIndex = 15;
-            this.PerceptronSwitch.Value = false;
-            // 
-            // CompetirBtn
-            // 
-            this.CompetirBtn.BackColor = System.Drawing.Color.Transparent;
-            this.CompetirBtn.Image = ((System.Drawing.Image)(resources.GetObject("CompetirBtn.Image")));
-            this.CompetirBtn.ImageActive = null;
-            this.CompetirBtn.Location = new System.Drawing.Point(94, 13);
-            this.CompetirBtn.Name = "CompetirBtn";
-            this.CompetirBtn.Size = new System.Drawing.Size(50, 50);
-            this.CompetirBtn.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.CompetirBtn.TabIndex = 24;
-            this.CompetirBtn.TabStop = false;
-            this.CompetirBtn.Zoom = 10;
-            // 
-            // LimpiarBtn
-            // 
-            this.LimpiarBtn.BackColor = System.Drawing.Color.Transparent;
-            this.LimpiarBtn.Image = ((System.Drawing.Image)(resources.GetObject("LimpiarBtn.Image")));
-            this.LimpiarBtn.ImageActive = null;
-            this.LimpiarBtn.Location = new System.Drawing.Point(165, 13);
-            this.LimpiarBtn.Name = "LimpiarBtn";
-            this.LimpiarBtn.Size = new System.Drawing.Size(50, 50);
-            this.LimpiarBtn.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.LimpiarBtn.TabIndex = 25;
-            this.LimpiarBtn.TabStop = false;
-            this.LimpiarBtn.Zoom = 10;
-            // 
-            // InicializarBtn
-            // 
-            this.InicializarBtn.BackColor = System.Drawing.Color.Transparent;
-            this.InicializarBtn.Image = ((System.Drawing.Image)(resources.GetObject("InicializarBtn.Image")));
-            this.InicializarBtn.ImageActive = null;
-            this.InicializarBtn.Location = new System.Drawing.Point(21, 13);
-            this.InicializarBtn.Name = "InicializarBtn";
-            this.InicializarBtn.Size = new System.Drawing.Size(50, 50);
-            this.InicializarBtn.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.InicializarBtn.TabIndex = 23;
-            this.InicializarBtn.TabStop = false;
-            this.InicializarBtn.Zoom = 10;
-            // 
-            // bunifuGradientPanel3
-            // 
-            this.bunifuGradientPanel3.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("bunifuGradientPanel3.BackgroundImage")));
-            this.bunifuGradientPanel3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.bunifuGradientPanel3.Controls.Add(this.bunifuSeparator2);
-            this.bunifuGradientPanel3.Controls.Add(this.RegresionLogisticaSwitch);
-            this.bunifuGradientPanel3.Controls.Add(this.bunifuCustomLabel5);
-            this.bunifuGradientPanel3.Controls.Add(this.AdalineSwitch);
-            this.bunifuGradientPanel3.Controls.Add(this.bunifuCustomLabel4);
-            this.bunifuGradientPanel3.Controls.Add(this.InicializarBtn);
-            this.bunifuGradientPanel3.Controls.Add(this.LimpiarBtn);
-            this.bunifuGradientPanel3.Controls.Add(this.PerceptronSwitch);
-            this.bunifuGradientPanel3.Controls.Add(this.bunifuCustomLabel1);
-            this.bunifuGradientPanel3.Controls.Add(this.CompetirBtn);
-            this.bunifuGradientPanel3.GradientBottomLeft = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(46)))));
-            this.bunifuGradientPanel3.GradientBottomRight = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(46)))));
-            this.bunifuGradientPanel3.GradientTopLeft = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(46)))));
-            this.bunifuGradientPanel3.GradientTopRight = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(46)))));
-            this.bunifuGradientPanel3.Location = new System.Drawing.Point(1039, 40);
-            this.bunifuGradientPanel3.Name = "bunifuGradientPanel3";
-            this.bunifuGradientPanel3.Quality = 15;
-            this.bunifuGradientPanel3.Size = new System.Drawing.Size(229, 284);
-            this.bunifuGradientPanel3.TabIndex = 24;
-            // 
-            // AdalineSwitch
-            // 
-            this.AdalineSwitch.BackColor = System.Drawing.Color.Transparent;
-            this.AdalineSwitch.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("AdalineSwitch.BackgroundImage")));
-            this.AdalineSwitch.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.AdalineSwitch.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.AdalineSwitch.Location = new System.Drawing.Point(172, 118);
-            this.AdalineSwitch.Name = "AdalineSwitch";
-            this.AdalineSwitch.OffColor = System.Drawing.Color.DarkRed;
-            this.AdalineSwitch.OnColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(202)))), ((int)(((byte)(94)))));
-            this.AdalineSwitch.Size = new System.Drawing.Size(43, 25);
-            this.AdalineSwitch.TabIndex = 26;
-            this.AdalineSwitch.Value = false;
-            // 
-            // bunifuCustomLabel4
-            // 
-            this.bunifuCustomLabel4.Font = new System.Drawing.Font("Lucida Sans Unicode", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bunifuCustomLabel4.ForeColor = System.Drawing.SystemColors.Control;
-            this.bunifuCustomLabel4.Location = new System.Drawing.Point(100, 121);
-            this.bunifuCustomLabel4.Name = "bunifuCustomLabel4";
-            this.bunifuCustomLabel4.Size = new System.Drawing.Size(66, 22);
-            this.bunifuCustomLabel4.TabIndex = 27;
-            this.bunifuCustomLabel4.Text = "Adaline";
-            // 
-            // RegresionLogisticaSwitch
-            // 
-            this.RegresionLogisticaSwitch.BackColor = System.Drawing.Color.Transparent;
-            this.RegresionLogisticaSwitch.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("RegresionLogisticaSwitch.BackgroundImage")));
-            this.RegresionLogisticaSwitch.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.RegresionLogisticaSwitch.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.RegresionLogisticaSwitch.Location = new System.Drawing.Point(172, 149);
-            this.RegresionLogisticaSwitch.Name = "RegresionLogisticaSwitch";
-            this.RegresionLogisticaSwitch.OffColor = System.Drawing.Color.DarkRed;
-            this.RegresionLogisticaSwitch.OnColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(202)))), ((int)(((byte)(94)))));
-            this.RegresionLogisticaSwitch.Size = new System.Drawing.Size(43, 25);
-            this.RegresionLogisticaSwitch.TabIndex = 28;
-            this.RegresionLogisticaSwitch.Value = false;
-            // 
-            // bunifuCustomLabel5
-            // 
-            this.bunifuCustomLabel5.Font = new System.Drawing.Font("Lucida Sans Unicode", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bunifuCustomLabel5.ForeColor = System.Drawing.SystemColors.Control;
-            this.bunifuCustomLabel5.Location = new System.Drawing.Point(13, 152);
-            this.bunifuCustomLabel5.Name = "bunifuCustomLabel5";
-            this.bunifuCustomLabel5.Size = new System.Drawing.Size(153, 22);
-            this.bunifuCustomLabel5.TabIndex = 29;
-            this.bunifuCustomLabel5.Text = "Regresión Logística";
-            // 
-            // ClasesLabel
-            // 
-            this.ClasesLabel.AutoSize = true;
-            this.ClasesLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ClasesLabel.ForeColor = System.Drawing.SystemColors.Control;
-            this.ClasesLabel.Location = new System.Drawing.Point(210, 147);
-            this.ClasesLabel.Name = "ClasesLabel";
-            this.ClasesLabel.Size = new System.Drawing.Size(60, 18);
-            this.ClasesLabel.TabIndex = 23;
-            this.ClasesLabel.Text = "Clases";
-            // 
-            // bunifuSeparator1
-            // 
-            this.bunifuSeparator1.BackColor = System.Drawing.Color.Transparent;
-            this.bunifuSeparator1.LineColor = System.Drawing.Color.DimGray;
-            this.bunifuSeparator1.LineThickness = 1;
-            this.bunifuSeparator1.Location = new System.Drawing.Point(13, 123);
-            this.bunifuSeparator1.Name = "bunifuSeparator1";
-            this.bunifuSeparator1.Size = new System.Drawing.Size(334, 21);
-            this.bunifuSeparator1.TabIndex = 24;
-            this.bunifuSeparator1.Transparency = 255;
-            this.bunifuSeparator1.Vertical = false;
-            // 
-            // ClaseSelected
-            // 
-            this.ClaseSelected.BackColor = System.Drawing.Color.Transparent;
-            this.ClaseSelected.BorderRadius = 3;
-            this.ClaseSelected.ForeColor = System.Drawing.Color.White;
-            this.ClaseSelected.Items = new string[0];
-            this.ClaseSelected.Location = new System.Drawing.Point(118, 147);
-            this.ClaseSelected.Name = "ClaseSelected";
-            this.ClaseSelected.NomalColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(139)))), ((int)(((byte)(87)))));
-            this.ClaseSelected.onHoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(129)))), ((int)(((byte)(77)))));
-            this.ClaseSelected.selectedIndex = -1;
-            this.ClaseSelected.Size = new System.Drawing.Size(70, 18);
-            this.ClaseSelected.TabIndex = 25;
-            // 
-            // bunifuCustomLabel7
-            // 
-            this.bunifuCustomLabel7.AutoSize = true;
-            this.bunifuCustomLabel7.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bunifuCustomLabel7.ForeColor = System.Drawing.SystemColors.Control;
-            this.bunifuCustomLabel7.Location = new System.Drawing.Point(10, 147);
-            this.bunifuCustomLabel7.Name = "bunifuCustomLabel7";
-            this.bunifuCustomLabel7.Size = new System.Drawing.Size(102, 18);
-            this.bunifuCustomLabel7.TabIndex = 26;
-            this.bunifuCustomLabel7.Text = "Clase Actual";
-            // 
-            // ClasesTb
-            // 
-            this.ClasesTb.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.ClasesTb.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
-            this.ClasesTb.ForeColor = System.Drawing.SystemColors.Control;
-            this.ClasesTb.HintForeColor = System.Drawing.Color.Empty;
-            this.ClasesTb.HintText = "";
-            this.ClasesTb.isPassword = false;
-            this.ClasesTb.LineFocusedColor = System.Drawing.Color.Blue;
-            this.ClasesTb.LineIdleColor = System.Drawing.Color.Gray;
-            this.ClasesTb.LineMouseHoverColor = System.Drawing.Color.Blue;
-            this.ClasesTb.LineThickness = 3;
-            this.ClasesTb.Location = new System.Drawing.Point(277, 142);
-            this.ClasesTb.Margin = new System.Windows.Forms.Padding(4);
-            this.ClasesTb.Name = "ClasesTb";
-            this.ClasesTb.Size = new System.Drawing.Size(70, 27);
-            this.ClasesTb.TabIndex = 27;
-            this.ClasesTb.Text = "2";
-            this.ClasesTb.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            // 
-            // bunifuSeparator2
-            // 
-            this.bunifuSeparator2.BackColor = System.Drawing.Color.Transparent;
-            this.bunifuSeparator2.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(105)))), ((int)(((byte)(105)))), ((int)(((byte)(105)))));
-            this.bunifuSeparator2.LineThickness = 1;
-            this.bunifuSeparator2.Location = new System.Drawing.Point(11, 177);
-            this.bunifuSeparator2.Name = "bunifuSeparator2";
-            this.bunifuSeparator2.Size = new System.Drawing.Size(204, 21);
-            this.bunifuSeparator2.TabIndex = 30;
-            this.bunifuSeparator2.Transparency = 255;
-            this.bunifuSeparator2.Vertical = false;
-            // 
-            // NeuronaPcLabel
-            // 
-            this.NeuronaPcLabel.AutoSize = true;
-            this.NeuronaPcLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.NeuronaPcLabel.ForeColor = System.Drawing.SystemColors.Control;
-            this.NeuronaPcLabel.Location = new System.Drawing.Point(166, 180);
-            this.NeuronaPcLabel.Name = "NeuronaPcLabel";
-            this.NeuronaPcLabel.Size = new System.Drawing.Size(104, 18);
-            this.NeuronaPcLabel.TabIndex = 28;
-            this.NeuronaPcLabel.Text = "Neuronas/pc";
-            // 
-            // NeuronaPcTb
-            // 
-            this.NeuronaPcTb.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.NeuronaPcTb.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
-            this.NeuronaPcTb.ForeColor = System.Drawing.SystemColors.Control;
-            this.NeuronaPcTb.HintForeColor = System.Drawing.Color.Empty;
-            this.NeuronaPcTb.HintText = "";
-            this.NeuronaPcTb.isPassword = false;
-            this.NeuronaPcTb.LineFocusedColor = System.Drawing.Color.Blue;
-            this.NeuronaPcTb.LineIdleColor = System.Drawing.Color.Gray;
-            this.NeuronaPcTb.LineMouseHoverColor = System.Drawing.Color.Blue;
-            this.NeuronaPcTb.LineThickness = 3;
-            this.NeuronaPcTb.Location = new System.Drawing.Point(277, 177);
-            this.NeuronaPcTb.Margin = new System.Windows.Forms.Padding(4);
-            this.NeuronaPcTb.Name = "NeuronaPcTb";
-            this.NeuronaPcTb.Size = new System.Drawing.Size(70, 27);
-            this.NeuronaPcTb.TabIndex = 29;
-            this.NeuronaPcTb.Text = "1";
-            this.NeuronaPcTb.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            // 
-            // NextBtn
-            // 
-            this.NextBtn.BackColor = System.Drawing.Color.Transparent;
-            this.NextBtn.Image = ((System.Drawing.Image)(resources.GetObject("NextBtn.Image")));
-            this.NextBtn.ImageActive = null;
-            this.NextBtn.Location = new System.Drawing.Point(322, 211);
-            this.NextBtn.Name = "NextBtn";
-            this.NextBtn.Size = new System.Drawing.Size(25, 25);
-            this.NextBtn.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.NextBtn.TabIndex = 30;
-            this.NextBtn.TabStop = false;
-            this.NextBtn.Zoom = 10;
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -638,12 +640,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.plano)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Error_cmp)).EndInit();
             this.bunifuGradientPanel1.ResumeLayout(false);
+            this.bunifuGradientPanel3.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.InicializarBtn)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.LimpiarBtn)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CompetirBtn)).EndInit();
             this.bunifuGradientPanel2.ResumeLayout(false);
             this.bunifuGradientPanel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.CompetirBtn)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.LimpiarBtn)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.InicializarBtn)).EndInit();
-            this.bunifuGradientPanel3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.NextBtn)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

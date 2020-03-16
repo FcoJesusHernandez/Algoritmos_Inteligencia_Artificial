@@ -20,56 +20,40 @@ namespace Algoritmos_IA
         Perceptron p;
         Adaline a;
         RegresionLogistica rl;
-        List<Pen> plumas;
-        //List<Pen> lista_plumas = new List<Pen>();
+        readonly List<Pen> plumas;
 
         public Form1()
         {
             InitializeComponent();
-            plano_Paint();
-
+            Plano_Paint();
             lista_puntos = new List<Punto>();
             plumas = new List<Pen>();
-            //llenarPlumas();
-            //buttonPerceptron.Enabled = false;
-            //InicializarBtn.Enabled = false;
-            //LimpiarBtn.Enabled = false;
-            //CompetirBtn.Enabled = false;
-            //buttonAdaline.Enabled = false;
-            //buttonEntrenarRegresionLogistica.Enabled = false;
-            llenarPlumas();            
+            LlenarPlumas();
         }
 
 
-        public void llenarPlumas()
+        public void LlenarPlumas()
         {
-            // n = numero de clases 
-            //clase.get_Pluma().ToString();
             Random random = new Random();
             for (int i=0; i < 10; i++)
             {
                 Clases clase = new Clases(random);
-                plumas.Add(clase.get_Pluma());
-                
+                plumas.Add(clase.Get_Pluma());   
             }
-            
-
         }
-        
-        
 
-        private async void plano_Click(object sender, EventArgs e)
+        private async void Plano_Click(object sender, EventArgs e)
         {
             MouseEventArgs click = (MouseEventArgs)e;
             int tipo;
 
             if (a != null && a.getCompletado())  /// nota: deberia ir a.getEntrenado(), pero causa errores cuando no se alcanza el error minimo
             {
-                if (!p.getEntrenado())
+                if (!p.GetEntrenado())
                 {
                     labelAlerta.Text = "La clasificación puede ser incorrecta ya que no se alcanzó el error mínimo";
                 }
-                float[] coordenadasAdaptadas = coordenadaRealToAdaptada(click.X, click.Y);
+                float[] coordenadasAdaptadas = CoordenadaRealToAdaptada(click.X, click.Y);
                 float[,] xTemp = new float[3, 1];
                 xTemp[0, 0] = -1;
                 xTemp[1, 0] = coordenadasAdaptadas[0];
@@ -85,18 +69,23 @@ namespace Algoritmos_IA
                     tipo = 0;
                 }
             }
-            else if (p != null && p.getEntrenado())
+            else if (p != null && p.GetEntrenado())
             {
-                float[] coordenadasAdaptadas = coordenadaRealToAdaptada(click.X, click.Y);
+                float[] coordenadasAdaptadas = CoordenadaRealToAdaptada(click.X, click.Y);
                 float[,] xTemp = new float[3, 1];
                 xTemp[0, 0] = -1;
                 xTemp[1, 0] = coordenadasAdaptadas[0];
                 xTemp[2, 0] = coordenadasAdaptadas[1];
 
-                tipo = p.funcionEscalon(xTemp);
+                tipo = p.FuncionEscalon(xTemp);
             }
             else
             {
+                if ()
+                {
+
+                }
+                /*
                 if (click.Button.ToString() == "Right")
                 {
                     tipo = 1;
@@ -105,6 +94,7 @@ namespace Algoritmos_IA
                 {
                     tipo = 0;
                 }
+                */
             }
             Punto punto_generado = new Punto(click.X, click.Y, tipo);
             lista_puntos.Add(punto_generado);
@@ -116,14 +106,20 @@ namespace Algoritmos_IA
                 this.Invoke((MethodInvoker)(() => labelCoordenadaYClick.Text = punto_generado.getPosicionAdaptadaY().ToString()))
             );
 
-            dibujar_punto(punto_generado);
+            //Dibujar_punto(punto_generado);
+            Dibujar_Clases(punto_generado);
             if (lista_puntos.Count>2)
             {
                 InicializarBtn.Enabled = true;
             }
         }
 
-        private void dibujar_punto(Punto p)
+        private void Dibujar_Clases(Punto p)
+        {
+
+        }
+
+        private void Dibujar_punto(Punto p)
         {
             /*if (numeroClases != 2)
             {
@@ -153,18 +149,7 @@ namespace Algoritmos_IA
             plano.Refresh();
         }
 
-        /*
-        private void dibujar_puntos(Punto p)
-        {
-
-             
-
-            bitmap_temp.DrawEllipse(pluma, new Rectangle(p.getPosicionOriginalX() - 4, p.getPosicionOriginalY() - 4, 8, 8));
-            bitmap_temp_respaldo.DrawEllipse(pluma, new Rectangle(p.getPosicionOriginalX() - 4, p.getPosicionOriginalY() - 4, 8, 8));
-        }
-        */
-
-        private void plano_Paint()
+        private void Plano_Paint()
         {
             Bitmap img = new Bitmap(plano.Width, plano.Height);
             Graphics imgBitmap = Graphics.FromImage(img);
@@ -195,51 +180,70 @@ namespace Algoritmos_IA
             bitmap_solo_plano = new Bitmap(img);
         }
 
-        private void buttonPerceptron_Click(object sender, EventArgs e)
+        private void InicializarBtn_Click(object sender, EventArgs e)
         {
             labelAlerta.Text = "";
 
-            List<int> hola = new List<int>();
+            List<int> hola = new List<int>
+            {
+                2,
+                2
+            };
 
-            hola.Add(2);
-            hola.Add(3);
-
-            MLP caca = new MLP(2, hola, float.Parse(LearningRateTb.Text) , lista_puntos);
-            caca.Forward_Backward();
+            //MLP caca = new MLP(Int32.Parse(EpocasMaximasTb.Text), 2, hola, float.Parse(LearningRateTb.Text), lista_puntos);
+            //caca.Forward_Backward();
             //fin de borrar esto
-
-
-            create_error_graphic();
+            //Punto prueba = new Punto(2, 2, 6);
+            //caca.Forward(prueba, true);
+            //Punto prueba2 = new Punto(2, -2, 5);
+            //caca.Forward(prueba2, true);
+            //Punto prueba3 = new Punto(-2, -2, 5);
+            //caca.Forward(prueba3, true);
+            //Punto prueba4 = new Punto(-2, 2, 5);
+            //caca.Forward(prueba4, true);
+            //Create_error_graphic();
             this.Error_cmp.Series["Perceptron"].Points.Clear();
             this.Error_cmp.Series["Adaline"].Points.Clear();
             this.Error_cmp.Series["Regresión logistica"].Points.Clear();
 
-            this.p = new Perceptron(Int32.Parse(EpocasMaximasTb.Text), float.Parse(LearningRateTb.Text.ToString()), lista_puntos, 0);
-            p.inicializar();
-            bitmap_plano = new Bitmap(respaldo);
-            dibujarLinea(false, "perceptron");
-
-            this.a = new Adaline(Int32.Parse(EpocasMaximasTb.Text), float.Parse(LearningRateTb.Text), lista_puntos, 0);
-            a.inicializar();
-            bitmap_plano = new Bitmap(respaldo);
-            dibujarLinea(false, "adaline");
-            
             if (PerceptronSwitch.Value == true)
+            {
+                this.p = new Perceptron(Int32.Parse(EpocasMaximasTb.Text), float.Parse(LearningRateTb.Text.ToString()), lista_puntos, 0);
+                p.Inicializar();
+                bitmap_plano = new Bitmap(respaldo);
+                DibujarLinea(false, "perceptron");
+            }
+            else
+            {
+
+            }
+            if (AdalineSwitch.Value == true)
+            {
+                this.a = new Adaline(Int32.Parse(EpocasMaximasTb.Text), float.Parse(LearningRateTb.Text), lista_puntos, 0);
+                a.inicializar();
+                bitmap_plano = new Bitmap(respaldo);
+                DibujarLinea(false, "adaline");
+            }
+            else
+            {
+
+            }
+            if (RegresionLogisticaSwitch.Value == true)
             {
                 this.rl = new RegresionLogistica(Int32.Parse(EpocasMaximasTb.Text), float.Parse(LearningRateTb.Text), lista_puntos, 0);
                 rl.inicializar();
                 bitmap_plano = new Bitmap(respaldo);
-                dibujarLinea(false, "regresion_logistica");
-                //buttonEntrenarRegresionLogistica.Enabled = true;
+                DibujarLinea(false, "regresion_logistica");
+                //bunifuFlatButtonEntrenarRegresionLogistica.Enabled = true;
             }
+            else
+            {
+
+            }
+
         }
 
-        private async void button1_Click(object sender, EventArgs e)
-        {
-            await perceptron_function();
-        }
-
-        private void dibujarLinea(bool definitivo, string type){
+        private void DibujarLinea(bool definitivo, string type){
             Bitmap bm_temp;
             Color color_pen; 
             if (definitivo)
@@ -260,7 +264,7 @@ namespace Algoritmos_IA
                 x.SetValue(j,i);
                 if(type == "perceptron")
                 {
-                    y.SetValue((-(double)p.getPesos().GetValue(0, 0) + (double)p.getPesos().GetValue(0, 1) * (double)x.GetValue(i)) / (double)p.getPesos().GetValue(0, 2), i);
+                    y.SetValue((-(double)p.GetPesos().GetValue(0, 0) + (double)p.GetPesos().GetValue(0, 1) * (double)x.GetValue(i)) / (double)p.GetPesos().GetValue(0, 2), i);
                 }
                 else if(type == "adaline")
                 {
@@ -272,53 +276,53 @@ namespace Algoritmos_IA
                 
             }
 
-            int b = 0;
+            //int b = 0;
             if (type == "perceptron")
             {
                 color_pen = Color.Blue;
-                b = 0;
+                //b = 0;
             }
             else if(type == "adaline")
             {
                 color_pen = Color.Yellow;
-                b = 1;
+                //b = 1;
             }
             else if(type == "regresion_logistica"){
                 color_pen = Color.Red;
-                b = 2;
+                //b = 2;
             }
             else{
                 color_pen = Color.DarkGreen;
             }
-            Pen lapiz = plumas[b];
-            //Pen lapiz = new Pen(color_pen, 3);
-            bitmap_temp.DrawLine(lapiz, coordenadaAdaptadaToReal((double)x.GetValue(0)), coordenadaAdaptadaToReal((double)y.GetValue(0)), coordenadaAdaptadaToReal((double)x.GetValue(9)), coordenadaAdaptadaToReal((double)y.GetValue(9)));
+            //Pen lapiz = plumas[b];
+            Pen lapiz = new Pen(color_pen, 3);
+            bitmap_temp.DrawLine(lapiz, CoordenadaAdaptadaToReal((double)x.GetValue(0)), CoordenadaAdaptadaToReal((double)y.GetValue(0)), CoordenadaAdaptadaToReal((double)x.GetValue(9)), CoordenadaAdaptadaToReal((double)y.GetValue(9)));
 
             plano.Image = bm_temp;
             plano.Refresh();
         }
 
-        private int coordenadaAdaptadaToReal(double coordenada){
+        private int CoordenadaAdaptadaToReal(double coordenada){
             return (int)((coordenada * 60) + 300);
         }
 
-        private float[] coordenadaRealToAdaptada(int posicion_original_x, int posicion_original_y)
+        private float[] CoordenadaRealToAdaptada(int posicion_original_x, int posicion_original_y)
         {
             float posicion_adaptada_x = ((float)posicion_original_x - 300) / 60;
             if (posicion_adaptada_x < 0)
             {
-                posicion_adaptada_x = posicion_adaptada_x * -1;
+                posicion_adaptada_x *= -1;
             }
 
             float posicion_adaptada_y = ((float)posicion_original_y - 300) / 60;
             if (posicion_adaptada_y < 0)
             {
-                posicion_adaptada_y = posicion_adaptada_y * -1;
+                posicion_adaptada_y *= -1;
             }
 
             if (posicion_original_x <= 300 && posicion_original_y <= 300)
             {
-                posicion_adaptada_x = posicion_adaptada_x * -1;
+                posicion_adaptada_x *= -1;
             }
             else if (posicion_original_x <= 600 && posicion_original_y <= 300)
             {
@@ -326,12 +330,12 @@ namespace Algoritmos_IA
             }
             else if (posicion_original_x <= 300 && posicion_original_y <= 600)
             {
-                posicion_adaptada_x = posicion_adaptada_x * -1;
-                posicion_adaptada_y = posicion_adaptada_y * -1;
+                posicion_adaptada_x *= -1;
+                posicion_adaptada_y *= -1;
             }
             else if (posicion_original_x <= 600 && posicion_original_y <= 600)
             {
-                posicion_adaptada_y = posicion_adaptada_y * -1;
+                posicion_adaptada_y *= -1;
             }
 
             float[] xTemp = new float[2];
@@ -340,30 +344,16 @@ namespace Algoritmos_IA
             return xTemp; 
         }
 
-        private void create_error_graphic()
+        private void Create_error_graphic()
         {
             this.Error_cmp.Series["Perceptron"].Points.AddXY(1, 10);
-            this.Error_cmp.Series["Perceptron"].Points.AddXY(2, 20);
-            this.Error_cmp.Series["Perceptron"].Points.AddXY(3, 30);
-            this.Error_cmp.Series["Perceptron"].Points.AddXY(4, 40);
-            this.Error_cmp.Series["Perceptron"].Points.AddXY(5, 50);
-            this.Error_cmp.Series["Perceptron"].Points.AddXY(6, 40);
-            this.Error_cmp.Series["Perceptron"].Points.AddXY(7, 50);
         }
 
-        private void chart1_Click(object sender, EventArgs e)
+        private async Task Perceptron_function()
         {
-
-        }
-
-        private async Task perceptron_function()
-        {
-            //InicializarBtn.Enabled = false;
             //buttonPerceptron.Enabled = false;
-            //CompetirBtn.Enabled = false;
-
-            
-
+            //button1.Enabled = false;
+            //Competir.Enabled = false;
 
             Pen lapiz = new Pen(Color.Red, 3);
             //Array x = (Array)np.zeros(10);
@@ -371,40 +361,40 @@ namespace Algoritmos_IA
 
             await Task.Factory.StartNew(() =>
             {
-                while (!p.getEntrenado() && p.getEpocaActual() < p.getEpocas())
+                while (!p.GetEntrenado() && p.GetEpocaActual() < p.GetEpocas())
                 {
-                    p.setEntrenado(true);
-                    p.setErrorAcumulado(0);
-                    for (int i = 0; i < p.getPuntos().Count; i++)
+                    p.SetEntrenado(true);
+                    p.SetErrorAcumulado(0);
+                    for (int i = 0; i < p.GetPuntos().Count; i++)
                     {
                         float[,] xTemp = new float[3, 1];
                         xTemp[0, 0] = -1;
-                        xTemp[1, 0] = p.getPuntos()[i].getPosicionAdaptadaX();
-                        xTemp[2, 0] = p.getPuntos()[i].getPosicionAdaptadaY();
+                        xTemp[1, 0] = p.GetPuntos()[i].getPosicionAdaptadaX();
+                        xTemp[2, 0] = p.GetPuntos()[i].getPosicionAdaptadaY();
 
-                        int error = p.getPuntos()[i].getTipo() - p.funcionEscalon(xTemp);
+                        int error = p.GetPuntos()[i].getTipo() - p.FuncionEscalon(xTemp);
 
 
                         if (error != 0)
                         {
-                            p.setErrorAcumulado(p.getErrorAcumulado() + 1);
-                            p.setEntrenado(false);
-                            p.setPeso((Array)((NDArray)p.getPesos() + np.multiply(p.getLR(), np.multiply(error, np.transpose(xTemp)))));
+                            p.SetErrorAcumulado(p.GetErrorAcumulado() + 1);
+                            p.SetEntrenado(false);
+                            p.SetPeso((Array)((NDArray)p.GetPesos() + np.multiply(p.GetLR(), np.multiply(error, np.transpose(xTemp)))));
 
-                            this.Invoke((MethodInvoker)(() => dibujarLinea(false, "perceptron")));
+                            this.Invoke((MethodInvoker)(() => DibujarLinea(false, "perceptron")));
                         }
                     }
-                    this.Invoke((MethodInvoker)(() => this.Error_cmp.Series["Perceptron"].Points.AddXY(p.getEpocaActual(), p.getErrorAcumulado())));
-                    p.setEpocaActual(p.getEpocaActual() + 1);
+                    this.Invoke((MethodInvoker)(() => this.Error_cmp.Series["Perceptron"].Points.AddXY(p.GetEpocaActual(), p.GetErrorAcumulado())));
+                    p.SetEpocaActual(p.GetEpocaActual() + 1);
                 }
-                this.Invoke((MethodInvoker)(() => InicializarBtn.Enabled = true));
+                //this.Invoke((MethodInvoker)(() => buttonPerceptron.Enabled = true));
 
             });
 
-            dibujarLinea(true, "perceptron");
+            DibujarLinea(true, "perceptron");
         }
 
-        private async Task adaline_function()
+        private async Task Adaline_function()
         {
             Pen lapiz = new Pen(Color.BlueViolet, 3);
             Array x = (Array)np.zeros(10);
@@ -454,7 +444,7 @@ namespace Algoritmos_IA
 
                             a.setErrorAcumulado(a.getErrorAcumulado() + error);
 
-                            this.Invoke((MethodInvoker)(() => dibujarLinea(false, "adaline")));
+                            this.Invoke((MethodInvoker)(() => DibujarLinea(false, "adaline")));
                         }
 
                         this.Invoke((MethodInvoker)(() => this.Error_cmp.Series["Adaline"].Points.AddXY(a.getEpocaActual(), a.getErrorActualEpoca())));
@@ -473,19 +463,14 @@ namespace Algoritmos_IA
                     a.setEntrenado(true);
                 }
                 a.setCompletado(true);
-                this.Invoke((MethodInvoker)(() => InicializarBtn.Enabled = true));
-
-
+                //this.Invoke((MethodInvoker)(() => buttonPerceptron.Enabled = true));
             });
 
-            dibujarLinea(true, "adaline");
+            DibujarLinea(true, "adaline");
         }
 
         private async Task RegresionLogistica_function()
         {
-            //CompetirBtn.Enabled = false;
-            //buttonEntrenarRegresionLogistica.Enabled = false;
-            
             Pen lapiz = new Pen(Color.BlueViolet, 3);
             Array x = (Array)np.zeros(10);
             Array y = (Array)np.zeros(10);
@@ -496,7 +481,6 @@ namespace Algoritmos_IA
                 while (!rl.getEntrenado() && rl.getEpocaActual() < rl.getEpocas())
                 {
                     rl.setEntrenado(true);
-                    //Console.WriteLine("Entra ciclo infinito");
 
                     // Si error medio^2 es mayor a 0 y mayor a error maximo entra
                     if (rl.getEpocaActual() == 0)
@@ -508,7 +492,6 @@ namespace Algoritmos_IA
                         rl.setErrorActualEpoca(Math.Pow(rl.getErrorAcumulado() / rl.getPuntos().Count, 2));
                     }
 
-                    //Console.WriteLine(a.getErrorActualEpoca());
                     if (rl.getErrorActualEpoca() > float.Parse(ErrorTb.Text))
                     {
                         rl.setEntrenado(true);
@@ -516,7 +499,6 @@ namespace Algoritmos_IA
 
                         for (int i = 0; i < rl.getPuntos().Count; i++)
                         {
-
                             float[,] xTemp = new float[3, 1];
                             xTemp[0, 0] = -1;
                             xTemp[1, 0] = rl.getPuntos()[i].getPosicionAdaptadaX();
@@ -524,7 +506,6 @@ namespace Algoritmos_IA
 
                             double sigmoide = rl.funcion_sigmoide(xTemp);
                             double error = rl.getPuntos()[i].getTipo() - sigmoide;
-                            //Console.WriteLine(error);
 
                             rl.setErrorAcumulado(rl.getErrorAcumulado() + error);
 
@@ -534,7 +515,7 @@ namespace Algoritmos_IA
 
                             rl.setErrorAcumulado(rl.getErrorAcumulado() + error);
 
-                            this.Invoke((MethodInvoker)(() => dibujarLinea(false, "regresion_logistica")));
+                            this.Invoke((MethodInvoker)(() => DibujarLinea(false, "regresion_logistica")));
                         }
 
                         this.Invoke((MethodInvoker)(() => this.Error_cmp.Series["Regresión logistica"].Points.AddXY(rl.getEpocaActual(), rl.getErrorActualEpoca())));
@@ -553,67 +534,50 @@ namespace Algoritmos_IA
                     rl.setEntrenado(true);
                 }
                 rl.setCompletado(true);
-                this.Invoke((MethodInvoker)(() => InicializarBtn.Enabled = true));
-
-
+                //this.Invoke((MethodInvoker)(() => buttonPerceptron.Enabled = true));
             });
 
-            dibujarLinea(true, "regresion_logistica");
+            DibujarLinea(true, "regresion_logistica");
         }
 
-        private async void Adaline_Click(object sender, EventArgs e)
+        private async void CompetirBtn_Click(object sender, EventArgs e)
         {
-            await adaline_function();
-        }
+            var ListTask = new List<Task>();
 
-        private async void Competir_Click(object sender, EventArgs e)
-        {
-            //CompetirBtn.Enabled = false;
-            //InicializarBtn.Enabled = false;
-            //buttonAdaline.Enabled = false;
-            //buttonEntrenarRegresionLogistica.Enabled = false;
-
-            var tarea1 = perceptron_function();
-            var tarea2 = adaline_function();
-            if (PerceptronSwitch.Value==true)
+            if (PerceptronSwitch.Value == true)
             {
-                var tarea3 = RegresionLogistica_function();
-                await Task.WhenAny(tarea1, tarea2, tarea3);
+                ListTask.Add(Perceptron_function());
+            }
+            if (AdalineSwitch.Value == true)
+            {
+                ListTask.Add(Adaline_function());
+            }
+            if (RegresionLogisticaSwitch.Value == true)
+            {
+                ListTask.Add(RegresionLogistica_function());
+            }
+            if (ListTask.Count > 0)
+            {
+                await Task.WhenAny(ListTask.ToArray());
             }
             else
             {
-                await Task.WhenAny(tarea1, tarea2);
+                Console.WriteLine("No existen tareas para ejecutar");
             }
         }
 
-        private async void bunifuFlatButtonEntrenarRegresionLogistica_Click(object sender, EventArgs e)
+        private void LimpiarBtn_Click(object sender, EventArgs e)
         {
-            await RegresionLogistica_function();
-        }
-
-        private void bunifuGradientPanel2_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void buttonLimpiar_Click(object sender, EventArgs e)
-        {
-            if ((p != null && p.getCompletado()) || (a!=null && a.getCompletado()) || (rl != null && rl.getCompletado()))
+            if ((p != null && p.GetCompletado()) || (a != null && a.getCompletado()) || (rl != null && rl.getCompletado()))
             {
                 labelAlerta.Text = "";
                 this.Error_cmp.Series["Perceptron"].Points.Clear();
                 this.Error_cmp.Series["Adaline"].Points.Clear();
                 this.Error_cmp.Series["Regresión logistica"].Points.Clear();
 
-                LimpiarBtn.Enabled = false;
                 p = null;
                 a = null;
                 rl = null;
-                //buttonPerceptron.Enabled = false;
-                //InicializarBtn.Enabled = false;
-                //CompetirBtn.Enabled = false;
-                //buttonAdaline.Enabled = false;
-                //buttonEntrenarRegresionLogistica.Enabled = false;
 
                 lista_puntos = new List<Punto>();
                 bitmap_plano = new Bitmap(bitmap_solo_plano);

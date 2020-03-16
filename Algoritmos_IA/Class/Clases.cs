@@ -10,10 +10,9 @@ namespace Algoritmos_IA.Class
     public class Clases
     {
         Color Color_Pluma;
-
-        int Dureza;
-        List<int> lista_colores;
-        Random Color_random;
+        readonly int Dureza;
+        readonly List<int> lista_colores;
+        readonly Random Color_random;
         public Clases(Random random)
         {
             Color_random = random;
@@ -21,7 +20,7 @@ namespace Algoritmos_IA.Class
             Dureza = 2;
             lista_colores = new List<int>();
         }
-        public Pen get_Pluma()
+        public Pen Get_Pluma()
         {
             
             int suma = 0;
@@ -45,7 +44,7 @@ namespace Algoritmos_IA.Class
             return Pluma;
         }
 
-        public void funcion_prueba()
+        public void Funcion_prueba()
         {
             Console.WriteLine("funciona");
         }
