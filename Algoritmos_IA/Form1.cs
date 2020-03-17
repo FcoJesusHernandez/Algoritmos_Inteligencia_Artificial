@@ -27,7 +27,7 @@ namespace Algoritmos_IA
         public Form1()
         {
             InitializeComponent();
-            
+
             Capas = Int32.Parse(CapasTb.Text);
             neuronasXcapa = new List<int>();
             lista_puntos = new List<Punto>();
@@ -51,7 +51,7 @@ namespace Algoritmos_IA
             {
 
             }
-            
+
         }
 
         private void ClasesSelected()
@@ -72,7 +72,7 @@ namespace Algoritmos_IA
                 CapaActual = 1;
                 Capas = Int32.Parse(CapasTb.Text);
                 NextBtn.Enabled = true;
-                GuiaCapasLabel.Text = "Capa "+ CapaActual.ToString() + "/" + CapasTb.Text;
+                GuiaCapasLabel.Text = "Capa " + CapaActual.ToString() + "/" + CapasTb.Text;
                 GuiaCapasLabel.ForeColor = SystemColors.Control;
                 NeuronaPcTb.Visible = true;
                 NextBtn.Visible = true;
@@ -90,10 +90,10 @@ namespace Algoritmos_IA
         {
             plumas.Clear();
             Random random = new Random();
-            for (int i=0; i < cantClases; i++)
+            for (int i = 0; i < cantClases; i++)
             {
                 Clases clase = new Clases(random);
-                plumas.Add(clase.Get_Pluma());   
+                plumas.Add(clase.Get_Pluma());
             }
         }
 
@@ -161,7 +161,7 @@ namespace Algoritmos_IA
 
             //Dibujar_punto(punto_generado);
             Dibujar_Clases(punto_generado);
-            if (lista_puntos.Count>2)
+            if (lista_puntos.Count > 2)
             {
                 InicializarBtn.Enabled = true;
             }
@@ -218,7 +218,7 @@ namespace Algoritmos_IA
             Bitmap img = new Bitmap(plano.Width, plano.Height);
             Graphics imgBitmap = Graphics.FromImage(img);
 
-            imgBitmap.Clear(Color.FromArgb(30,30,46));
+            imgBitmap.Clear(Color.FromArgb(30, 30, 46));
             int x_centro = plano.Width / 2;
             int y_centro = plano.Height / 2;
 
@@ -294,9 +294,9 @@ namespace Algoritmos_IA
 
         }
 
-        private void DibujarLinea(bool definitivo, string type){
+        private void DibujarLinea(bool definitivo, string type) {
             Bitmap bm_temp;
-            Color color_pen; 
+            Color color_pen;
             if (definitivo)
             {
                 bm_temp = bitmap_plano;
@@ -305,26 +305,26 @@ namespace Algoritmos_IA
             {
                 bm_temp = new Bitmap(bitmap_plano);
             }
-            
+
             Graphics bitmap_temp = Graphics.FromImage(bm_temp);
-            
+
             Array x = (Array)np.zeros(10);
             Array y = (Array)np.zeros(10);
-            
-            for(int i = 0, j = -5; i<10; i++, j++){
-                x.SetValue(j,i);
-                if(type == "perceptron")
+
+            for (int i = 0, j = -5; i < 10; i++, j++) {
+                x.SetValue(j, i);
+                if (type == "perceptron")
                 {
                     y.SetValue((-(double)p.GetPesos().GetValue(0, 0) + (double)p.GetPesos().GetValue(0, 1) * (double)x.GetValue(i)) / (double)p.GetPesos().GetValue(0, 2), i);
                 }
-                else if(type == "adaline")
+                else if (type == "adaline")
                 {
                     y.SetValue((-(double)a.getPesos().GetValue(0, 0) + (double)a.getPesos().GetValue(0, 1) * (double)x.GetValue(i)) / (double)a.getPesos().GetValue(0, 2), i);
                 }
-                else if(type == "regresion_logistica"){
+                else if (type == "regresion_logistica") {
                     y.SetValue((-(double)rl.getPesos().GetValue(0, 0) + (double)rl.getPesos().GetValue(0, 1) * (double)x.GetValue(i)) / (double)rl.getPesos().GetValue(0, 2), i);
                 }
-                
+
             }
 
             //int b = 0;
@@ -333,16 +333,16 @@ namespace Algoritmos_IA
                 color_pen = Color.Blue;
                 //b = 0;
             }
-            else if(type == "adaline")
+            else if (type == "adaline")
             {
                 color_pen = Color.Yellow;
                 //b = 1;
             }
-            else if(type == "regresion_logistica"){
+            else if (type == "regresion_logistica") {
                 color_pen = Color.Red;
                 //b = 2;
             }
-            else{
+            else {
                 color_pen = Color.DarkGreen;
             }
             //Pen lapiz = plumas[b];
@@ -353,7 +353,7 @@ namespace Algoritmos_IA
             plano.Refresh();
         }
 
-        private int CoordenadaAdaptadaToReal(double coordenada){
+        private int CoordenadaAdaptadaToReal(double coordenada) {
             return (int)((coordenada * 60) + 300);
         }
 
@@ -392,7 +392,7 @@ namespace Algoritmos_IA
             float[] xTemp = new float[2];
             xTemp[0] = posicion_adaptada_x;
             xTemp[1] = posicion_adaptada_y;
-            return xTemp; 
+            return xTemp;
         }
 
         private void Create_error_graphic()
@@ -487,7 +487,7 @@ namespace Algoritmos_IA
                             double error = a.getPuntos()[i].getTipo() - sigmoide;
                             //Console.WriteLine(error);
 
-                            a.setErrorAcumulado(a.getErrorAcumulado() + Math.Pow(error,2));
+                            a.setErrorAcumulado(a.getErrorAcumulado() + Math.Pow(error, 2));
 
                             a.setEntrenado(false);
 
@@ -509,7 +509,7 @@ namespace Algoritmos_IA
                     }
 
                 }
-                if(a.getEpocaActual() < a.getEpocas())
+                if (a.getEpocaActual() < a.getEpocas())
                 {
                     a.setEntrenado(true);
                 }
@@ -580,7 +580,7 @@ namespace Algoritmos_IA
                     }
 
                 }
-                if(rl.getEpocaActual() < rl.getEpocas())
+                if (rl.getEpocaActual() < rl.getEpocas())
                 {
                     rl.setEntrenado(true);
                 }
@@ -593,8 +593,8 @@ namespace Algoritmos_IA
 
         private void NextBtn_Click(object sender, EventArgs e)
         {
-            if(CapaActual == Int32.Parse(CapasTb.Text))
-            {  
+            if (CapaActual == Int32.Parse(CapasTb.Text))
+            {
                 neuronasXcapa.Add(Int32.Parse(ClasesTb.Text));
                 NeuronaPcTb.Text = "0";
                 NextBtn.Enabled = false;
@@ -604,7 +604,7 @@ namespace Algoritmos_IA
             else
             {
                 neuronasXcapa.Add(Int32.Parse(NeuronaPcTb.Text));// NeuronaPcTb);
-                if(CapaActual+1 == Int32.Parse(CapasTb.Text))
+                if (CapaActual + 1 == Int32.Parse(CapasTb.Text))
                 {
                     NeuronaPcTb.Text = ClasesTb.Text;
                 }
@@ -633,16 +633,16 @@ namespace Algoritmos_IA
             mlp.Forward_Backward();
 
             //Datos de prueba, hay que quitarlos
-            Punto prueba = new Punto(2, 2, 6);
-            mlp.Forward(prueba, true);
-            Punto prueba2 = new Punto(2, -2, 5);
-            mlp.Forward(prueba2, true);
-            Punto prueba3 = new Punto(-2, -2, 5);
-            mlp.Forward(prueba3, true);
-            Punto prueba4 = new Punto(-2, 2, 5);
-            mlp.Forward(prueba4, true);
+            Punto prueba = new Punto(2, 2, 5, CoordenadaAdaptadaToReal(2), CoordenadaAdaptadaToReal(2));
+            mlp.Forward(prueba, true, false);
+            Punto prueba2 = new Punto(2, -2, 5, CoordenadaAdaptadaToReal(2), CoordenadaAdaptadaToReal(-2));
+            mlp.Forward(prueba2, true, false);
+            Punto prueba3 = new Punto(-2, -2, 5, CoordenadaAdaptadaToReal(-2), CoordenadaAdaptadaToReal(-2));
+            mlp.Forward(prueba3, true, false);
+            Punto prueba4 = new Punto(-2, 2, 5, CoordenadaAdaptadaToReal(-2), CoordenadaAdaptadaToReal(2));
+            mlp.Forward(prueba4, true, false);
             Punto prueba5 = new Punto(-3, 2, 5);
-            mlp.Forward(prueba5, true);
+            mlp.Forward(prueba5, true, false);
 
             dibujar_bitmap_mlp(mlp);
         }
@@ -654,7 +654,7 @@ namespace Algoritmos_IA
                 for (float y = 5; y > -5; y = y - 0.5f)
                 {
                     Punto punto_dibujar = new Punto(x, y, 5,CoordenadaAdaptadaToReal(x), CoordenadaAdaptadaToReal(y));
-                    punto_dibujar.setTipo(mlp.Forward(punto_dibujar, true));
+                    punto_dibujar.setTipo(mlp.Forward(punto_dibujar, true, false));
                     Dibujar_Clases(punto_dibujar);
                 }
             }
@@ -708,7 +708,7 @@ namespace Algoritmos_IA
 
         private void LimpiarBtn_Click(object sender, EventArgs e)
         {
-            if ((p != null && p.GetCompletado()) || (a != null && a.getCompletado()) || (rl != null && rl.getCompletado()))
+            if ((p != null && p.GetCompletado()) || (a != null && a.getCompletado()) || (rl != null && rl.getCompletado()) || (rl==null || p == null || a == null))
             {
                 labelAlerta.Text = "";
                 this.Error_cmp.Series["Perceptron"].Points.Clear();

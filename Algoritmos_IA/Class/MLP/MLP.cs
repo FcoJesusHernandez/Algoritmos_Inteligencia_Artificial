@@ -67,22 +67,35 @@ namespace Algoritmos_IA.Class.MLP
 
                 foreach (Punto p in entradas)
                 {
-                    Forward(p, false);
+                    Forward(p, false, false);
                     BackPropagation(p);
                 }
                 Console.WriteLine("Error Acumulado por Epoca: ");
                 Console.WriteLine(errorAcumulado / entradas.Count);
             }
+            combinacion_clases = new List<NDArray>();
+            relacion_numero_clase = new List<int>();
+
+            // definir clases
+            foreach (Punto p in entradas)
+            {
+                if (!relacion_numero_clase.Contains(p.getTipo()))
+                {
+                    Forward(p, true, true);
+                }
+            }
         }
-        public int Forward(Punto p, bool evaluar)
+        public int Forward(Punto p, bool evaluar, bool guardar_clase)
         {
             double[,] primerEntrada = new double[3, 1];
             //Este if y el bool evaluar es solo para los casos de prueba, hay que quitarlos
             if (evaluar)
             {
                 primerEntrada[0, 0] = -1;
-                primerEntrada[1, 0] = p.getPosicionOriginalX();
-                primerEntrada[2, 0] = p.getPosicionOriginalY();
+                /*primerEntrada[1, 0] = p.getPosicionOriginalX();
+                primerEntrada[2, 0] = p.getPosicionOriginalY();*/
+                primerEntrada[1, 0] = p.getPosicionAdaptadaX();
+                primerEntrada[2, 0] = p.getPosicionAdaptadaY();
             }
             else //lo que esta en este else si se ocupa
             {
@@ -130,7 +143,7 @@ namespace Algoritmos_IA.Class.MLP
 
                 //Esta parte creo que conviene hacerla una funciona aparte, para que devuelva el valor de la clase
 
-                if (!evaluar && capas.Last<Capa>() == c)
+                if (guardar_clase && capas.Last<Capa>() == c)
                 {
                     NDArray temp_combinacion = new NDArray((double[,])c.salidaCapa);
 
@@ -150,10 +163,6 @@ namespace Algoritmos_IA.Class.MLP
                     {
                         combinacion_clases.Add(temp_combinacion);
                         relacion_numero_clase.Add(p.getTipo());
-                    }
-                    else
-                    {
-                        relacion_numero_clase[combinacion_clases.IndexOf(temp_combinacion)] = p.getTipo();
                     }
                 }
 
@@ -195,6 +204,7 @@ namespace Algoritmos_IA.Class.MLP
                 }
                 //
             }
+            
             primerForward = false;
             return 0;
         }
