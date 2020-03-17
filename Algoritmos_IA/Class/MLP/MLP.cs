@@ -11,6 +11,8 @@ namespace Algoritmos_IA.Class.MLP
     {
         List<Punto> entradas;
         List<Capa> capas;
+        List<NDArray> combinacion_clases;
+        List<int> relacion_numero_clase;
         bool primerForward = true;
         NDArray matrizDeseadas;
         float learningRate;
@@ -20,6 +22,9 @@ namespace Algoritmos_IA.Class.MLP
 
         public MLP(int epocas, int nCapas, List<int> neuronaXCapa, float lr, List<Punto> puntos, double errorDeseado)
         {
+            combinacion_clases = new List<NDArray>();
+            relacion_numero_clase = new List<int>();
+
             this.epocas = epocas;
             this.entradas = puntos;
             this.entradas = puntos;
@@ -56,6 +61,10 @@ namespace Algoritmos_IA.Class.MLP
                     break;
                 }
                 errorAcumulado = 0;
+
+                combinacion_clases = new List<NDArray>();
+                relacion_numero_clase = new List<int>();
+
                 foreach (Punto p in entradas)
                 {
                     Forward(p, false);
@@ -65,7 +74,7 @@ namespace Algoritmos_IA.Class.MLP
                 Console.WriteLine(errorAcumulado / entradas.Count);
             }
         }
-        public void Forward(Punto p, bool evaluar)
+        public int Forward(Punto p, bool evaluar)
         {
             double[,] primerEntrada = new double[3, 1];
             //Este if y el bool evaluar es solo para los casos de prueba, hay que quitarlos
@@ -121,30 +130,73 @@ namespace Algoritmos_IA.Class.MLP
 
                 //Esta parte creo que conviene hacerla una funciona aparte, para que devuelva el valor de la clase
 
+                if (!evaluar && capas.Last<Capa>() == c)
+                {
+                    NDArray temp_combinacion = new NDArray((double[,])c.salidaCapa);
+
+                    for (int i = 0; i < temp_combinacion.Shape[0]; i++)
+                    {
+                        if (temp_combinacion[i][0] >= 0.5)
+                        {
+                            temp_combinacion[i][0] = 1;
+                        }
+                        else
+                        {
+                            temp_combinacion[i][0] = 0;
+                        }
+                    }
+
+                    if (!combinacion_clases.Contains(temp_combinacion))
+                    {
+                        combinacion_clases.Add(temp_combinacion);
+                        relacion_numero_clase.Add(p.getTipo());
+                    }
+                    else
+                    {
+                        relacion_numero_clase[combinacion_clases.IndexOf(temp_combinacion)] = p.getTipo();
+                    }
+                }
+
                 if (evaluar && capas.Last<Capa>() == c)
                 {
                     Console.WriteLine("C_salida: " + c.salidaCapa.ToString());
-                    int clase = 0;
+
+                    int clase = -1;
                     for (int i = 0; i < c.salidaCapa.Shape[0]; i++)
                     {
-
                         if (c.salidaCapa[i][0] >= 0.5)
                         {
                             c.salidaCapa[i][0] = 1;
-                            clase = i;
                         }
                         else
                         {
                             c.salidaCapa[i][0] = 0;
                         }
                     }
-                    Console.WriteLine("C: " + c.salidaCapa.ToString());
-                    Console.WriteLine("Clase: " + clase.ToString());
 
+                    for (int i = 0; i < combinacion_clases.Count; i++)
+                    {
+                        int coincidencias = 0;
+                        for (int j = 0; j < combinacion_clases[i].size; j++)
+                        {
+                            if (combinacion_clases[i][j][0] == c.salidaCapa[j][0])
+                            {
+                                coincidencias++;
+                            }
+                        }
+                        if(coincidencias == combinacion_clases[i].size)
+                        {
+                            clase = relacion_numero_clase[i];
+                            Console.WriteLine("C: " + c.salidaCapa.ToString());
+                            Console.WriteLine("Clase: " + clase.ToString());
+                            return clase;
+                        }
+                    }
                 }
                 //
             }
             primerForward = false;
+            return 0;
         }
 
         public void BackPropagation(Punto p)

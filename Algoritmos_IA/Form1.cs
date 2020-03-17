@@ -641,6 +641,23 @@ namespace Algoritmos_IA
             mlp.Forward(prueba3, true);
             Punto prueba4 = new Punto(-2, 2, 5);
             mlp.Forward(prueba4, true);
+            Punto prueba5 = new Punto(-3, 2, 5);
+            mlp.Forward(prueba5, true);
+
+            dibujar_bitmap_mlp(mlp);
+        }
+
+        private void dibujar_bitmap_mlp(MLP mlp)
+        {
+            for (float x = -5; x < 5; x = x + 0.5f)
+            {
+                for (float y = 5; y > -5; y = y - 0.5f)
+                {
+                    Punto punto_dibujar = new Punto(x, y, 5,CoordenadaAdaptadaToReal(x), CoordenadaAdaptadaToReal(y));
+                    punto_dibujar.setTipo(mlp.Forward(punto_dibujar, true));
+                    Dibujar_Clases(punto_dibujar);
+                }
+            }
         }
 
         private void ClaseSelected_onItemSelected(object sender, EventArgs e)

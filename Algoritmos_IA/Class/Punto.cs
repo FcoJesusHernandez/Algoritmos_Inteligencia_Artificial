@@ -21,6 +21,16 @@ namespace Algoritmos_IA.Class
             adaptarPunto();
         }
 
+        public Punto(float adaptada_x, float adaptada_y, int t, int o_x, int o_y)
+        {
+            posicion_adaptada_x = adaptada_x;
+            posicion_adaptada_y = adaptada_y;
+            tipo = t;
+
+            posicion_original_x = o_x;
+            posicion_original_y = o_y;
+        }
+
         private void adaptarPunto()
         {
             posicion_adaptada_x = ((float)posicion_original_x - 300) / 60;
@@ -77,6 +87,11 @@ namespace Algoritmos_IA.Class
         public int getTipo()
         {
             return tipo;
+        }
+
+        public void setTipo(int tipo)
+        {
+            this.tipo = tipo;
         }
     }
 }
