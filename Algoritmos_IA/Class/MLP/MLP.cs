@@ -4,11 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NumSharp;
+using System.Windows.Forms;
+using System.Drawing;
 
 namespace Algoritmos_IA.Class.MLP
 {
-    class MLP
+    class MLP : Form1
     {
+        Img_control ImgControl;
         List<Punto> entradas;
         List<Capa> capas;
         List<NDArray> combinacion_clases;
@@ -50,41 +53,54 @@ namespace Algoritmos_IA.Class.MLP
             return sigmoide * (1 - sigmoide);
         }
 
-        public void Forward_Backward()
+        public async Task Forward_Backward(Bitmap bitmap_plano, Bitmap respaldo,Bitmap bitmap_solo_plano, Form callingForm, List<Pen> plumas, List<Punto> lista_puntos)
         {
-            for (int i = 0; i < epocas; i++)
-            {
-                if (errorDeseado > errorAcumulado / entradas.Count)
-                {
-                    Console.WriteLine("Error Acumulado por Epoca: ");
-                    Console.WriteLine(errorAcumulado / entradas.Count);
-                    break;
-                }
-                errorAcumulado = 0;
+            ImgControl = new Img_control(bitmap_plano, respaldo, bitmap_solo_plano, callingForm);
+            ImgControl.LimpiarPLano();
 
+            await Task.Factory.StartNew(() =>
+            {
+                for (int i = 0; i < epocas; i++)
+                {
+
+                    if (errorDeseado > errorAcumulado / entradas.Count)
+                    {
+                        //Console.WriteLine("Error Acumulado por Epoca: ");
+                        //Console.WriteLine(errorAcumulado / entradas.Count);
+                        break;
+                    }
+
+                    errorAcumulado = 0;
+
+                    combinacion_clases = new List<NDArray>();
+                    relacion_numero_clase = new List<int>();
+
+                    foreach (Punto p in entradas)
+                    {
+                        Forward(p, false, false);
+                        BackPropagation(p);
+                    }
+                    //Console.WriteLine("Error Acumulado por Epoca: ");
+                    //Console.WriteLine(errorAcumulado / entradas.Count);
+                    //Console.WriteLine("Epoca: " + epocas.ToString());
+                    ImgControl.ActualizarGraficaError("MLP", i, errorAcumulado / entradas.Count);
+                }
                 combinacion_clases = new List<NDArray>();
                 relacion_numero_clase = new List<int>();
 
+                // definir clases
                 foreach (Punto p in entradas)
                 {
-                    Forward(p, false, false);
-                    BackPropagation(p);
+                    if (!relacion_numero_clase.Contains(p.getTipo()))
+                    {
+                        Forward(p, true, true);
+                    }
                 }
-                Console.WriteLine("Error Acumulado por Epoca: ");
-                Console.WriteLine(errorAcumulado / entradas.Count);
-            }
-            combinacion_clases = new List<NDArray>();
-            relacion_numero_clase = new List<int>();
 
-            // definir clases
-            foreach (Punto p in entradas)
-            {
-                if (!relacion_numero_clase.Contains(p.getTipo()))
-                {
-                    Forward(p, true, true);
-                }
-            }
+                ImgControl.DibujarPuntos(plumas, lista_puntos);
+            });
         }
+
         public int Forward(Punto p, bool evaluar, bool guardar_clase)
         {
             double[,] primerEntrada = new double[3, 1];

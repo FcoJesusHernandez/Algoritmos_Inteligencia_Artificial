@@ -33,6 +33,7 @@
             System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataVisualization.Charting.Title title1 = new System.Windows.Forms.DataVisualization.Charting.Title();
             System.Windows.Forms.DataVisualization.Charting.Title title2 = new System.Windows.Forms.DataVisualization.Charting.Title();
             System.Windows.Forms.DataVisualization.Charting.Title title3 = new System.Windows.Forms.DataVisualization.Charting.Title();
@@ -58,6 +59,10 @@
             this.bunifuCustomLabel1 = new Bunifu.Framework.UI.BunifuCustomLabel();
             this.CompetirBtn = new Bunifu.Framework.UI.BunifuImageButton();
             this.bunifuGradientPanel2 = new Bunifu.Framework.UI.BunifuGradientPanel();
+            this.GuiaCapasLabel = new Bunifu.Framework.UI.BunifuCustomLabel();
+            this.bunifuCustomLabel3 = new Bunifu.Framework.UI.BunifuCustomLabel();
+            this.bunifuSeparator4 = new Bunifu.Framework.UI.BunifuSeparator();
+            this.bunifuCustomLabel2 = new Bunifu.Framework.UI.BunifuCustomLabel();
             this.bunifuSeparator3 = new Bunifu.Framework.UI.BunifuSeparator();
             this.CapasTb = new Bunifu.Framework.UI.BunifuMaterialTextbox();
             this.CapasLabel = new Bunifu.Framework.UI.BunifuCustomLabel();
@@ -75,10 +80,6 @@
             this.ErrorTb = new Bunifu.Framework.UI.BunifuMaterialTextbox();
             this.textoxEpocasMaximas = new Bunifu.Framework.UI.BunifuCustomLabel();
             this.EpocasMaximasTb = new Bunifu.Framework.UI.BunifuMaterialTextbox();
-            this.bunifuCustomLabel2 = new Bunifu.Framework.UI.BunifuCustomLabel();
-            this.bunifuSeparator4 = new Bunifu.Framework.UI.BunifuSeparator();
-            this.bunifuCustomLabel3 = new Bunifu.Framework.UI.BunifuCustomLabel();
-            this.GuiaCapasLabel = new Bunifu.Framework.UI.BunifuCustomLabel();
             ((System.ComponentModel.ISupportInitialize)(this.plano)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Error_cmp)).BeginInit();
             this.bunifuGradientPanel1.SuspendLayout();
@@ -97,6 +98,7 @@
             this.plano.Location = new System.Drawing.Point(41, 40);
             this.plano.Name = "plano";
             this.plano.Size = new System.Drawing.Size(600, 600);
+            this.plano.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.plano.TabIndex = 0;
             this.plano.TabStop = false;
             this.plano.Click += new System.EventHandler(this.Plano_Click);
@@ -197,9 +199,14 @@
             series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
             series3.Legend = "Legend1";
             series3.Name = "Regresión logistica";
+            series4.ChartArea = "ChartArea1";
+            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series4.Legend = "Legend1";
+            series4.Name = "MLP";
             this.Error_cmp.Series.Add(series1);
             this.Error_cmp.Series.Add(series2);
             this.Error_cmp.Series.Add(series3);
+            this.Error_cmp.Series.Add(series4);
             this.Error_cmp.Size = new System.Drawing.Size(654, 310);
             this.Error_cmp.TabIndex = 10;
             this.Error_cmp.Text = "Error";
@@ -454,6 +461,54 @@
             this.bunifuGradientPanel2.Size = new System.Drawing.Size(418, 284);
             this.bunifuGradientPanel2.TabIndex = 22;
             this.bunifuGradientPanel2.Paint += new System.Windows.Forms.PaintEventHandler(this.bunifuGradientPanel2_Paint);
+            // 
+            // GuiaCapasLabel
+            // 
+            this.GuiaCapasLabel.AutoSize = true;
+            this.GuiaCapasLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.GuiaCapasLabel.ForeColor = System.Drawing.SystemColors.Control;
+            this.GuiaCapasLabel.Location = new System.Drawing.Point(212, 224);
+            this.GuiaCapasLabel.Name = "GuiaCapasLabel";
+            this.GuiaCapasLabel.Size = new System.Drawing.Size(75, 18);
+            this.GuiaCapasLabel.TabIndex = 37;
+            this.GuiaCapasLabel.Text = "Capa 1/3";
+            // 
+            // bunifuCustomLabel3
+            // 
+            this.bunifuCustomLabel3.AutoSize = true;
+            this.bunifuCustomLabel3.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold);
+            this.bunifuCustomLabel3.ForeColor = System.Drawing.SystemColors.Control;
+            this.bunifuCustomLabel3.Location = new System.Drawing.Point(206, 13);
+            this.bunifuCustomLabel3.Name = "bunifuCustomLabel3";
+            this.bunifuCustomLabel3.Size = new System.Drawing.Size(192, 18);
+            this.bunifuCustomLabel3.TabIndex = 36;
+            this.bunifuCustomLabel3.Text = "Configuración de Básica";
+            // 
+            // bunifuSeparator4
+            // 
+            this.bunifuSeparator4.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.bunifuSeparator4.BackColor = System.Drawing.Color.Transparent;
+            this.bunifuSeparator4.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(105)))), ((int)(((byte)(105)))), ((int)(((byte)(105)))));
+            this.bunifuSeparator4.LineThickness = 2;
+            this.bunifuSeparator4.Location = new System.Drawing.Point(184, 149);
+            this.bunifuSeparator4.Name = "bunifuSeparator4";
+            this.bunifuSeparator4.Size = new System.Drawing.Size(11, 130);
+            this.bunifuSeparator4.TabIndex = 35;
+            this.bunifuSeparator4.Transparency = 255;
+            this.bunifuSeparator4.Vertical = true;
+            // 
+            // bunifuCustomLabel2
+            // 
+            this.bunifuCustomLabel2.AutoSize = true;
+            this.bunifuCustomLabel2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold);
+            this.bunifuCustomLabel2.ForeColor = System.Drawing.SystemColors.Control;
+            this.bunifuCustomLabel2.Location = new System.Drawing.Point(10, 177);
+            this.bunifuCustomLabel2.Name = "bunifuCustomLabel2";
+            this.bunifuCustomLabel2.Size = new System.Drawing.Size(171, 18);
+            this.bunifuCustomLabel2.TabIndex = 34;
+            this.bunifuCustomLabel2.Text = "Configuración de Red";
             // 
             // bunifuSeparator3
             // 
@@ -714,54 +769,6 @@
             this.EpocasMaximasTb.TabIndex = 16;
             this.EpocasMaximasTb.Text = "200";
             this.EpocasMaximasTb.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            // 
-            // bunifuCustomLabel2
-            // 
-            this.bunifuCustomLabel2.AutoSize = true;
-            this.bunifuCustomLabel2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold);
-            this.bunifuCustomLabel2.ForeColor = System.Drawing.SystemColors.Control;
-            this.bunifuCustomLabel2.Location = new System.Drawing.Point(10, 177);
-            this.bunifuCustomLabel2.Name = "bunifuCustomLabel2";
-            this.bunifuCustomLabel2.Size = new System.Drawing.Size(171, 18);
-            this.bunifuCustomLabel2.TabIndex = 34;
-            this.bunifuCustomLabel2.Text = "Configuración de Red";
-            // 
-            // bunifuSeparator4
-            // 
-            this.bunifuSeparator4.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.bunifuSeparator4.BackColor = System.Drawing.Color.Transparent;
-            this.bunifuSeparator4.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(105)))), ((int)(((byte)(105)))), ((int)(((byte)(105)))));
-            this.bunifuSeparator4.LineThickness = 2;
-            this.bunifuSeparator4.Location = new System.Drawing.Point(184, 149);
-            this.bunifuSeparator4.Name = "bunifuSeparator4";
-            this.bunifuSeparator4.Size = new System.Drawing.Size(11, 130);
-            this.bunifuSeparator4.TabIndex = 35;
-            this.bunifuSeparator4.Transparency = 255;
-            this.bunifuSeparator4.Vertical = true;
-            // 
-            // bunifuCustomLabel3
-            // 
-            this.bunifuCustomLabel3.AutoSize = true;
-            this.bunifuCustomLabel3.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold);
-            this.bunifuCustomLabel3.ForeColor = System.Drawing.SystemColors.Control;
-            this.bunifuCustomLabel3.Location = new System.Drawing.Point(206, 13);
-            this.bunifuCustomLabel3.Name = "bunifuCustomLabel3";
-            this.bunifuCustomLabel3.Size = new System.Drawing.Size(192, 18);
-            this.bunifuCustomLabel3.TabIndex = 36;
-            this.bunifuCustomLabel3.Text = "Configuración de Básica";
-            // 
-            // GuiaCapasLabel
-            // 
-            this.GuiaCapasLabel.AutoSize = true;
-            this.GuiaCapasLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.GuiaCapasLabel.ForeColor = System.Drawing.SystemColors.Control;
-            this.GuiaCapasLabel.Location = new System.Drawing.Point(212, 224);
-            this.GuiaCapasLabel.Name = "GuiaCapasLabel";
-            this.GuiaCapasLabel.Size = new System.Drawing.Size(75, 18);
-            this.GuiaCapasLabel.TabIndex = 37;
-            this.GuiaCapasLabel.Text = "Capa 1/3";
             // 
             // Form1
             // 
