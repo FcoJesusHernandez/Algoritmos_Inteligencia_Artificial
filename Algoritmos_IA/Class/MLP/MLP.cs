@@ -7,6 +7,7 @@ using NumSharp;
 using System.Windows.Forms;
 using System.Drawing;
 
+
 namespace Algoritmos_IA.Class.MLP
 {
     class MLP : Form1
@@ -56,6 +57,10 @@ namespace Algoritmos_IA.Class.MLP
         public async Task Forward_Backward(Bitmap bitmap_plano, Bitmap respaldo,Bitmap bitmap_solo_plano, Form callingForm, List<Pen> plumas, List<Punto> lista_puntos)
         {
             ImgControl = new Img_control(bitmap_plano, respaldo, bitmap_solo_plano, callingForm);
+            foreach (Capa c in capas)
+            {
+                c.setImgControl(ImgControl);
+            }
             ImgControl.LimpiarPLano();
 
             await Task.Factory.StartNew(() =>

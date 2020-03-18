@@ -15,14 +15,21 @@ namespace Algoritmos_IA.Class.MLP
         public NDArray salidaCapa { set; get; }
 
         public NDArray sensibilidadCapa { set; get; }
+        Img_control ImgControl;
         public Capa(int nNeuronas)
         {
+            //ImgControl = imgC;
             listaNeuronas = new List<Neurona>();
             for (int i = 0; i < nNeuronas; i++)
             {
                 Neurona n = new Neurona();
                 this.listaNeuronas.Add(n);
             }
+        }
+
+        public void setImgControl(Img_control ImgC)
+        {
+            ImgControl = ImgC;
         }
 
         public NDArray getPesosCapa()
@@ -67,6 +74,9 @@ namespace Algoritmos_IA.Class.MLP
             var s_a = np.dot(sensibilidadCapa, np.transpose(a));
             var w_incremento = np.dot(-lr, s_a);
             pesos = pesos + w_incremento;
+            //Console.WriteLine(pesos.ToString());
+            
+            //Console.WriteLine(pesos[0].ToString());
             NDArray pesosNeurona = new NDArray(typeof(Double));
             for (int i = 0; i < pesos.Shape[0];i++) 
             {
@@ -74,6 +84,10 @@ namespace Algoritmos_IA.Class.MLP
 
                 for (int j = 0; j < pesos.Shape[1]; j++) 
                 {
+                    if (pesos.Shape[1] == 3)
+                    {
+                        ImgControl.DibujarLinea(false, "MLP", pesos[i]);
+                    }
                     listaNeuronas[i].pesos.Add(pesos[i][j]);
                 }
             }

@@ -1,14 +1,16 @@
 ﻿using System;
+using Algoritmos_IA.Class.MLP;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 using System.Windows.Forms;
+using NumSharp;
 
 namespace Algoritmos_IA.Class
 {
-    class Img_control : Form
+    public class Img_control : Form
     {
         private Form1 mainForm = null;
         Bitmap bitmap_plano, respaldo, bitmap_solo_plano;
@@ -42,6 +44,122 @@ namespace Algoritmos_IA.Class
                 this.mainForm.ImagePlano = bitmap_plano;
                 //plano.Refresh();
             }
+        }
+
+        public void DibujarLinea(bool definitivo, string type, NDArray n)
+        {
+            Bitmap bm_temp;
+            Color color_pen;
+            if (definitivo)
+            {
+                bm_temp = bitmap_plano;
+            }
+            else
+            {
+                bm_temp = new Bitmap(bitmap_plano);
+            }
+
+            Graphics bitmap_temp = Graphics.FromImage(bm_temp);
+
+            Array x = (Array)np.zeros(10);
+            Array y = (Array)np.zeros(10);
+
+            for (int i = 0, j = -5; i < 10; i++, j++)
+            {
+                x.SetValue(j, i);
+                //y.SetValue(-(double)n[0][0] , i);
+                //Console.WriteLine((double)n[0]);
+                y.SetValue((-(double)n[0] + (double)n[1] * (double)x.GetValue(i)) / (double)n[2], i);
+                /*
+                if (type == "perceptron")
+                {
+                    
+                }
+                else if (type == "adaline")
+                {
+                    y.SetValue((-(double)a.getPesos().GetValue(0, 0) + (double)a.getPesos().GetValue(0, 1) * (double)x.GetValue(i)) / (double)a.getPesos().GetValue(0, 2), i);
+                }
+                else if (type == "regresion_logistica")
+                {
+                    y.SetValue((-(double)rl.getPesos().GetValue(0, 0) + (double)rl.getPesos().GetValue(0, 1) * (double)x.GetValue(i)) / (double)rl.getPesos().GetValue(0, 2), i);
+                }
+                */
+
+            }
+
+            //int b = 0;
+            if (type == "perceptron")
+            {
+                color_pen = Color.Blue;
+                //b = 0;
+            }
+            else if (type == "adaline")
+            {
+                color_pen = Color.Yellow;
+                //b = 1;
+            }
+            else if (type == "regresion_logistica")
+            {
+                color_pen = Color.Red;
+                //b = 2;
+            }
+            else
+            {
+                color_pen = Color.DarkGreen;
+            }
+            //Pen lapiz = plumas[b];
+            
+            Pen lapiz = new Pen(color_pen, 3);
+            bitmap_temp.DrawLine(lapiz, CoordenadaAdaptadaToReal((double)x.GetValue(0)), CoordenadaAdaptadaToReal((double)y.GetValue(0)), CoordenadaAdaptadaToReal((double)x.GetValue(9)), CoordenadaAdaptadaToReal((double)y.GetValue(9)));
+
+            //this.Invoke((MethodInvoker)(() => this.mainForm.ImagePlano = bm_temp));// this.Error_cmp.Series[series].Points.AddXY(x, y)));
+            this.mainForm.ImagePlano = bm_temp;
+            //plano.Image = bm_temp;
+            //plano.Refresh();
+
+        }
+
+        private int CoordenadaAdaptadaToReal(double coordenada)
+        {
+            return (int)((coordenada * 60) + 300);
+        }
+
+        private float[] CoordenadaRealToAdaptada(int posicion_original_x, int posicion_original_y)
+        {
+            float posicion_adaptada_x = ((float)posicion_original_x - 300) / 60;
+            if (posicion_adaptada_x < 0)
+            {
+                posicion_adaptada_x *= -1;
+            }
+
+            float posicion_adaptada_y = ((float)posicion_original_y - 300) / 60;
+            if (posicion_adaptada_y < 0)
+            {
+                posicion_adaptada_y *= -1;
+            }
+
+            if (posicion_original_x <= 300 && posicion_original_y <= 300)
+            {
+                posicion_adaptada_x *= -1;
+            }
+            else if (posicion_original_x <= 600 && posicion_original_y <= 300)
+            {
+                posicion_adaptada_y = (300 - (float)posicion_original_y) / 60;
+            }
+            else if (posicion_original_x <= 300 && posicion_original_y <= 600)
+            {
+                posicion_adaptada_x *= -1;
+                posicion_adaptada_y *= -1;
+            }
+            else if (posicion_original_x <= 600 && posicion_original_y <= 600)
+            {
+                posicion_adaptada_y *= -1;
+            }
+
+            float[] xTemp = new float[2];
+            xTemp[0] = posicion_adaptada_x;
+            xTemp[1] = posicion_adaptada_y;
+            return xTemp;
         }
 
         public void ActualizarGraficaError(string series, double x, double y)

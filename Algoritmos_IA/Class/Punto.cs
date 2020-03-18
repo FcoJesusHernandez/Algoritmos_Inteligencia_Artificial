@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Algoritmos_IA.Class
 {
-    class Punto
+    public class Punto
     {
         private int posicion_original_x, posicion_original_y;
         private float posicion_adaptada_x, posicion_adaptada_y;
