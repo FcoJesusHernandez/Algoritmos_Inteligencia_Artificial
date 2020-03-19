@@ -42,12 +42,12 @@ namespace Algoritmos_IA
         public Image ImagePlano
         {
             get { return plano.Image; }
-            set { plano.Image = value; }
+            set { this.Invoke((MethodInvoker)(() => plano.Image = value)); }
         }
+
         public void ErrorComponent(string series, double x, double y)
         {
-            this.Invoke((MethodInvoker)(() => this.Error_cmp.Series[series].Points.AddXY(x, y) ));
-            
+            this.Invoke((MethodInvoker)(() => this.Error_cmp.Series[series].Points.AddXY(x, y)));
         }
 
         protected void ClasesTb_TextChanged(object sender, EventArgs e)
@@ -60,6 +60,7 @@ namespace Algoritmos_IA
             }
             else
             {
+
 
             }
 
@@ -178,7 +179,7 @@ namespace Algoritmos_IA
             }
         }
 
-        private void Dibujar_Clases(Punto p)
+        public void Dibujar_Clases(Punto p)
         {
             Graphics bitmap_temp = Graphics.FromImage(bitmap_plano);
             Graphics bitmap_temp_respaldo = Graphics.FromImage(respaldo);
@@ -189,8 +190,8 @@ namespace Algoritmos_IA
 
             bitmap_temp.DrawEllipse(pluma, new Rectangle(p.getPosicionOriginalX() - 4, p.getPosicionOriginalY() - 4, 8, 8));
             bitmap_temp_respaldo.DrawEllipse(pluma, new Rectangle(p.getPosicionOriginalX() - 4, p.getPosicionOriginalY() - 4, 8, 8));
-
             plano.Image = bitmap_plano;
+            //plano.Image = bitmap_plano;
             plano.Refresh();
         }
 
@@ -644,7 +645,7 @@ namespace Algoritmos_IA
             MLP mlp = new MLP(Int32.Parse(EpocasMaximasTb.Text), Capas, neuronasXcapa, float.Parse(LearningRateTb.Text), lista_puntos, double.Parse(ErrorTb.Text));
             await mlp.Forward_Backward(bitmap_plano, respaldo, bitmap_solo_plano, this , plumas, lista_puntos);
 
-            getClassReal(mlp);
+            //getClassReal(mlp);
             /*
 
             //Datos de prueba, hay que quitarlos
@@ -663,29 +664,6 @@ namespace Algoritmos_IA
             //ImgControl.DibujarPuntos(plumas, lista_puntos_dibujar
 
             //dibujar_bitmap_mlp(mlp);
-        }
-
-        private void dibujar_bitmap_mlp(MLP mlp)
-        {
-            for (float x = -5; x < 5; x = x + 0.5f)
-            {
-                for (float y = 5; y > -5; y = y - 0.5f)
-                {
-                    Punto punto_dibujar = new Punto(x, y, 5,CoordenadaAdaptadaToReal(x), CoordenadaAdaptadaToReal(y));
-                    punto_dibujar.setTipo(mlp.Forward(punto_dibujar, true, false));
-                    lista_puntos_dibujar.Add(punto_dibujar);
-                    //Dibujar_Clases(punto_dibujar);
-                }
-            }
-        }
-
-        private void getClassReal(MLP mlp)
-        {
-            foreach (Punto p in lista_puntos)
-            {
-                Console.WriteLine("Clase real: " + p.getTipo().ToString());
-                mlp.Forward(p, true, false);
-            }
         }
 
         private void ClaseSelected_onItemSelected(object sender, EventArgs e)

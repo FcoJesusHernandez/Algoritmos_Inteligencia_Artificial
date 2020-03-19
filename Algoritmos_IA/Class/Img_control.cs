@@ -1,5 +1,6 @@
 ﻿using System;
-using Algoritmos_IA.Class.MLP;
+//using Algoritmos_IA.Class.MLP;
+//using Algoritmos_IA.Class;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,8 +15,10 @@ namespace Algoritmos_IA.Class
     {
         private Form1 mainForm = null;
         Bitmap bitmap_plano, respaldo, bitmap_solo_plano;
-        public Img_control(Bitmap newBitmap, Bitmap newBitmap2, Bitmap newBitmap3, Form CallingForm)
+        List<Pen> plumas;
+        public Img_control(Bitmap newBitmap, Bitmap newBitmap2, Bitmap newBitmap3, List<Pen> listaPlumas, Form CallingForm)
         {
+            plumas = listaPlumas;
             mainForm = CallingForm as Form1;
             bitmap_plano = new Bitmap(newBitmap);
             respaldo = new Bitmap(newBitmap2);
@@ -38,15 +41,16 @@ namespace Algoritmos_IA.Class
                 Pen pluma = plumas[p.getTipo()]; //new Pen(Color.Green, 3);
 
                 bitmap_temp.DrawEllipse(pluma, new Rectangle(p.getPosicionOriginalX() - 4, p.getPosicionOriginalY() - 4, 8, 8));
-                bitmap_temp_respaldo.DrawEllipse(pluma, new Rectangle(p.getPosicionOriginalX() - 4, p.getPosicionOriginalY() - 4, 8, 8));
+                //bitmap_temp_respaldo.DrawEllipse(pluma, new Rectangle(p.getPosicionOriginalX() - 4, p.getPosicionOriginalY() - 4, 8, 8));
 
                 //plano.Image = bitmap_plano;
-                this.mainForm.ImagePlano = bitmap_plano;
                 //plano.Refresh();
+
             }
+            this.mainForm.ImagePlano = bitmap_plano;
         }
 
-        public void DibujarLinea(bool definitivo, string type, NDArray n)
+        public void DibujarLinea(bool definitivo, string type, NDArray n, bool DibujarBitmap)
         {
             Bitmap bm_temp;
             Color color_pen;
@@ -64,6 +68,7 @@ namespace Algoritmos_IA.Class
             Array x = (Array)np.zeros(10);
             Array y = (Array)np.zeros(10);
 
+            
             for (int i = 0, j = -5; i < 10; i++, j++)
             {
                 x.SetValue(j, i);
@@ -113,7 +118,11 @@ namespace Algoritmos_IA.Class
             bitmap_temp.DrawLine(lapiz, CoordenadaAdaptadaToReal((double)x.GetValue(0)), CoordenadaAdaptadaToReal((double)y.GetValue(0)), CoordenadaAdaptadaToReal((double)x.GetValue(9)), CoordenadaAdaptadaToReal((double)y.GetValue(9)));
 
             //this.Invoke((MethodInvoker)(() => this.mainForm.ImagePlano = bm_temp));// this.Error_cmp.Series[series].Points.AddXY(x, y)));
-            this.mainForm.ImagePlano = bm_temp;
+            if (DibujarBitmap)
+            {
+                this.mainForm.ImagePlano = bm_temp;
+            }
+
             //plano.Image = bm_temp;
             //plano.Refresh();
 
@@ -165,6 +174,47 @@ namespace Algoritmos_IA.Class
         public void ActualizarGraficaError(string series, double x, double y)
         {
             this.mainForm.ErrorComponent(series, x, y);
+        }
+
+        public void Dibujar_Clases(Punto p)
+        {
+            Graphics bitmap_temp = Graphics.FromImage(bitmap_plano);
+            Graphics bitmap_temp_respaldo = Graphics.FromImage(respaldo);
+
+            //Pen pluma;
+
+            Pen pluma = plumas[p.getTipo()]; //new Pen(Color.Green, 3);
+
+            bitmap_temp.DrawEllipse(pluma, new Rectangle(p.getPosicionOriginalX() - 4, p.getPosicionOriginalY() - 4, 8, 8));
+            bitmap_temp_respaldo.DrawEllipse(pluma, new Rectangle(p.getPosicionOriginalX() - 4, p.getPosicionOriginalY() - 4, 8, 8));
+            //this.mainForm.ImagePlano = bitmap_plano;
+            //plano.Image = bitmap_plano;
+            //plano.Refresh();
+        }
+
+        public void Dibujar_bitmap_mlp(MLP.MLP mlp, List<Punto> lista_puntos_dibujar )
+        {
+            for (float x = -5; x < 5; x = x + 0.5f)
+            {
+                for (float y = 5; y > -5; y = y - 0.5f)
+                {
+                    Punto punto_dibujar = new Punto(x, y, 5, CoordenadaAdaptadaToReal(x), CoordenadaAdaptadaToReal(y));
+                    punto_dibujar.setTipo(mlp.Forward(punto_dibujar, true, false));
+                    lista_puntos_dibujar.Add(punto_dibujar);
+                    //Dibujar_Clases(punto_dibujar);
+                }
+            }
+            lista_puntos_dibujar.Reverse();
+            DibujarPuntos(plumas, lista_puntos_dibujar);
+        }
+
+        public void GetClassReal(MLP.MLP mlp, List<Punto> lista_puntos)
+        {
+            foreach (Punto p in lista_puntos)
+            {
+                Console.WriteLine("Clase real: " + p.getTipo().ToString());
+                mlp.Forward(p, true, false);
+            }
         }
     }
 }

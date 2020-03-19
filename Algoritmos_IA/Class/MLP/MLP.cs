@@ -10,7 +10,7 @@ using System.Drawing;
 
 namespace Algoritmos_IA.Class.MLP
 {
-    class MLP : Form1
+    public class MLP : Form1
     {
         Img_control ImgControl;
         List<Punto> entradas;
@@ -56,7 +56,7 @@ namespace Algoritmos_IA.Class.MLP
 
         public async Task Forward_Backward(Bitmap bitmap_plano, Bitmap respaldo,Bitmap bitmap_solo_plano, Form callingForm, List<Pen> plumas, List<Punto> lista_puntos)
         {
-            ImgControl = new Img_control(bitmap_plano, respaldo, bitmap_solo_plano, callingForm);
+            ImgControl = new Img_control(bitmap_plano, respaldo, bitmap_solo_plano, plumas, callingForm);
             foreach (Capa c in capas)
             {
                 c.setImgControl(ImgControl);
@@ -102,7 +102,28 @@ namespace Algoritmos_IA.Class.MLP
                     }
                 }
 
-                ImgControl.DibujarPuntos(plumas, lista_puntos);
+                //Dibuajar el area bajo la curva
+                ImgControl.Dibujar_bitmap_mlp(this, lista_puntos);
+
+                // Dibujar las rectas al final
+                
+                for (int i = 0; i < capas[0].pesos.Shape[0]; i++)
+                {
+                    capas[0].listaNeuronas[i].pesos = new List<double>();
+
+                    for (int j = 0; j < capas[0].pesos.Shape[1]; j++)
+                    {
+                        if (capas[0].pesos.Shape[1] == 3)
+                        {
+                            Console.WriteLine(i);
+                            ImgControl.DibujarLinea(true, "MLP", capas[0].pesos[i], true);
+                        }
+                        capas[0].listaNeuronas[i].pesos.Add(capas[0].pesos[i][j]);
+                    }
+                }
+                
+
+                //ImgControl.DibujarPuntos(plumas, lista_puntos);
             });
         }
 
@@ -217,8 +238,8 @@ namespace Algoritmos_IA.Class.MLP
                         if(coincidencias == combinacion_clases[i].size)
                         {
                             clase = relacion_numero_clase[i];
-                            Console.WriteLine("C: " + c.salidaCapa.ToString());
-                            Console.WriteLine("Clase: " + clase.ToString());
+                            //Console.WriteLine("C: " + c.salidaCapa.ToString());
+                            //Console.WriteLine("Clase: " + clase.ToString());
                             return clase;
                         }
                     }

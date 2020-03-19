@@ -86,7 +86,11 @@ namespace Algoritmos_IA.Class.MLP
                 {
                     if (pesos.Shape[1] == 3)
                     {
-                        ImgControl.DibujarLinea(false, "MLP", pesos[i]);
+                        if (j < pesos.Shape[1])
+                        {
+                            ImgControl.DibujarLinea(false, "MLP", pesos[i], true);
+                        }
+                        ImgControl.DibujarLinea(false, "MLP", pesos[i], false);
                     }
                     listaNeuronas[i].pesos.Add(pesos[i][j]);
                 }
