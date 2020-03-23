@@ -38,13 +38,32 @@ namespace Algoritmos_IA.Class
 
             foreach (Punto p in ListPoints)
             {
-                Pen pluma = plumas[p.getTipo()]; //new Pen(Color.Green, 3);
+                SolidBrush pluma = new SolidBrush(plumas[p.getTipo()].Color); 
+                
+                Pen pluma_border = new Pen(Color.Black, 1);
 
-                bitmap_temp.DrawEllipse(pluma, new Rectangle(p.getPosicionOriginalX() - 4, p.getPosicionOriginalY() - 4, 8, 8));
+                bitmap_temp.FillEllipse(pluma, new Rectangle(p.getPosicionOriginalX() - 4, p.getPosicionOriginalY() - 4, 8, 8));
+                bitmap_temp.DrawEllipse(pluma_border, new Rectangle(p.getPosicionOriginalX() - 4, p.getPosicionOriginalY() - 4, 8, 8));
                 //bitmap_temp_respaldo.DrawEllipse(pluma, new Rectangle(p.getPosicionOriginalX() - 4, p.getPosicionOriginalY() - 4, 8, 8));
 
                 //plano.Image = bitmap_plano;
                 //plano.Refresh();
+
+            }
+            this.mainForm.ImagePlano = bitmap_plano;
+        }
+
+        public void DibujarPuntos_Mapeo(List<Pen> plumas, List<Punto> ListPoints)
+        {
+            Graphics bitmap_temp = Graphics.FromImage(bitmap_plano);
+            Graphics bitmap_temp_respaldo = Graphics.FromImage(respaldo);
+            //Pen pluma;
+
+            foreach (Punto p in ListPoints)
+            {
+                SolidBrush pluma = new SolidBrush(plumas[p.getTipo()].Color);
+
+                bitmap_temp.FillRectangle(pluma, new Rectangle(p.getPosicionOriginalX(), p.getPosicionOriginalY(), 20, 20));
 
             }
             this.mainForm.ImagePlano = bitmap_plano;
@@ -194,18 +213,18 @@ namespace Algoritmos_IA.Class
 
         public void Dibujar_bitmap_mlp(MLP.MLP mlp, List<Punto> lista_puntos_dibujar )
         {
-            for (float x = -5; x < 5; x = x + 0.5f)
+            for (float x = -5; x < 5; x = x + 0.3f)
             {
-                for (float y = 5; y > -5; y = y - 0.5f)
+                for (float y = 5; y > -5; y = y - 0.3f)
                 {
-                    Punto punto_dibujar = new Punto(x, y, 5, CoordenadaAdaptadaToReal(x), CoordenadaAdaptadaToReal(y));
+                    Punto punto_dibujar = new Punto(x, y, 5, CoordenadaAdaptadaToReal(x), CoordenadaAdaptadaToReal((y) * -1));
                     punto_dibujar.setTipo(mlp.Forward(punto_dibujar, true, false));
                     lista_puntos_dibujar.Add(punto_dibujar);
                     //Dibujar_Clases(punto_dibujar);
                 }
             }
             lista_puntos_dibujar.Reverse();
-            DibujarPuntos(plumas, lista_puntos_dibujar);
+            DibujarPuntos_Mapeo(plumas, lista_puntos_dibujar);
         }
 
         public void GetClassReal(MLP.MLP mlp, List<Punto> lista_puntos)
