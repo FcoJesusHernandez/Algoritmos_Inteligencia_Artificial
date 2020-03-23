@@ -186,10 +186,13 @@ namespace Algoritmos_IA
 
             //Pen pluma;
 
-            Pen pluma = plumas[p.getTipo()]; //new Pen(Color.Green, 3);
+            SolidBrush pluma = new SolidBrush(plumas[p.getTipo()].Color);
 
-            bitmap_temp.DrawEllipse(pluma, new Rectangle(p.getPosicionOriginalX() - 4, p.getPosicionOriginalY() - 4, 8, 8));
-            bitmap_temp_respaldo.DrawEllipse(pluma, new Rectangle(p.getPosicionOriginalX() - 4, p.getPosicionOriginalY() - 4, 8, 8));
+            Pen pluma_border = new Pen(Color.Black, 1);
+
+            bitmap_temp.FillEllipse(pluma, new Rectangle(p.getPosicionOriginalX() - 4, p.getPosicionOriginalY() - 4, 8, 8));
+            bitmap_temp.DrawEllipse(pluma_border, new Rectangle(p.getPosicionOriginalX() - 4, p.getPosicionOriginalY() - 4, 8, 8));
+
             plano.Image = bitmap_plano;
             //plano.Image = bitmap_plano;
             plano.Refresh();

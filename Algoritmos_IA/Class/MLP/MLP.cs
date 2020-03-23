@@ -105,6 +105,7 @@ namespace Algoritmos_IA.Class.MLP
                 //Dibuajar el area bajo la curva
                 ImgControl.Dibujar_bitmap_mlp(this, lista_puntos);
 
+                ImgControl.Plano_Paint();
                 // Dibujar las rectas al final
                 
                 for (int i = 0; i < capas[0].pesos.Shape[0]; i++)

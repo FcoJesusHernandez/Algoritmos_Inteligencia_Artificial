@@ -38,13 +38,45 @@ namespace Algoritmos_IA.Class
 
             foreach (Punto p in ListPoints)
             {
-                Pen pluma = plumas[p.getTipo()]; //new Pen(Color.Green, 3);
+                SolidBrush pluma = new SolidBrush(plumas[p.getTipo()].Color); 
+                
+                Pen pluma_border = new Pen(Color.Black, 1);
 
-                bitmap_temp.DrawEllipse(pluma, new Rectangle(p.getPosicionOriginalX() - 4, p.getPosicionOriginalY() - 4, 8, 8));
+                bitmap_temp.FillEllipse(pluma, new Rectangle(p.getPosicionOriginalX() - 4, p.getPosicionOriginalY() - 4, 8, 8));
+                bitmap_temp.DrawEllipse(pluma_border, new Rectangle(p.getPosicionOriginalX() - 4, p.getPosicionOriginalY() - 4, 8, 8));
                 //bitmap_temp_respaldo.DrawEllipse(pluma, new Rectangle(p.getPosicionOriginalX() - 4, p.getPosicionOriginalY() - 4, 8, 8));
 
                 //plano.Image = bitmap_plano;
                 //plano.Refresh();
+
+            }
+            this.mainForm.ImagePlano = bitmap_plano;
+        }
+
+        public void DibujarPuntos_Mapeo(List<Pen> plumas, List<Punto> ListPoints, int index)
+        {
+            Graphics bitmap_temp = Graphics.FromImage(bitmap_plano);
+            Graphics bitmap_temp_respaldo = Graphics.FromImage(respaldo);
+            //Pen pluma;
+            int i = 0;
+            foreach (Punto p in ListPoints)
+            {
+                if (i < (ListPoints.Count - index))
+                {
+                    SolidBrush pluma = new SolidBrush(plumas[p.getTipo()].Color);
+                    bitmap_temp.FillRectangle(pluma, new Rectangle(p.getPosicionOriginalX(), p.getPosicionOriginalY(), 20, 20));
+
+                }
+                else
+                {
+                    SolidBrush pluma = new SolidBrush(plumas[p.getTipo()].Color);
+
+                    Pen pluma_border = new Pen(Color.Black, 1);
+
+                    bitmap_temp.FillEllipse(pluma, new Rectangle(p.getPosicionOriginalX() - 4, p.getPosicionOriginalY() - 4, 8, 8));
+                    bitmap_temp.DrawEllipse(pluma_border, new Rectangle(p.getPosicionOriginalX() - 4, p.getPosicionOriginalY() - 4, 8, 8));
+                }
+                i++;
 
             }
             this.mainForm.ImagePlano = bitmap_plano;
@@ -194,18 +226,50 @@ namespace Algoritmos_IA.Class
 
         public void Dibujar_bitmap_mlp(MLP.MLP mlp, List<Punto> lista_puntos_dibujar )
         {
-            for (float x = -5; x < 5; x = x + 0.5f)
+            int index = lista_puntos_dibujar.Count;
+            for (float x = -5; x < 5; x = x + 0.3f)
             {
-                for (float y = 5; y > -5; y = y - 0.5f)
+                for (float y = 5; y > -5; y = y - 0.3f)
                 {
-                    Punto punto_dibujar = new Punto(x, y, 5, CoordenadaAdaptadaToReal(x), CoordenadaAdaptadaToReal(y));
+                    Punto punto_dibujar = new Punto(x, y, 5, CoordenadaAdaptadaToReal(x), CoordenadaAdaptadaToReal((y) * -1));
                     punto_dibujar.setTipo(mlp.Forward(punto_dibujar, true, false));
                     lista_puntos_dibujar.Add(punto_dibujar);
                     //Dibujar_Clases(punto_dibujar);
                 }
             }
             lista_puntos_dibujar.Reverse();
-            DibujarPuntos(plumas, lista_puntos_dibujar);
+            DibujarPuntos_Mapeo(plumas, lista_puntos_dibujar, index);
+        }
+
+        public void Plano_Paint()
+        {
+            Graphics bitmap_temp = Graphics.FromImage(bitmap_plano);
+
+            //bitmap_temp.Clear(Color.FromArgb(30, 30, 46));
+            int x_centro = bitmap_plano.Width / 2;
+            int y_centro = bitmap_plano.Height / 2;
+
+            Pen lapiz = new Pen(Color.White, 1);
+
+            bitmap_temp.TranslateTransform(x_centro, y_centro);
+            bitmap_temp.ScaleTransform(1, -1);
+
+            bitmap_temp.DrawLine(lapiz, x_centro * -1, 0, x_centro * 2, 0);
+            bitmap_temp.DrawLine(lapiz, 0, y_centro, 0, y_centro * -1);
+
+            //e.Graphics.PageScale = .2f;  // investigar como funciona
+
+            for (int i = -x_centro; i <= x_centro; i += 60)
+            {
+                bitmap_temp.DrawLine(lapiz, 4, i, -4, i);
+                bitmap_temp.DrawLine(lapiz, i, 4, i, -4);
+            }
+
+            this.mainForm.ImagePlano = bitmap_plano;
+            //plano.Image = img;
+            //respaldo = new Bitmap(img);
+            //bitmap_plano = img;
+            //bitmap_solo_plano = new Bitmap(img);
         }
 
         public void GetClassReal(MLP.MLP mlp, List<Punto> lista_puntos)
