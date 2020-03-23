@@ -68,6 +68,10 @@ namespace Algoritmos_IA
         {
             if (CapasTb.Text != "")
             {
+                Bitmap bm_temp = new Bitmap(bitmap_plano);
+                plano.Image = bm_temp;
+                plano.Refresh();
+
                 neuronasXcapa.Clear();
                 CapaActual = 1;
                 Capas = Int32.Parse(CapasTb.Text);
@@ -167,17 +171,70 @@ namespace Algoritmos_IA
             }
         }
 
+        private void Dibujar_Clases_Mapeo(Punto p)
+        {
+            Graphics bitmap_temp = Graphics.FromImage(bitmap_plano);
+            //Graphics bitmap_temp_respaldo = Graphics.FromImage(respaldo);
+
+            //Pen pluma;
+
+            SolidBrush pluma = new SolidBrush(plumas[p.getTipo()].Color);
+
+            bitmap_temp.FillRectangle(pluma, new Rectangle(p.getPosicionOriginalX() - 10, p.getPosicionOriginalY() - 10, 20, 20));
+            //bitmap_temp_respaldo.FillRectangle(pluma, new Rectangle(p.getPosicionOriginalX() - 6, p.getPosicionOriginalY() - 6, 12, 12));
+
+            plano.Image = bitmap_plano;
+            plano.Refresh();
+        }
+
+        private void redibuja_puntos_mapeo()
+        {
+            Graphics imgBitmap = Graphics.FromImage(bitmap_plano);
+            SolidBrush pluma = new SolidBrush(Color.Black);
+            foreach (Punto p in lista_puntos)
+            {
+                imgBitmap.FillEllipse(pluma, new Rectangle(p.getPosicionOriginalX() - 4, p.getPosicionOriginalY() - 4, 8, 8));
+                imgBitmap.FillEllipse(pluma, new Rectangle(p.getPosicionOriginalX() - 4, p.getPosicionOriginalY() - 4, 8, 8));
+            }
+
+            plano.Image = bitmap_plano;
+            plano.Refresh();
+        }
+
+        private void redibuja_plano_mapeo()
+        {
+            Graphics imgBitmap = Graphics.FromImage(bitmap_plano);
+
+            int x_centro = plano.Width / 2;
+            int y_centro = plano.Height / 2;
+
+            Pen lapiz = new Pen(Color.White, 1);
+
+            imgBitmap.TranslateTransform(x_centro, y_centro);
+            imgBitmap.ScaleTransform(1, -1);
+
+            imgBitmap.DrawLine(lapiz, x_centro * -1, 0, x_centro * 2, 0);
+            imgBitmap.DrawLine(lapiz, 0, y_centro, 0, y_centro * -1);
+
+            for (int i = -x_centro; i <= x_centro; i += 60)
+            {
+                imgBitmap.DrawLine(lapiz, 4, i, -4, i);
+                imgBitmap.DrawLine(lapiz, i, 4, i, -4);
+            }
+
+            plano.Image = bitmap_plano;
+            plano.Refresh();
+        }
+
         private void Dibujar_Clases(Punto p)
         {
             Graphics bitmap_temp = Graphics.FromImage(bitmap_plano);
-            Graphics bitmap_temp_respaldo = Graphics.FromImage(respaldo);
 
             //Pen pluma;
 
             Pen pluma = plumas[p.getTipo()]; //new Pen(Color.Green, 3);
 
             bitmap_temp.DrawEllipse(pluma, new Rectangle(p.getPosicionOriginalX() - 4, p.getPosicionOriginalY() - 4, 8, 8));
-            bitmap_temp_respaldo.DrawEllipse(pluma, new Rectangle(p.getPosicionOriginalX() - 4, p.getPosicionOriginalY() - 4, 8, 8));
 
             plano.Image = bitmap_plano;
             plano.Refresh();
@@ -348,7 +405,7 @@ namespace Algoritmos_IA
             //Pen lapiz = plumas[b];
             Pen lapiz = new Pen(color_pen, 3);
             bitmap_temp.DrawLine(lapiz, CoordenadaAdaptadaToReal((double)x.GetValue(0)), CoordenadaAdaptadaToReal((double)y.GetValue(0)), CoordenadaAdaptadaToReal((double)x.GetValue(9)), CoordenadaAdaptadaToReal((double)y.GetValue(9)));
-
+            
             plano.Image = bm_temp;
             plano.Refresh();
         }
@@ -632,30 +689,20 @@ namespace Algoritmos_IA
             MLP mlp = new MLP(Int32.Parse(EpocasMaximasTb.Text), Capas, neuronasXcapa, float.Parse(LearningRateTb.Text), lista_puntos, double.Parse(ErrorTb.Text));
             mlp.Forward_Backward();
 
-            //Datos de prueba, hay que quitarlos
-            Punto prueba = new Punto(2, 2, 5, CoordenadaAdaptadaToReal(2), CoordenadaAdaptadaToReal(2));
-            mlp.Forward(prueba, true, false);
-            Punto prueba2 = new Punto(2, -2, 5, CoordenadaAdaptadaToReal(2), CoordenadaAdaptadaToReal(-2));
-            mlp.Forward(prueba2, true, false);
-            Punto prueba3 = new Punto(-2, -2, 5, CoordenadaAdaptadaToReal(-2), CoordenadaAdaptadaToReal(-2));
-            mlp.Forward(prueba3, true, false);
-            Punto prueba4 = new Punto(-2, 2, 5, CoordenadaAdaptadaToReal(-2), CoordenadaAdaptadaToReal(2));
-            mlp.Forward(prueba4, true, false);
-            Punto prueba5 = new Punto(-3, 2, 5);
-            mlp.Forward(prueba5, true, false);
-
             dibujar_bitmap_mlp(mlp);
+            redibuja_plano_mapeo();
+            redibuja_puntos_mapeo();
         }
 
         private void dibujar_bitmap_mlp(MLP mlp)
         {
-            for (float x = -5; x < 5; x = x + 0.5f)
+            for (float x = -5; x < 5; x = x + 0.3f)
             {
-                for (float y = 5; y > -5; y = y - 0.5f)
+                for (float y = 5; y > -5; y = y - 0.3f)
                 {
-                    Punto punto_dibujar = new Punto(x, y, 5,CoordenadaAdaptadaToReal(x), CoordenadaAdaptadaToReal(y));
+                    Punto punto_dibujar = new Punto(x, (y), 5,CoordenadaAdaptadaToReal(x), CoordenadaAdaptadaToReal((y) * -1));
                     punto_dibujar.setTipo(mlp.Forward(punto_dibujar, true, false));
-                    Dibujar_Clases(punto_dibujar);
+                    Dibujar_Clases_Mapeo(punto_dibujar);
                 }
             }
         }
