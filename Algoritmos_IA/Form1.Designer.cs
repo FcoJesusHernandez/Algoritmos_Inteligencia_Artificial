@@ -80,6 +80,8 @@
             this.ErrorTb = new Bunifu.Framework.UI.BunifuMaterialTextbox();
             this.textoxEpocasMaximas = new Bunifu.Framework.UI.BunifuCustomLabel();
             this.EpocasMaximasTb = new Bunifu.Framework.UI.BunifuMaterialTextbox();
+            this.LineasSwitch = new Bunifu.Framework.UI.BunifuiOSSwitch();
+            this.bunifuCustomLabel6 = new Bunifu.Framework.UI.BunifuCustomLabel();
             ((System.ComponentModel.ISupportInitialize)(this.plano)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Error_cmp)).BeginInit();
             this.bunifuGradientPanel1.SuspendLayout();
@@ -260,6 +262,8 @@
             // 
             this.bunifuGradientPanel3.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("bunifuGradientPanel3.BackgroundImage")));
             this.bunifuGradientPanel3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.bunifuGradientPanel3.Controls.Add(this.bunifuCustomLabel6);
+            this.bunifuGradientPanel3.Controls.Add(this.LineasSwitch);
             this.bunifuGradientPanel3.Controls.Add(this.MlpBtn);
             this.bunifuGradientPanel3.Controls.Add(this.bunifuSeparator2);
             this.bunifuGradientPanel3.Controls.Add(this.RegresionLogisticaSwitch);
@@ -478,11 +482,11 @@
             this.bunifuCustomLabel3.AutoSize = true;
             this.bunifuCustomLabel3.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold);
             this.bunifuCustomLabel3.ForeColor = System.Drawing.SystemColors.Control;
-            this.bunifuCustomLabel3.Location = new System.Drawing.Point(206, 13);
+            this.bunifuCustomLabel3.Location = new System.Drawing.Point(230, 13);
             this.bunifuCustomLabel3.Name = "bunifuCustomLabel3";
-            this.bunifuCustomLabel3.Size = new System.Drawing.Size(192, 18);
+            this.bunifuCustomLabel3.Size = new System.Drawing.Size(169, 18);
             this.bunifuCustomLabel3.TabIndex = 36;
-            this.bunifuCustomLabel3.Text = "Configuración de Básica";
+            this.bunifuCustomLabel3.Text = "Configuración Básica";
             // 
             // bunifuSeparator4
             // 
@@ -770,6 +774,31 @@
             this.EpocasMaximasTb.Text = "200";
             this.EpocasMaximasTb.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             // 
+            // LineasSwitch
+            // 
+            this.LineasSwitch.BackColor = System.Drawing.Color.Transparent;
+            this.LineasSwitch.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("LineasSwitch.BackgroundImage")));
+            this.LineasSwitch.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.LineasSwitch.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.LineasSwitch.Location = new System.Drawing.Point(172, 254);
+            this.LineasSwitch.Name = "LineasSwitch";
+            this.LineasSwitch.OffColor = System.Drawing.Color.DarkRed;
+            this.LineasSwitch.OnColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(202)))), ((int)(((byte)(94)))));
+            this.LineasSwitch.Size = new System.Drawing.Size(43, 25);
+            this.LineasSwitch.TabIndex = 32;
+            this.LineasSwitch.Value = false;
+            // 
+            // bunifuCustomLabel6
+            // 
+            this.bunifuCustomLabel6.Font = new System.Drawing.Font("Lucida Sans Unicode", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bunifuCustomLabel6.ForeColor = System.Drawing.SystemColors.Control;
+            this.bunifuCustomLabel6.Location = new System.Drawing.Point(13, 255);
+            this.bunifuCustomLabel6.Name = "bunifuCustomLabel6";
+            this.bunifuCustomLabel6.Size = new System.Drawing.Size(153, 22);
+            this.bunifuCustomLabel6.TabIndex = 33;
+            this.bunifuCustomLabel6.Text = "Mostrar Lineas";
+            this.bunifuCustomLabel6.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -841,6 +870,8 @@
         private Bunifu.Framework.UI.BunifuCustomLabel bunifuCustomLabel2;
         private Bunifu.Framework.UI.BunifuCustomLabel bunifuCustomLabel3;
         private Bunifu.Framework.UI.BunifuCustomLabel GuiaCapasLabel;
+        private Bunifu.Framework.UI.BunifuCustomLabel bunifuCustomLabel6;
+        private Bunifu.Framework.UI.BunifuiOSSwitch LineasSwitch;
     }
 }
 

@@ -33,6 +33,7 @@ namespace Algoritmos_IA.Class.MLP
             this.entradas = puntos;
             this.entradas = puntos;
             this.learningRate = lr;
+            this.errorDeseado = errorDeseado;
             capas = new List<Capa>();
             for (int i = 0; i < nCapas; i++)
             {
@@ -54,7 +55,7 @@ namespace Algoritmos_IA.Class.MLP
             return sigmoide * (1 - sigmoide);
         }
 
-        public async Task Forward_Backward(Bitmap bitmap_plano, Bitmap respaldo,Bitmap bitmap_solo_plano, Form callingForm, List<Pen> plumas, List<Punto> lista_puntos)
+        public async Task Forward_Backward(Bitmap bitmap_plano, Bitmap respaldo,Bitmap bitmap_solo_plano, Form callingForm, List<Pen> plumas, List<Punto> lista_puntos, Boolean LineasSwitch)
         {
             ImgControl = new Img_control(bitmap_plano, respaldo, bitmap_solo_plano, plumas, callingForm);
             foreach (Capa c in capas)
@@ -67,8 +68,7 @@ namespace Algoritmos_IA.Class.MLP
             {
                 for (int i = 0; i < epocas; i++)
                 {
-
-                    if (errorDeseado > errorAcumulado / entradas.Count)
+                    if (errorDeseado > ( errorAcumulado / entradas.Count ) && i != 0)
                     {
                         //Console.WriteLine("Error Acumulado por Epoca: ");
                         //Console.WriteLine(errorAcumulado / entradas.Count);
@@ -107,22 +107,24 @@ namespace Algoritmos_IA.Class.MLP
 
                 ImgControl.Plano_Paint();
                 // Dibujar las rectas al final
-                
-                for (int i = 0; i < capas[0].pesos.Shape[0]; i++)
-                {
-                    capas[0].listaNeuronas[i].pesos = new List<double>();
 
-                    for (int j = 0; j < capas[0].pesos.Shape[1]; j++)
+                if (LineasSwitch == true)
+                {
+                    for (int i = 0; i < capas[0].pesos.Shape[0]; i++)
                     {
-                        if (capas[0].pesos.Shape[1] == 3)
+                        capas[0].listaNeuronas[i].pesos = new List<double>();
+
+                        for (int j = 0; j < capas[0].pesos.Shape[1]; j++)
                         {
-                            Console.WriteLine(i);
-                            ImgControl.DibujarLinea(true, "MLP", capas[0].pesos[i], true);
+                            if (capas[0].pesos.Shape[1] == 3)
+                            {
+                                Console.WriteLine(i);
+                                ImgControl.DibujarLinea(true, "MLP", capas[0].pesos[i], true);
+                            }
+                            capas[0].listaNeuronas[i].pesos.Add(capas[0].pesos[i][j]);
                         }
-                        capas[0].listaNeuronas[i].pesos.Add(capas[0].pesos[i][j]);
                     }
                 }
-                
 
                 //ImgControl.DibujarPuntos(plumas, lista_puntos);
             });
