@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Drawing;
 using System.Windows.Forms;
 using NumSharp;
+using System.Threading;
 
 namespace Algoritmos_IA.Class
 {
@@ -94,6 +95,8 @@ namespace Algoritmos_IA.Class
             {
                 bm_temp = new Bitmap(bitmap_plano);
             }
+
+            Thread.Sleep(100);
 
             Graphics bitmap_temp = Graphics.FromImage(bm_temp);
 

@@ -52,7 +52,7 @@ namespace Algoritmos_IA
 
         protected void ClasesTb_TextChanged(object sender, EventArgs e)
         {
-            ClaseSelected.Clear();
+            ClaseSelected.Items.Clear();
             plumas.Clear();
             if (ClasesTb.Text != "")
             {
@@ -70,9 +70,9 @@ namespace Algoritmos_IA
         {
             for (int i = 0; i < Int32.Parse(ClasesTb.Text); i++)
             {
-                ClaseSelected.AddItem(i.ToString());
+                ClaseSelected.Items.Add(i.ToString());
             }
-            ClaseSelected.selectedIndex = 0;
+            ClaseSelected.SelectedIndex = 0;
             LlenarPlumas(Int32.Parse(ClasesTb.Text));
         }
 
@@ -148,7 +148,7 @@ namespace Algoritmos_IA
             }
             else
             {
-                tipo = Int32.Parse(ClaseSelected.selectedValue);
+                tipo = Int32.Parse(ClaseSelected.SelectedItem.ToString());
                 /*
                 if (click.Button.ToString() == "Right")
                 {

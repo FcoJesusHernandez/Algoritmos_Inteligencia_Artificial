@@ -75,6 +75,10 @@ namespace Algoritmos_IA.Class.MLP
                         break;
                     }
 
+                    if (i == 100) 
+                    {
+                        Console.WriteLine("XD: "+funcion_sigmoide(0));
+                    }
                     errorAcumulado = 0;
 
                     combinacion_clases = new List<NDArray>();
@@ -86,9 +90,9 @@ namespace Algoritmos_IA.Class.MLP
                         BackPropagation(p);
                     }
                     //Console.WriteLine("Error Acumulado por Epoca: ");
-                    //Console.WriteLine(errorAcumulado / entradas.Count);
+                    Console.WriteLine(errorAcumulado);
                     //Console.WriteLine("Epoca: " + epocas.ToString());
-                    ImgControl.ActualizarGraficaError("MLP", i, errorAcumulado / entradas.Count);
+                    ImgControl.ActualizarGraficaError("MLP", i, errorAcumulado);
                 }
                 combinacion_clases = new List<NDArray>();
                 relacion_numero_clase = new List<int>();
@@ -174,7 +178,7 @@ namespace Algoritmos_IA.Class.MLP
 
                 for (int i = 0; i < net.size; i++)
                 {
-                    a_salida[i, 0] = net[i, 0];
+                    a_salida[i, 0] = funcion_sigmoide(net[i, 0]);
                 }
                 c.salidaCapa = a_salida;
 
@@ -272,9 +276,9 @@ namespace Algoritmos_IA.Class.MLP
                     double acum = 0;
                     for (int i = 0; i < error.size; i++)
                     {
-                        acum += error[i][0];
+                        acum += Math.Pow(error[i][0],2);
                     }
-                    errorAcumulado += Math.Pow(acum, 2);
+                    errorAcumulado += acum/ 2;
                     NDArray gradiente = new NDArray(typeof(Double), new Shape(c.netCapa.size, 1));
                     for (int i = 0; i < c.netCapa.size; i++)
                     {
