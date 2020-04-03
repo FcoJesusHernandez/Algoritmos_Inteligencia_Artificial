@@ -75,10 +75,15 @@
   <ItemGroup>
     <Compile Include="Class\Adaline.cs" />
     <Compile Include="Class\Clases.cs" />
-    <Compile Include="Class\Img_control.cs" />
+    <Compile Include="Class\elemento_importado.cs" />
+    <Compile Include="Class\Img_control.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Class\MLP\Neurona.cs" />
     <Compile Include="Class\MLP\Capa.cs" />
-    <Compile Include="Class\MLP\MLP.cs" />
+    <Compile Include="Class\MLP\MLP.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Class\Perceptron.cs" />
     <Compile Include="Class\Punto.cs" />
     <Compile Include="Class\RegresionLogistica.cs" />

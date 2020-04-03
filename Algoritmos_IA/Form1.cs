@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using NumSharp;
+using System.IO;
 
 namespace Algoritmos_IA
 {
@@ -24,6 +25,7 @@ namespace Algoritmos_IA
         List<int> neuronasXcapa;
         int CapaActual = 1;
         int Capas;
+        importacion datosImportados;
         public Form1()
         {
             InitializeComponent();
@@ -682,6 +684,70 @@ namespace Algoritmos_IA
         private void bunifuSeparator1_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void bunifuGradientPanel3_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void bunifuImageButtonDataset_Click(object sender, EventArgs e)
+        {
+            string nombre_archivo;
+            openFileDialog1.Title = "Selecciona el archivo correspondiente al dataset";
+            openFileDialog1.DefaultExt = "csv";
+            openFileDialog1.ShowDialog();
+
+            nombre_archivo = openFileDialog1.FileName;
+            manejarCSV(nombre_archivo);
+            // la variable datosImportados tiene los datos del archivo, nombre, tamano filas/columas, lista de elementos_importados,
+        }
+
+        public void manejarCSV(string path)
+        {
+            int fila = 0;
+            List<elemento_importado> datos = new List<elemento_importado>();
+            List<string> cabeceras = new List<string>();
+            List<double> clasesDetectadas = new List<double>();
+            int columnas = 0;
+
+            using (StreamReader readFile = new StreamReader(path))
+            {
+                string line;
+                string[] row;
+
+                while ((line = readFile.ReadLine()) != null)
+                {
+                    if (fila == 0)
+                    {
+                        row = line.Split(',');
+                        for (int i = 0; i < row.Count(); i++)
+                        {
+                            cabeceras.Add(row[i]);
+                        }
+                        
+                        columnas = row.Count() - 1;
+                    }
+                    else
+                    {
+                        List<double> datosColumnas = new List<double>();
+                        row = line.Split(',');
+                        int i = 0;
+                        for (i = 0; i < row.Count()-1; i++)
+                        {
+                            datosColumnas.Add(double.Parse(row[i]));
+                        }
+                        if (!clasesDetectadas.Contains(double.Parse(row[i])))
+                        {
+                            clasesDetectadas.Add(double.Parse(row[i]));
+                        }
+                        elemento_importado datosFila = new elemento_importado(datosColumnas, double.Parse(row[i]));
+                        datos.Add(datosFila);
+                    }
+                    fila++;
+                }
+            }
+            datosImportados = new importacion(path, datos, clasesDetectadas, columnas, cabeceras);
         }
 
         private void bunifuGradientPanel2_Paint(object sender, PaintEventArgs e)
