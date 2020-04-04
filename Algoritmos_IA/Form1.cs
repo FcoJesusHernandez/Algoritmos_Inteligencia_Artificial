@@ -709,6 +709,7 @@ namespace Algoritmos_IA
             List<elemento_importado> datos = new List<elemento_importado>();
             List<string> cabeceras = new List<string>();
             List<double> clasesDetectadas = new List<double>();
+            List<string> clasesDetectadasOriginal = new List<string>();
             int columnas = 0;
 
             using (StreamReader readFile = new StreamReader(path))
@@ -737,17 +738,28 @@ namespace Algoritmos_IA
                         {
                             datosColumnas.Add(double.Parse(row[i]));
                         }
-                        if (!clasesDetectadas.Contains(double.Parse(row[i])))
+                        if (!clasesDetectadasOriginal.Contains(row[i]))
                         {
-                            clasesDetectadas.Add(double.Parse(row[i]));
+                            clasesDetectadasOriginal.Add(row[i]);
+                            clasesDetectadas.Add(clasesDetectadasOriginal.Count);
                         }
-                        elemento_importado datosFila = new elemento_importado(datosColumnas, double.Parse(row[i]));
+                        double tipo = 0;
+                        for (int j=0; j<clasesDetectadasOriginal.Count; j++)
+                        {
+                            if (clasesDetectadasOriginal[j] == row[i])
+                            {
+                                tipo = clasesDetectadas[j];
+                                break;
+                            }
+                        }
+
+                        elemento_importado datosFila = new elemento_importado(datosColumnas, tipo);
                         datos.Add(datosFila);
                     }
                     fila++;
                 }
             }
-            datosImportados = new importacion(path, datos, clasesDetectadas, columnas, cabeceras);
+            datosImportados = new importacion(path, datos, clasesDetectadas, clasesDetectadasOriginal, columnas, cabeceras);
         }
 
         private void bunifuGradientPanel2_Paint(object sender, PaintEventArgs e)

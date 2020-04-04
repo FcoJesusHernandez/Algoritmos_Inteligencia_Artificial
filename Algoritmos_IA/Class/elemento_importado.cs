@@ -27,6 +27,7 @@ namespace Algoritmos_IA.Class
     {
         public string nombreArchivo { get; set; }
         public List<double> clasesDetectadas { get; set; }
+        public List<string> clasesDetectadasOriginal { get; set; }
         public int tamanoColumnas { get; set; }
         public int tamanoFilas { get; set; }
         public List<elemento_importado> elementosImportados { get; set; }
@@ -35,7 +36,7 @@ namespace Algoritmos_IA.Class
         public double[] desviacion { get; set; }
         public double[] varianza { get; set; }
 
-        public importacion(string nombreArchivo, List<elemento_importado> entradas, List<double> clases, int tamanoColumnas, List<string> nombresColumbas)
+        public importacion(string nombreArchivo, List<elemento_importado> entradas, List<double> clases, List<string> clasesTexto, int tamanoColumnas, List<string> nombresColumnas)
         {
             this.nombreArchivo = nombreArchivo;
             elementosImportados = new List<elemento_importado>(entradas);
@@ -43,6 +44,7 @@ namespace Algoritmos_IA.Class
             this.tamanoColumnas = tamanoColumnas;
             this.clasesDetectadas = new List<double>(clases);
             this.nombresColumnas = nombresColumnas;
+            clasesDetectadasOriginal = clasesTexto;
 
             media = new double[this.tamanoColumnas];
             varianza = new double[this.tamanoColumnas];
