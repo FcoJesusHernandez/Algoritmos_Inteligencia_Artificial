@@ -16,6 +16,11 @@ namespace Algoritmos_IA.Class.MLP
 
         public NDArray sensibilidadCapa { set; get; }
         Img_control ImgControl;
+
+        public NDArray gradienteAnterior { set; get; }
+        public NDArray W_Anterior { set; get; }
+
+        static Random r = new Random();
         public Capa(int nNeuronas)
         {
             //ImgControl = imgC;
@@ -93,6 +98,53 @@ namespace Algoritmos_IA.Class.MLP
                         //ImgControl.DibujarLinea(false, "MLP", pesos[i], false);
                     }
                     listaNeuronas[i].pesos.Add(pesos[i][j]);
+                }
+            }
+        }
+
+        public void QuickActualizaPesos(NDArray a)
+        {
+            NDArray matrizW = new NDArray(typeof(Double), new Shape(pesos.Shape[0], pesos.Shape[1]));
+            NDArray matrizGradientes = new NDArray(typeof(Double), new Shape(pesos.Shape[0], pesos.Shape[1]));
+
+            for (int i = 0; i < pesos.Shape[0]; i++)
+            {
+                listaNeuronas[i].pesos = new List<double>();
+
+                for (int j = 0; j < pesos.Shape[1]; j++)
+                {
+                    var E_gradiente = gradienteError(sensibilidadCapa[i][0], a[j][0]);
+                    matrizGradientes[i, j] = E_gradiente;
+                    var incW = incremento_W(i, j, E_gradiente);
+                    matrizW[i, j] = incW;
+                    pesos[i, j] += incW;
+                    listaNeuronas[i].pesos.Add(pesos[i, j]);
+                }
+            }
+            gradienteAnterior = matrizGradientes;
+            W_Anterior = matrizW;
+        }
+
+        public double gradienteError(double s, double a)
+        {
+            return s * a;
+        }
+
+        public double incremento_W(int i, int j, double E_gradiente)
+        {
+            return (E_gradiente / (gradienteAnterior[i, j] - E_gradiente)) * W_Anterior[i, j];
+        }
+
+        public void inicializaAnteriores()
+        {
+            gradienteAnterior = new NDArray(typeof(Double), new Shape(pesos.Shape[0], pesos.Shape[1]));
+            W_Anterior = new NDArray(typeof(Double), new Shape(pesos.Shape[0], pesos.Shape[1]));
+            for (int i = 0; i < pesos.Shape[0]; i++)
+            {
+                for (int j = 0; j < pesos.Shape[1]; j++)
+                {
+                    gradienteAnterior[i, j] = r.NextDouble();
+                    W_Anterior[i, j] = 1;
                 }
             }
         }

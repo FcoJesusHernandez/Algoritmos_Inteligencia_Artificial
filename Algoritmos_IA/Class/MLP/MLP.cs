@@ -23,6 +23,7 @@ namespace Algoritmos_IA.Class.MLP
         int epocas;
         double errorAcumulado;
         double errorDeseado;
+        bool quick = true;
 
         public MLP(int epocas, int nCapas, List<int> neuronaXCapa, float lr, List<Punto> puntos, double errorDeseado)
         {
@@ -46,11 +47,19 @@ namespace Algoritmos_IA.Class.MLP
 
         public double funcion_sigmoide(double net)
         {
+            if (quick)
+            {
+                return net;
+            }
             return 1 / (1 + (Math.Exp(-net)));
         }
 
         public double funcion_sigmoide_derivada(double net)
         {
+            if (quick)
+            {
+                return net;
+            }
             double sigmoide = funcion_sigmoide(net);
             return sigmoide * (1 - sigmoide);
         }
@@ -73,11 +82,6 @@ namespace Algoritmos_IA.Class.MLP
                         //Console.WriteLine("Error Acumulado por Epoca: ");
                         //Console.WriteLine(errorAcumulado / entradas.Count);
                         break;
-                    }
-
-                    if (i == 100) 
-                    {
-                        Console.WriteLine("XD: "+funcion_sigmoide(0));
                     }
                     errorAcumulado = 0;
 
@@ -164,10 +168,24 @@ namespace Algoritmos_IA.Class.MLP
                     {
                         a.inicializaPesos(entrada.size);
                     }
+                    if (quick)
+                    {
+                        c.getPesosCapa();
+                        c.inicializaAnteriores();
+                    }
                 }
                 else if (!evaluar)
                 {
-                    c.actualizaPesos(learningRate, entrada);
+                    if (quick)
+                    {
+                        c.QuickActualizaPesos(entrada);
+                        c.getPesosCapa();
+                    }
+                    else
+                    {
+                        c.actualizaPesos(learningRate, entrada);
+                    }
+
                 }
 
                 net = np.dot(c.getPesosCapa(), entrada);
