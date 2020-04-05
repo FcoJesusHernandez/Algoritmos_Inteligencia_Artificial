@@ -21,6 +21,16 @@ namespace Algoritmos_IA.Class
             arregloValoresEntrada = listaValoresEntrada.ToArray();
             tipo = clase;
         }
+
+        public elemento_importado(List<double> entradas, List<double> entradasNormalizadas, double clase)
+        {
+            listaValoresEntrada = new List<double>(entradas);
+            arregloValoresEntrada = listaValoresEntrada.ToArray();
+            tipo = clase;
+
+            listaValoresEntradaNormalizada = new List<double>(entradasNormalizadas);
+            arregloValoresEntradaNormalizada = listaValoresEntradaNormalizada.ToArray();
+        }
     }
 
     public class importacion
@@ -52,6 +62,21 @@ namespace Algoritmos_IA.Class
             normalizacion();
         }
 
+        public importacion(string nombreArchivo, List<elemento_importado> entradas, List<double> clases, List<string> clasesTexto, int tamanoColumnas, List<string> nombresColumnas, double[] media, double[] desviacion, double[] varianza)
+        {
+            this.nombreArchivo = nombreArchivo;
+            elementosImportados = new List<elemento_importado>(entradas);
+            tamanoFilas = elementosImportados.Count;
+            this.tamanoColumnas = tamanoColumnas;
+            this.clasesDetectadas = new List<double>(clases);
+            this.nombresColumnas = nombresColumnas;
+            clasesDetectadasOriginal = clasesTexto;
+
+            this.media = media;
+            this.desviacion = desviacion;
+            this.varianza = varianza;
+        }
+
         public void normalizacion()
         {
             calcularMedia();
@@ -75,11 +100,6 @@ namespace Algoritmos_IA.Class
                 elementosImportados[i].listaValoresEntradaNormalizada = new List<double>(temporal_de_entradas);
                 elementosImportados[i].arregloValoresEntradaNormalizada = elementosImportados[i].listaValoresEntradaNormalizada.ToArray();
             }
-
-            /*
-            (X(:, i) - media(i)) / sigma(i);
-            arregloValoresEntradaNormalizada
-            listaValoresEntradaNormalizada*/
         }
 
         private void calcularMedia()
