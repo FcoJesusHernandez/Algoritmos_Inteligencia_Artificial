@@ -87,7 +87,7 @@ namespace Algoritmos_IA.Class.MLP
                         Forward(p, false, false);
                         BackPropagation(p);
                     }
-                    //Console.WriteLine("Error Acumulado por Epoca: ");
+                    Console.WriteLine("Error Acumulado por Epoca: ");
                     Console.WriteLine(errorAcumulado);
                     //Console.WriteLine("Epoca: " + epocas.ToString());
                     ImgControl.ActualizarGraficaError("MLP", i, errorAcumulado);
@@ -283,7 +283,32 @@ namespace Algoritmos_IA.Class.MLP
                 if (primerCapa)
                 {
                     NDArray deseada = new NDArray((Array)matrizDeseadas[p.getTipo()], new Shape(matrizDeseadas.Shape[0], 1));
-                    var error = np.subtract(deseada, capa.salidaCapa);
+                    //var error = np.subtract(deseada, capa.salidaCapa);
+
+                    NDArray error_temp = new NDArray((Array)capa.salidaCapa, new Shape(capa.salidaCapa.Shape[0], 1));
+                    
+                        for (int i = 0; i < capa.salidaCapa.Shape[0]; i++)
+                        {
+                            if (capa.salidaCapa[i][0] >= 0.5)
+                            {
+                                error_temp[i][0] = 1;
+                            }
+                            else
+                            {
+                                error_temp[i][0] = 0;
+                            }
+                        }
+                        /*if (error_temp[i, 0] > 0)
+                        {
+                            error_temp[i, 0] = 1;
+                        } else
+                        {
+                            error_temp[i, 0] = 0;
+                        }*/
+                    
+
+                    var error = np.subtract(deseada, error_temp);
+
                     double acum = 0;
 
                     for (int i = 0; i < error.size; i++)
