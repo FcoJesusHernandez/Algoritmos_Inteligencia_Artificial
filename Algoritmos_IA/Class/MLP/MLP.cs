@@ -47,19 +47,13 @@ namespace Algoritmos_IA.Class.MLP
 
         public double funcion_sigmoide(double net)
         {
-            if (quick)
-            {
-                return net;
-            }
+            if (quick) { return net; }
             return 1 / (1 + (Math.Exp(-net)));
         }
 
         public double funcion_sigmoide_derivada(double net)
         {
-            if (quick)
-            {
-                return net;
-            }
+            if (quick) { return net; }
             double sigmoide = funcion_sigmoide(net);
             return sigmoide * (1 - sigmoide);
         }
@@ -179,7 +173,6 @@ namespace Algoritmos_IA.Class.MLP
                     if (quick)
                     {
                         c.QuickActualizaPesos(entrada);
-                        c.getPesosCapa();
                     }
                     else
                     {
@@ -284,44 +277,46 @@ namespace Algoritmos_IA.Class.MLP
 
             Capa anterior = capas.First<Capa>();
 
-            foreach (Capa c in capas)
+            foreach (Capa capa in capas)
             {
 
                 if (primerCapa)
                 {
                     NDArray deseada = new NDArray((Array)matrizDeseadas[p.getTipo()], new Shape(matrizDeseadas.Shape[0], 1));
-                    var error = np.subtract(deseada, c.salidaCapa);
+                    var error = np.subtract(deseada, capa.salidaCapa);
                     double acum = 0;
+
                     for (int i = 0; i < error.size; i++)
                     {
                         acum += Math.Pow(error[i][0],2);
                     }
                     errorAcumulado += acum/ 2;
-                    NDArray gradiente = new NDArray(typeof(Double), new Shape(c.netCapa.size, 1));
-                    for (int i = 0; i < c.netCapa.size; i++)
+                    NDArray gradiente = new NDArray(typeof(Double), new Shape(capa.netCapa.size, 1));
+                    for (int i = 0; i < capa.netCapa.size; i++)
                     {
-                        gradiente[i, 0] = funcion_sigmoide_derivada(c.netCapa[i, 0]);
+                        gradiente[i, 0] = funcion_sigmoide_derivada(capa.netCapa[i, 0]);
                     }
                     var s = np.multiply(-2, gradiente);
                     var sensibilidad = np.multiply(s, error);
-                    c.sensibilidadCapa = sensibilidad;
-                    anterior = c;
+                    
+                    capa.sensibilidadCapa = sensibilidad;
+                    anterior = capa;
                     primerCapa = false;
                 }
                 else
                 {
-                    NDArray gradiente = new NDArray(typeof(Double), new Shape(c.netCapa.size, 1));
-                    for (int i = 0; i < c.netCapa.size; i++)
+                    NDArray gradiente = new NDArray(typeof(Double), new Shape(capa.netCapa.size, 1));
+                    for (int i = 0; i < capa.netCapa.size; i++)
                     {
-                        gradiente[i, 0] = funcion_sigmoide_derivada(c.netCapa[i, 0]);
+                        gradiente[i, 0] = funcion_sigmoide_derivada(capa.netCapa[i, 0]);
                     }
                     var unos = np.eye(gradiente.size);
                     var identidad = np.multiply(gradiente, unos);
                     var transpuesta = anterior.getPesosSinCero();
                     var ws = np.dot(transpuesta, anterior.sensibilidadCapa);
                     var sensibilidad = np.dot(identidad, ws);
-                    c.sensibilidadCapa = sensibilidad;
-                    anterior = c;
+                    capa.sensibilidadCapa = sensibilidad;
+                    anterior = capa;
                 }
             }
             capas.Reverse();

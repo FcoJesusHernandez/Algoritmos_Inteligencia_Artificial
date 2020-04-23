@@ -113,26 +113,40 @@ namespace Algoritmos_IA.Class.MLP
 
                 for (int j = 0; j < pesos.Shape[1]; j++)
                 {
-                    var E_gradiente = gradienteError(sensibilidadCapa[i][0], a[j][0]);
+                    double E_gradiente = gradienteError(sensibilidadCapa[i][0], a[j][0]);
                     matrizGradientes[i, j] = E_gradiente;
-                    var incW = incremento_W(i, j, E_gradiente);
+                    double incW = incremento_W(i, j, E_gradiente);
+                    if (incW > (1.75 * (double)W_Anterior[i, j]))
+                    {
+                        incW = 1.75 * W_Anterior[i, j];
+                    }
+                    if (gradienteAnterior[i, j] * E_gradiente >= 0) 
+                    {
+                        incW += 0.03 * E_gradiente;
+                    }
+                    
                     matrizW[i, j] = incW;
                     pesos[i, j] += incW;
                     listaNeuronas[i].pesos.Add(pesos[i, j]);
                 }
             }
             gradienteAnterior = matrizGradientes;
+
             W_Anterior = matrizW;
         }
 
         public double gradienteError(double s, double a)
         {
-            return s * a;
+            return (s * a);
         }
 
         public double incremento_W(int i, int j, double E_gradiente)
         {
-            return (E_gradiente / (gradienteAnterior[i, j] - E_gradiente)) * W_Anterior[i, j];
+            /*if ((gradienteAnterior[i, j] - E_gradiente) == 0) 
+            {
+                return 0.01;
+            }*/
+            return ((E_gradiente / (gradienteAnterior[i, j] - E_gradiente)) * W_Anterior[i, j]);
         }
 
         public void inicializaAnteriores()
@@ -141,12 +155,21 @@ namespace Algoritmos_IA.Class.MLP
             W_Anterior = new NDArray(typeof(Double), new Shape(pesos.Shape[0], pesos.Shape[1]));
             for (int i = 0; i < pesos.Shape[0]; i++)
             {
+
                 for (int j = 0; j < pesos.Shape[1]; j++)
                 {
                     gradienteAnterior[i, j] = r.NextDouble();
-                    W_Anterior[i, j] = 1;
+                    W_Anterior[i, j] = r.NextDouble()+0.01;
                 }
             }
+        }
+        public double abs(double wa)
+        {
+            if (wa < 0) 
+            {
+                wa = wa * -1;
+            }
+            return wa;
         }
     }
 }
