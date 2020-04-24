@@ -21,9 +21,15 @@ namespace Algoritmos_IA.Class.MLP
         public NDArray W_Anterior { set; get; }
 
         static Random r = new Random();
+
+        public Boolean llegoLimite { set; get; }
+
+        private int contllegoLim;
         public Capa(int nNeuronas)
         {
             //ImgControl = imgC;
+            llegoLimite = false;
+            contllegoLim = 0;
             listaNeuronas = new List<Neurona>();
             for (int i = 0; i < nNeuronas; i++)
             {
@@ -53,6 +59,7 @@ namespace Algoritmos_IA.Class.MLP
                     pesos = np.vstack(new NDArray[] { pesos, pesosNeurona });
                 }
             }
+            /*Console.WriteLine(pesos.ToString());*/
             return pesos;
         }
         public NDArray getPesosSinCero() 
@@ -124,9 +131,20 @@ namespace Algoritmos_IA.Class.MLP
                     {
                         incW += 0.03 * E_gradiente;
                     }
+
+                    if (incW > (Double.MaxValue/2)) // !Double.IsNaN(incW) || 
+                    {
+                        matrizW[i, j] = incW;
+                        pesos[i, j] += incW;
+                    } else
+                    {
+                        contllegoLim++;
+                        if(contllegoLim == 20)
+                        {
+                            llegoLimite = true;
+                        }
+                    }
                     
-                    matrizW[i, j] = incW;
-                    pesos[i, j] += incW;
                     listaNeuronas[i].pesos.Add(pesos[i, j]);
                 }
             }
@@ -142,10 +160,10 @@ namespace Algoritmos_IA.Class.MLP
 
         public double incremento_W(int i, int j, double E_gradiente)
         {
-            /*if ((gradienteAnterior[i, j] - E_gradiente) == 0) 
+            if ((gradienteAnterior[i, j] - E_gradiente) == 0) 
             {
-                return 0.01;
-            }*/
+                return 0.1;
+            }
             return ((E_gradiente / (gradienteAnterior[i, j] - E_gradiente)) * W_Anterior[i, j]);
         }
 

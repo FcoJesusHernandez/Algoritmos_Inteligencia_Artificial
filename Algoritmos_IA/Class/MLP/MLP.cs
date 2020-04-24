@@ -23,6 +23,7 @@ namespace Algoritmos_IA.Class.MLP
         int epocas;
         double errorAcumulado;
         double errorDeseado;
+        bool llegoLimiteQP = false;
         bool quick = true;
 
         public MLP(int epocas, int nCapas, List<int> neuronaXCapa, float lr, List<Punto> puntos, double errorDeseado)
@@ -77,15 +78,20 @@ namespace Algoritmos_IA.Class.MLP
                         //Console.WriteLine(errorAcumulado / entradas.Count);
                         break;
                     }
+                    if (llegoLimiteQP)
+                    {
+                        quick = false;
+                        llegoLimiteQP = false;
+                    }
                     errorAcumulado = 0;
-
-                    combinacion_clases = new List<NDArray>();
-                    relacion_numero_clase = new List<int>();
 
                     foreach (Punto p in entradas)
                     {
-                        Forward(p, false, false);
-                        BackPropagation(p);
+                        if (!llegoLimiteQP)
+                        {
+                            Forward(p, false, false);
+                            BackPropagation(p);
+                        }
                     }
                     Console.WriteLine("Error Acumulado por Epoca: ");
                     Console.WriteLine(errorAcumulado);
@@ -173,6 +179,11 @@ namespace Algoritmos_IA.Class.MLP
                     if (quick)
                     {
                         c.QuickActualizaPesos(entrada);
+                        if (c.llegoLimite)
+                        {
+                            llegoLimiteQP = true;
+                            break;
+                        }
                     }
                     else
                     {
@@ -297,15 +308,7 @@ namespace Algoritmos_IA.Class.MLP
                             {
                                 error_temp[i][0] = 0;
                             }
-                        }
-                        /*if (error_temp[i, 0] > 0)
-                        {
-                            error_temp[i, 0] = 1;
-                        } else
-                        {
-                            error_temp[i, 0] = 0;
-                        }*/
-                    
+                        }                    
 
                     var error = np.subtract(deseada, error_temp);
 
