@@ -25,7 +25,7 @@ namespace Algoritmos_IA
         List<int> neuronasXcapa;
         int CapaActual = 1;
         int Capas;
-        importacion datosImportados;
+        importacion datosImportados, datosPruebas, datosEntrenamiento;
         public Form1()
         {
             InitializeComponent();
@@ -646,7 +646,7 @@ namespace Algoritmos_IA
 
         private async void MlpBtn_Click(object sender, EventArgs e)
         {
-            
+            this.Error_cmp.Series["MLP"].Points.Clear();
             MLP mlp = new MLP(Int32.Parse(EpocasMaximasTb.Text), Capas, neuronasXcapa, float.Parse(LearningRateTb.Text), lista_puntos, double.Parse(ErrorTb.Text));
             await mlp.Forward_Backward(bitmap_plano, respaldo, bitmap_solo_plano, this , plumas, lista_puntos, LineasSwitch.Value);
 
@@ -700,7 +700,50 @@ namespace Algoritmos_IA
 
             nombre_archivo = openFileDialog1.FileName;
             manejarCSV(nombre_archivo);
+            dividirDatos(2, 1, 3);
             // la variable datosImportados tiene los datos del archivo, nombre, tamano filas/columas, lista de elementos_importados,
+        }
+
+        public void dividirDatos(int parte_entrenamientos, int parte_prueba, int partes_totales)
+        {
+            int cantidad_por_parte = datosImportados.tamanoFilas / partes_totales;
+            int total_parte_entrenamiento = cantidad_por_parte * parte_entrenamientos;
+            int total_parte_pruebas = cantidad_por_parte * parte_prueba;
+
+            bunifuMaterialTextboxEntrenamiento.Text = total_parte_entrenamiento.ToString();
+            bunifuMaterialTextboxPruebas.Text = total_parte_pruebas.ToString();
+
+            List<elemento_importado> elementos_entrenamiento = new List<elemento_importado>();
+            List<elemento_importado> elementos_prueba = new List<elemento_importado>();
+
+            int auxiliar = 1;
+
+            for (int i = 0; i < datosImportados.tamanoFilas; i++)
+            {
+                elemento_importado elemento = new elemento_importado(datosImportados.elementosImportados[i].listaValoresEntrada, datosImportados.elementosImportados[i].listaValoresEntradaNormalizada, datosImportados.elementosImportados[i].tipo);
+                if (auxiliar<=parte_entrenamientos)
+                {
+                    elementos_entrenamiento.Add(elemento);
+                }
+                else
+                {
+                    elementos_prueba.Add(elemento);
+                    auxiliar = 0;
+                }
+                auxiliar++;
+            }
+            
+            datosPruebas = new importacion(datosImportados.nombreArchivo, elementos_prueba, datosImportados.clasesDetectadas, datosImportados.clasesDetectadasOriginal, datosImportados.tamanoColumnas, datosImportados.nombresColumnas, datosImportados.media, datosImportados.desviacion, datosImportados.varianza);
+            datosEntrenamiento = new importacion(datosImportados.nombreArchivo, elementos_entrenamiento, datosImportados.clasesDetectadas, datosImportados.clasesDetectadasOriginal, datosImportados.tamanoColumnas, datosImportados.nombresColumnas, datosImportados.media, datosImportados.desviacion, datosImportados.varianza);
+
+        }
+
+        private void bunifuImageButton1_Click(object sender, EventArgs e)
+        {
+            // la variable datosEntrenamiento tiene los datos normalizados y originales del archivo
+            // la variable datosPruebas tiene los datos normalizados y originales del archivo
+
+            // la variable datosImportados tiene todos los datos, sin dividirlos en parte test y train
         }
 
         public void manejarCSV(string path)
@@ -760,6 +803,11 @@ namespace Algoritmos_IA
                 }
             }
             datosImportados = new importacion(path, datos, clasesDetectadas, clasesDetectadasOriginal, columnas, cabeceras);
+        }
+
+        private void bunifuSeparator11_Load(object sender, EventArgs e)
+        {
+
         }
 
         private void bunifuGradientPanel2_Paint(object sender, PaintEventArgs e)
