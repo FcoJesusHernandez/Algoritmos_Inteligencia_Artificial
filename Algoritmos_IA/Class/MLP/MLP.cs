@@ -26,7 +26,7 @@ namespace Algoritmos_IA.Class.MLP
         bool llegoLimiteQP = false;
         bool quick = true;
 
-        public MLP(int epocas, int nCapas, List<int> neuronaXCapa, float lr, List<Punto> puntos, double errorDeseado)
+        public MLP(int epocas, int nCapas, List<int> neuronaXCapa, float lr, List<Punto> puntos, double errorDeseado, bool quick)
         {
             combinacion_clases = new List<NDArray>();
             relacion_numero_clase = new List<int>();
@@ -36,6 +36,7 @@ namespace Algoritmos_IA.Class.MLP
             this.entradas = puntos;
             this.learningRate = lr;
             this.errorDeseado = errorDeseado;
+            this.quick = quick;
             capas = new List<Capa>();
             for (int i = 0; i < nCapas; i++)
             {

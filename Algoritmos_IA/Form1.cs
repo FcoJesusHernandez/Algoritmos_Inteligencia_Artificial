@@ -647,7 +647,7 @@ namespace Algoritmos_IA
         private async void MlpBtn_Click(object sender, EventArgs e)
         {
             this.Error_cmp.Series["MLP"].Points.Clear();
-            MLP mlp = new MLP(Int32.Parse(EpocasMaximasTb.Text), Capas, neuronasXcapa, float.Parse(LearningRateTb.Text), lista_puntos, double.Parse(ErrorTb.Text));
+            MLP mlp = new MLP(Int32.Parse(EpocasMaximasTb.Text), Capas, neuronasXcapa, float.Parse(LearningRateTb.Text), lista_puntos, double.Parse(ErrorTb.Text), false);
             await mlp.Forward_Backward(bitmap_plano, respaldo, bitmap_solo_plano, this , plumas, lista_puntos, LineasSwitch.Value);
 
             //getClassReal(mlp);
@@ -738,8 +738,12 @@ namespace Algoritmos_IA
 
         }
 
-        private void bunifuImageButton1_Click(object sender, EventArgs e)
+        private async void bunifuImageButton1_Click(object sender, EventArgs e)
         {
+            this.Error_cmp.Series["MLP"].Points.Clear();
+            MLP mlp = new MLP(Int32.Parse(EpocasMaximasTb.Text), Capas, neuronasXcapa, float.Parse(LearningRateTb.Text), lista_puntos, double.Parse(ErrorTb.Text), true);
+            await mlp.Forward_Backward(bitmap_plano, respaldo, bitmap_solo_plano, this, plumas, lista_puntos, LineasSwitch.Value);
+
             // la variable datosEntrenamiento tiene los datos normalizados y originales del archivo
             // la variable datosPruebas tiene los datos normalizados y originales del archivo
 
