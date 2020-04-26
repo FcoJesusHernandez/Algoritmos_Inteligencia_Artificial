@@ -227,21 +227,24 @@ namespace Algoritmos_IA.Class
             //plano.Refresh();
         }
 
-        public void Dibujar_bitmap_mlp(MLP.MLP mlp, List<Punto> lista_puntos_dibujar )
+        public void Dibujar_bitmap_mlp(MLP.MLP mlp, List<Punto> lista_puntos_dibujar)
         {
-            int index = lista_puntos_dibujar.Count;
-            for (float x = -5; x < 5; x = x + 0.3f)
+            if (!mlp.dataset)
             {
-                for (float y = 5; y > -5; y = y - 0.3f)
+                int index = lista_puntos_dibujar.Count;
+                for (float x = -5; x < 5; x = x + 0.3f)
                 {
-                    Punto punto_dibujar = new Punto(x, y, 5, CoordenadaAdaptadaToReal(x), CoordenadaAdaptadaToReal((y) * -1));
-                    punto_dibujar.setTipo(mlp.Forward(punto_dibujar, true, false));
-                    lista_puntos_dibujar.Add(punto_dibujar);
-                    //Dibujar_Clases(punto_dibujar);
+                    for (float y = 5; y > -5; y = y - 0.3f)
+                    {
+                        Punto punto_dibujar = new Punto(x, y, 5, CoordenadaAdaptadaToReal(x), CoordenadaAdaptadaToReal((y) * -1));
+                        punto_dibujar.setTipo(mlp.Forward(punto_dibujar, null, true, false));
+                        lista_puntos_dibujar.Add(punto_dibujar);
+                        //Dibujar_Clases(punto_dibujar);
+                    }
                 }
+                lista_puntos_dibujar.Reverse();
+                DibujarPuntos_Mapeo(plumas, lista_puntos_dibujar, index);
             }
-            lista_puntos_dibujar.Reverse();
-            DibujarPuntos_Mapeo(plumas, lista_puntos_dibujar, index);
         }
 
         public void Plano_Paint()
@@ -280,7 +283,7 @@ namespace Algoritmos_IA.Class
             foreach (Punto p in lista_puntos)
             {
                 Console.WriteLine("Clase real: " + p.getTipo().ToString());
-                mlp.Forward(p, true, false);
+                mlp.Forward(p, null, true, false);
             }
         }
     }

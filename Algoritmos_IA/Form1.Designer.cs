@@ -34,6 +34,7 @@
             System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataVisualization.Charting.Title title1 = new System.Windows.Forms.DataVisualization.Charting.Title();
             System.Windows.Forms.DataVisualization.Charting.Title title2 = new System.Windows.Forms.DataVisualization.Charting.Title();
             System.Windows.Forms.DataVisualization.Charting.Title title3 = new System.Windows.Forms.DataVisualization.Charting.Title();
@@ -227,11 +228,16 @@
             series4.ChartArea = "ChartArea1";
             series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
             series4.Legend = "Legend1";
-            series4.Name = "MLP";
+            series4.Name = "MLP BP";
+            series5.ChartArea = "ChartArea1";
+            series5.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series5.Legend = "Legend1";
+            series5.Name = "MLP QP";
             this.Error_cmp.Series.Add(series1);
             this.Error_cmp.Series.Add(series2);
             this.Error_cmp.Series.Add(series3);
             this.Error_cmp.Series.Add(series4);
+            this.Error_cmp.Series.Add(series5);
             this.Error_cmp.Size = new System.Drawing.Size(654, 273);
             this.Error_cmp.TabIndex = 10;
             this.Error_cmp.Text = "Error";
@@ -250,6 +256,7 @@
             this.Error_cmp.Titles.Add(title1);
             this.Error_cmp.Titles.Add(title2);
             this.Error_cmp.Titles.Add(title3);
+            this.Error_cmp.Click += new System.EventHandler(this.Error_cmp_Click);
             // 
             // labelAlerta
             // 

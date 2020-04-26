@@ -646,29 +646,17 @@ namespace Algoritmos_IA
 
         private async void MlpBtn_Click(object sender, EventArgs e)
         {
-            this.Error_cmp.Series["MLP"].Points.Clear();
-            MLP mlp = new MLP(Int32.Parse(EpocasMaximasTb.Text), Capas, neuronasXcapa, float.Parse(LearningRateTb.Text), lista_puntos, double.Parse(ErrorTb.Text), false);
-            await mlp.Forward_Backward(bitmap_plano, respaldo, bitmap_solo_plano, this , plumas, lista_puntos, LineasSwitch.Value);
-
-            //getClassReal(mlp);
-            /*
-
-            //Datos de prueba, hay que quitarlos
-            Punto prueba = new Punto(2, 2, 5, CoordenadaAdaptadaToReal(2), CoordenadaAdaptadaToReal(2));
-            mlp.Forward(prueba, true, false);
-            Punto prueba2 = new Punto(2, -2, 5, CoordenadaAdaptadaToReal(2), CoordenadaAdaptadaToReal(-2));
-            mlp.Forward(prueba2, true, false);
-            Punto prueba3 = new Punto(-2, -2, 5, CoordenadaAdaptadaToReal(-2), CoordenadaAdaptadaToReal(-2));
-            mlp.Forward(prueba3, true, false);
-            Punto prueba4 = new Punto(-2, 2, 5, CoordenadaAdaptadaToReal(-2), CoordenadaAdaptadaToReal(2));
-            mlp.Forward(prueba4, true, false);
-            Punto prueba5 = new Punto(-3, 2, 5);
-            mlp.Forward(prueba5, true, false);
-            */
-            //dibujar_bitmap_mlp(mlp);
-            //ImgControl.DibujarPuntos(plumas, lista_puntos_dibujar
-
-            //dibujar_bitmap_mlp(mlp);
+            if (datosEntrenamiento != null && datosEntrenamiento.tamanoFilas > 1)
+            {
+                this.Error_cmp.Series["MLP BP"].Points.Clear();
+                MLP mlp = new MLP(Int32.Parse(EpocasMaximasTb.Text), Capas, neuronasXcapa, float.Parse(LearningRateTb.Text), datosEntrenamiento, double.Parse(ErrorTb.Text), false);
+                await mlp.Forward_Backward(bitmap_plano, respaldo, bitmap_solo_plano, this, plumas, null, false);
+            }
+            else {
+                this.Error_cmp.Series["MLP BP"].Points.Clear();
+                MLP mlp = new MLP(Int32.Parse(EpocasMaximasTb.Text), Capas, neuronasXcapa, float.Parse(LearningRateTb.Text), lista_puntos, double.Parse(ErrorTb.Text), false);
+                await mlp.Forward_Backward(bitmap_plano, respaldo, bitmap_solo_plano, this, plumas, lista_puntos, LineasSwitch.Value);
+            } 
         }
 
         private void ClaseSelected_onItemSelected(object sender, EventArgs e)
@@ -740,14 +728,30 @@ namespace Algoritmos_IA
 
         private async void bunifuImageButton1_Click(object sender, EventArgs e)
         {
-            this.Error_cmp.Series["MLP"].Points.Clear();
-            MLP mlp = new MLP(Int32.Parse(EpocasMaximasTb.Text), Capas, neuronasXcapa, float.Parse(LearningRateTb.Text), lista_puntos, double.Parse(ErrorTb.Text), true);
-            await mlp.Forward_Backward(bitmap_plano, respaldo, bitmap_solo_plano, this, plumas, lista_puntos, LineasSwitch.Value);
+            if (datosEntrenamiento!=null && datosEntrenamiento.tamanoFilas > 1)
+            {
+                this.Error_cmp.Series["MLP BP"].Points.Clear();
+                this.Error_cmp.Series["MLP QP"].Points.Clear();
+                MLP mlp = new MLP(Int32.Parse(EpocasMaximasTb.Text), Capas, neuronasXcapa, float.Parse(LearningRateTb.Text), datosEntrenamiento, double.Parse(ErrorTb.Text), true);
+                await mlp.Forward_Backward(bitmap_plano, respaldo, bitmap_solo_plano, this, plumas, null, false);
+            }
+            else
+            {
+                this.Error_cmp.Series["MLP BP"].Points.Clear();
+                this.Error_cmp.Series["MLP QP"].Points.Clear();
+                MLP mlp = new MLP(Int32.Parse(EpocasMaximasTb.Text), Capas, neuronasXcapa, float.Parse(LearningRateTb.Text), lista_puntos, double.Parse(ErrorTb.Text), true);
+                await mlp.Forward_Backward(bitmap_plano, respaldo, bitmap_solo_plano, this, plumas, lista_puntos, LineasSwitch.Value);
+            }
 
             // la variable datosEntrenamiento tiene los datos normalizados y originales del archivo
             // la variable datosPruebas tiene los datos normalizados y originales del archivo
 
             // la variable datosImportados tiene todos los datos, sin dividirlos en parte test y train
+        }
+
+        private void Error_cmp_Click(object sender, EventArgs e)
+        {
+
         }
 
         public void manejarCSV(string path)
@@ -788,7 +792,7 @@ namespace Algoritmos_IA
                         if (!clasesDetectadasOriginal.Contains(row[i]))
                         {
                             clasesDetectadasOriginal.Add(row[i]);
-                            clasesDetectadas.Add(clasesDetectadasOriginal.Count);
+                            clasesDetectadas.Add(clasesDetectadasOriginal.Count - 1);
                         }
                         double tipo = 0;
                         for (int j=0; j<clasesDetectadasOriginal.Count; j++)
@@ -847,16 +851,24 @@ namespace Algoritmos_IA
 
         private void LimpiarBtn_Click(object sender, EventArgs e)
         {
-            if ((p != null && p.GetCompletado()) || (a != null && a.getCompletado()) || (rl != null && rl.getCompletado()) || (rl==null || p == null || a == null))
+            if ((p != null && p.GetCompletado()) || (a != null && a.getCompletado()) || (rl != null && rl.getCompletado()) || (rl == null || p == null || a == null))
             {
                 labelAlerta.Text = "";
                 this.Error_cmp.Series["Perceptron"].Points.Clear();
                 this.Error_cmp.Series["Adaline"].Points.Clear();
                 this.Error_cmp.Series["Regresión logistica"].Points.Clear();
+                this.Error_cmp.Series["MLP BP"].Points.Clear();
+                this.Error_cmp.Series["MLP QP"].Points.Clear();
 
                 p = null;
                 a = null;
                 rl = null;
+                datosImportados = null;
+                datosEntrenamiento = null;
+                datosPruebas = null;
+
+                bunifuMaterialTextboxEntrenamiento.Text = "-";
+                bunifuMaterialTextboxPruebas.Text = "-";
 
                 lista_puntos = new List<Punto>();
                 bitmap_plano = new Bitmap(bitmap_solo_plano);

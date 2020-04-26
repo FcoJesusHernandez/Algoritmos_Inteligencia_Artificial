@@ -14,6 +14,7 @@ namespace Algoritmos_IA.Class.MLP
     {
         Img_control ImgControl;
         List<Punto> entradas;
+        List<elemento_importado> entradas_dataset;
         List<Capa> capas;
         List<NDArray> combinacion_clases;
         List<int> relacion_numero_clase;
@@ -25,6 +26,8 @@ namespace Algoritmos_IA.Class.MLP
         double errorDeseado;
         bool llegoLimiteQP = false;
         bool quick = true;
+        public bool dataset = false;
+        bool iniciobp = false;
 
         public MLP(int epocas, int nCapas, List<int> neuronaXCapa, float lr, List<Punto> puntos, double errorDeseado, bool quick)
         {
@@ -32,8 +35,31 @@ namespace Algoritmos_IA.Class.MLP
             relacion_numero_clase = new List<int>();
 
             this.epocas = epocas;
+            dataset = false;
+            iniciobp = false;
             this.entradas = puntos;
-            this.entradas = puntos;
+            this.learningRate = lr;
+            this.errorDeseado = errorDeseado;
+            this.quick = quick;
+            capas = new List<Capa>();
+            for (int i = 0; i < nCapas; i++)
+            {
+                Capa c;
+                c = new Capa(neuronaXCapa[i]);
+                capas.Add(c);
+            }
+            matrizDeseadas = np.eye(neuronaXCapa[nCapas - 1]);
+        }
+
+        public MLP(int epocas, int nCapas, List<int> neuronaXCapa, float lr, importacion puntos, double errorDeseado, bool quick)
+        {
+            combinacion_clases = new List<NDArray>();
+            relacion_numero_clase = new List<int>();
+
+            this.epocas = epocas;
+            dataset = true;
+            iniciobp = false;
+            this.entradas_dataset = puntos.elementosImportados;
             this.learningRate = lr;
             this.errorDeseado = errorDeseado;
             this.quick = quick;
@@ -73,7 +99,7 @@ namespace Algoritmos_IA.Class.MLP
             {
                 for (int i = 0; i < epocas; i++)
                 {
-                    if (errorDeseado > ( errorAcumulado / entradas.Count ) && i != 0)
+                    if ((dataset && errorDeseado > (errorAcumulado / entradas_dataset.Count) && i != 0) || (entradas != null && errorDeseado > ( errorAcumulado / entradas.Count ) && i != 0))
                     {
                         //Console.WriteLine("Error Acumulado por Epoca: ");
                         //Console.WriteLine(errorAcumulado / entradas.Count);
@@ -86,33 +112,74 @@ namespace Algoritmos_IA.Class.MLP
                     }
                     errorAcumulado = 0;
 
-                    foreach (Punto p in entradas)
+                    if (!dataset)
                     {
-                        if (!llegoLimiteQP)
+                        foreach (Punto p in entradas)
                         {
-                            Forward(p, false, false);
-                            BackPropagation(p);
+                            if (!llegoLimiteQP)
+                            {
+                                Forward(p, null, false, false);
+                                BackPropagation(p, null);
+                            }
+                        }
+                    } else
+                    {
+                        foreach (elemento_importado e in entradas_dataset)
+                        {
+                            if (!llegoLimiteQP)
+                            {
+                                Forward(null, e, false, false);
+                                BackPropagation(null, e);
+                            }
                         }
                     }
                     Console.WriteLine("Error Acumulado por Epoca: ");
                     Console.WriteLine(errorAcumulado);
-                    //Console.WriteLine("Epoca: " + epocas.ToString());
-                    ImgControl.ActualizarGraficaError("MLP", i, errorAcumulado);
+                    
+                    if (!quick)
+                    {
+                        ImgControl.ActualizarGraficaError("MLP BP", i, errorAcumulado);
+                        if (iniciobp)
+                        {
+                            ImgControl.ActualizarGraficaError("MLP QP", i, errorAcumulado);
+                            iniciobp = false;
+                        }
+                    } else
+                    {
+                        ImgControl.ActualizarGraficaError("MLP QP", i, errorAcumulado);
+                        iniciobp = true;;
+                    }
                 }
                 combinacion_clases = new List<NDArray>();
                 relacion_numero_clase = new List<int>();
 
                 // definir clases
-                foreach (Punto p in entradas)
+                if (!dataset)
                 {
-                    if (!relacion_numero_clase.Contains(p.getTipo()))
+                    foreach (Punto p in entradas)
                     {
-                        Forward(p, true, true);
+                        if (!relacion_numero_clase.Contains(p.getTipo()))
+                        {
+                            Forward(p, null, true, true);
+                        }
+                    }
+                } else
+                {
+                    foreach (elemento_importado e in entradas_dataset)
+                    {
+                        if (!relacion_numero_clase.Contains(Convert.ToInt32(e.tipo)))
+                        {
+                            Forward(null, e, true, true);
+                        }
                     }
                 }
 
-                //Dibuajar el area bajo la curva
-                ImgControl.Dibujar_bitmap_mlp(this, lista_puntos);
+
+                //Dibujar el area bajo la curva
+                if (lista_puntos != null)
+                {
+                    ImgControl.Dibujar_bitmap_mlp(this, lista_puntos);
+                }
 
                 ImgControl.Plano_Paint();
                 // Dibujar las rectas al final
@@ -139,25 +206,29 @@ namespace Algoritmos_IA.Class.MLP
             });
         }
 
-        public int Forward(Punto p, bool evaluar, bool guardar_clase)
+        public int Forward(Punto p, elemento_importado e, bool evaluar, bool guardar_clase)
         {
-            double[,] primerEntrada = new double[3, 1];
-            //Este if y el bool evaluar es solo para los casos de prueba, hay que quitarlos
-            if (evaluar)
-            {
-                primerEntrada[0, 0] = -1;
-                /*primerEntrada[1, 0] = p.getPosicionOriginalX();
-                primerEntrada[2, 0] = p.getPosicionOriginalY();*/
-                primerEntrada[1, 0] = p.getPosicionAdaptadaX();
-                primerEntrada[2, 0] = p.getPosicionAdaptadaY();
-            }
-            else //lo que esta en este else si se ocupa
-            {
-                primerEntrada[0, 0] = -1;
-                primerEntrada[1, 0] = p.getPosicionAdaptadaX();
-                primerEntrada[2, 0] = p.getPosicionAdaptadaY();
-            }
+            double[,] primerEntrada;
 
+            if (!dataset)
+            {
+                primerEntrada = new double[3, 1];
+
+                primerEntrada[0, 0] = -1;
+                primerEntrada[1, 0] = p.getPosicionAdaptadaX();
+                primerEntrada[2, 0] = p.getPosicionAdaptadaY();
+
+            }
+            else
+            {
+                primerEntrada = new double[e.listaValoresEntradaNormalizada.Count + 1, 1];
+
+                primerEntrada[0, 0] = -1;
+                for (int i = 1; i <= e.listaValoresEntradaNormalizada.Count; i++)
+                {
+                    primerEntrada[i, 0] = e.arregloValoresEntradaNormalizada[i-1];
+                }
+            }
             NDArray net;
             NDArray entrada = new NDArray(primerEntrada);
 
@@ -213,8 +284,6 @@ namespace Algoritmos_IA.Class.MLP
 
                 entrada = s;
 
-                //Esta parte creo que conviene hacerla una funciona aparte, para que devuelva el valor de la clase
-
                 if (guardar_clase && capas.Last<Capa>() == c)
                 {
                     NDArray temp_combinacion = new NDArray((double[,])c.salidaCapa);
@@ -234,7 +303,14 @@ namespace Algoritmos_IA.Class.MLP
                     if (!combinacion_clases.Contains(temp_combinacion))
                     {
                         combinacion_clases.Add(temp_combinacion);
-                        relacion_numero_clase.Add(p.getTipo());
+                        if (!dataset)
+                        {
+                            relacion_numero_clase.Add(p.getTipo());
+                        } else
+                        {
+                            relacion_numero_clase.Add(Convert.ToInt32(e.tipo));
+                        }
+                        
                     }
                 }
 
@@ -265,7 +341,7 @@ namespace Algoritmos_IA.Class.MLP
                                 coincidencias++;
                             }
                         }
-                        if(coincidencias == combinacion_clases[i].size)
+                        if (coincidencias == combinacion_clases[i].size)
                         {
                             clase = relacion_numero_clase[i];
                             //Console.WriteLine("C: " + c.salidaCapa.ToString());
@@ -276,12 +352,12 @@ namespace Algoritmos_IA.Class.MLP
                 }
                 //
             }
-            
+
             primerForward = false;
             return 0;
         }
 
-        public void BackPropagation(Punto p)
+        public void BackPropagation(Punto p, elemento_importado e)
         {
             bool primerCapa = true;
 
@@ -291,25 +367,33 @@ namespace Algoritmos_IA.Class.MLP
 
             foreach (Capa capa in capas)
             {
-
                 if (primerCapa)
                 {
-                    NDArray deseada = new NDArray((Array)matrizDeseadas[p.getTipo()], new Shape(matrizDeseadas.Shape[0], 1));
+                    NDArray deseada;
+                    if (!dataset)
+                    {
+                        deseada = new NDArray((Array)matrizDeseadas[p.getTipo()], new Shape(matrizDeseadas.Shape[0], 1));
+                    }
+                    else
+                    {
+                        deseada = new NDArray((Array)matrizDeseadas[Convert.ToInt32(e.tipo)], new Shape(matrizDeseadas.Shape[0], 1));
+                    }
+
                     //var error = np.subtract(deseada, capa.salidaCapa);
 
                     NDArray error_temp = new NDArray((Array)capa.salidaCapa, new Shape(capa.salidaCapa.Shape[0], 1));
-                    
-                        for (int i = 0; i < capa.salidaCapa.Shape[0]; i++)
+
+                    for (int i = 0; i < capa.salidaCapa.Shape[0]; i++)
+                    {
+                        if (capa.salidaCapa[i][0] >= 0.5)
                         {
-                            if (capa.salidaCapa[i][0] >= 0.5)
-                            {
-                                error_temp[i][0] = 1;
-                            }
-                            else
-                            {
-                                error_temp[i][0] = 0;
-                            }
-                        }                    
+                            error_temp[i][0] = 1;
+                        }
+                        else
+                        {
+                            error_temp[i][0] = 0;
+                        }
+                    }
 
                     var error = np.subtract(deseada, error_temp);
 
@@ -317,9 +401,9 @@ namespace Algoritmos_IA.Class.MLP
 
                     for (int i = 0; i < error.size; i++)
                     {
-                        acum += Math.Pow(error[i][0],2);
+                        acum += Math.Pow(error[i][0], 2);
                     }
-                    errorAcumulado += acum/ 2;
+                    errorAcumulado += acum / 2;
                     NDArray gradiente = new NDArray(typeof(Double), new Shape(capa.netCapa.size, 1));
                     for (int i = 0; i < capa.netCapa.size; i++)
                     {
@@ -327,7 +411,7 @@ namespace Algoritmos_IA.Class.MLP
                     }
                     var s = np.multiply(-2, gradiente);
                     var sensibilidad = np.multiply(s, error);
-                    
+
                     capa.sensibilidadCapa = sensibilidad;
                     anterior = capa;
                     primerCapa = false;
