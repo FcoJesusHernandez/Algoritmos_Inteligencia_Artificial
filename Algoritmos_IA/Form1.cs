@@ -21,6 +21,7 @@ namespace Algoritmos_IA
         Perceptron p;
         Adaline a;
         RegresionLogistica rl;
+        MLP mlp;
         readonly List<Pen> plumas;
         List<int> neuronasXcapa;
         int CapaActual = 1;
@@ -689,6 +690,8 @@ namespace Algoritmos_IA
             nombre_archivo = openFileDialog1.FileName;
             manejarCSV(nombre_archivo);
             dividirDatos(2, 1, 3);
+
+            plano.Visible = false;
             // la variable datosImportados tiene los datos del archivo, nombre, tamano filas/columas, lista de elementos_importados,
         }
 
@@ -732,8 +735,28 @@ namespace Algoritmos_IA
             {
                 this.Error_cmp.Series["MLP BP"].Points.Clear();
                 this.Error_cmp.Series["MLP QP"].Points.Clear();
+
+                comboBoxDatosPruebas.Items.Clear();
+                treeColumnas.Nodes.Clear();
+                treeValores.Nodes.Clear();
+
                 MLP mlp = new MLP(Int32.Parse(EpocasMaximasTb.Text), Capas, neuronasXcapa, float.Parse(LearningRateTb.Text), datosEntrenamiento, double.Parse(ErrorTb.Text), true);
                 await mlp.Forward_Backward(bitmap_plano, respaldo, bitmap_solo_plano, this, plumas, null, false);
+
+                for (int i = 0; i < datosPruebas.elementosImportados.Count; i++)
+                {
+                    comboBoxDatosPruebas.Items.Add(i.ToString());    
+                }
+                comboBoxDatosPruebas.SelectedIndex = 0;
+
+                for (int i = 0; i< datosPruebas.nombresColumnas.Count; i++)
+                {
+                    treeColumnas.Nodes.Add(datosPruebas.nombresColumnas[i]);
+                }
+
+                this.mlp = mlp;
+                
+                ModalPruebas.Visible = true;
             }
             else
             {
@@ -742,16 +765,39 @@ namespace Algoritmos_IA
                 MLP mlp = new MLP(Int32.Parse(EpocasMaximasTb.Text), Capas, neuronasXcapa, float.Parse(LearningRateTb.Text), lista_puntos, double.Parse(ErrorTb.Text), true);
                 await mlp.Forward_Backward(bitmap_plano, respaldo, bitmap_solo_plano, this, plumas, lista_puntos, LineasSwitch.Value);
             }
-
-            // la variable datosEntrenamiento tiene los datos normalizados y originales del archivo
-            // la variable datosPruebas tiene los datos normalizados y originales del archivo
-
-            // la variable datosImportados tiene todos los datos, sin dividirlos en parte test y train
         }
 
         private void Error_cmp_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void bunifuSeparator16_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void bunifuSeparator17_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void comboBoxDatosPruebas_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            treeValores.Nodes.Clear();
+            for (int i = 0; i < datosPruebas.tamanoColumnas; i++)
+            {
+                treeValores.Nodes.Add(datosPruebas.elementosImportados[Int32.Parse(comboBoxDatosPruebas.SelectedItem.ToString())].listaValoresEntrada[i].ToString());
+            }
+            treeValores.Nodes.Add(datosPruebas.clasesDetectadasOriginal[Convert.ToInt32(datosPruebas.elementosImportados[Int32.Parse(comboBoxDatosPruebas.SelectedItem.ToString())].tipo)]);
+
+            PruebasSalidaEsperada.Text = datosPruebas.clasesDetectadasOriginal[Convert.ToInt32(datosPruebas.elementosImportados[Int32.Parse(comboBoxDatosPruebas.SelectedItem.ToString())].tipo)];
+        }
+
+        private void bunifuImageButton3_Click(object sender, EventArgs e)
+        {
+            ModalPruebas.Visible = false;
+            mlp = null;
         }
 
         public void manejarCSV(string path)
@@ -860,9 +906,18 @@ namespace Algoritmos_IA
                 this.Error_cmp.Series["MLP BP"].Points.Clear();
                 this.Error_cmp.Series["MLP QP"].Points.Clear();
 
+                comboBoxDatosPruebas.Items.Clear();
+                treeColumnas.Nodes.Clear();
+                treeValores.Nodes.Clear();
+
+                plano.Visible = true;
+                ModalPruebas.Visible = false;
+
                 p = null;
                 a = null;
                 rl = null;
+                mlp = null;
+
                 datosImportados = null;
                 datosEntrenamiento = null;
                 datosPruebas = null;
