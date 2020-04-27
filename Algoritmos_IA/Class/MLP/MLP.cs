@@ -27,6 +27,10 @@ namespace Algoritmos_IA.Class.MLP
         bool llegoLimiteQP = false;
         bool quick = true;
         public bool dataset = false;
+        public double errorMinQP = 0;
+        public double errorMinBP = 0;
+        public int epocaMaxQP = 0;
+        public int epocaMaxBP = 0;
         bool iniciobp = false;
 
         public MLP(int epocas, int nCapas, List<int> neuronaXCapa, float lr, List<Punto> puntos, double errorDeseado, bool quick)
@@ -86,7 +90,7 @@ namespace Algoritmos_IA.Class.MLP
             return sigmoide * (1 - sigmoide);
         }
 
-        public async Task Forward_Backward(Bitmap bitmap_plano, Bitmap respaldo,Bitmap bitmap_solo_plano, Form callingForm, List<Pen> plumas, List<Punto> lista_puntos, Boolean LineasSwitch)
+        public async Task Forward_Backward(Bitmap bitmap_plano, Bitmap respaldo, Bitmap bitmap_solo_plano, Form callingForm, List<Pen> plumas, List<Punto> lista_puntos, Boolean LineasSwitch)
         {
             ImgControl = new Img_control(bitmap_plano, respaldo, bitmap_solo_plano, plumas, callingForm);
             foreach (Capa c in capas)
@@ -99,17 +103,37 @@ namespace Algoritmos_IA.Class.MLP
             {
                 for (int i = 0; i < epocas; i++)
                 {
-                    if ((dataset && errorDeseado > (errorAcumulado / entradas_dataset.Count) && i != 0) || (entradas != null && errorDeseado > ( errorAcumulado / entradas.Count ) && i != 0))
+                    if ((dataset && errorDeseado > (errorAcumulado / entradas_dataset.Count) && i != 0) || (entradas != null && errorDeseado > (errorAcumulado / entradas.Count) && i != 0))
                     {
-                        //Console.WriteLine("Error Acumulado por Epoca: ");
-                        //Console.WriteLine(errorAcumulado / entradas.Count);
+                        if (quick)
+                        {
+                            ImgControl.ActualizarGraficaError("MLP QP", i, errorAcumulado);
+                            errorMinQP = errorAcumulado;
+                            epocaMaxQP = i + 1;
+                        }
+                        else
+                        {
+                            ImgControl.ActualizarGraficaError("MLP BP", i, errorAcumulado);
+                            errorMinBP = errorAcumulado;
+                            epocaMaxBP = i + 1;
+                        }
                         break;
                     }
                     if (llegoLimiteQP)
                     {
+                        ImgControl.ActualizarGraficaError("MLP QP", i, errorAcumulado);
+                        errorMinQP = errorAcumulado;
                         quick = false;
                         llegoLimiteQP = false;
+                        epocaMaxQP = i + 1;
                     }
+
+                    if (!quick)
+                    {
+                        errorMinBP = errorAcumulado;
+                        epocaMaxBP = i + 1;
+                    }
+
                     errorAcumulado = 0;
 
                     if (!dataset)
@@ -135,19 +159,19 @@ namespace Algoritmos_IA.Class.MLP
                     }
                     Console.WriteLine("Error Acumulado por Epoca: ");
                     Console.WriteLine(errorAcumulado);
-                    
+
                     if (!quick)
                     {
                         ImgControl.ActualizarGraficaError("MLP BP", i, errorAcumulado);
                         if (iniciobp)
                         {
-                            ImgControl.ActualizarGraficaError("MLP QP", i, errorAcumulado);
+                            //ImgControl.ActualizarGraficaError("MLP QP", i, errorAcumulado);
                             iniciobp = false;
                         }
                     } else
                     {
                         ImgControl.ActualizarGraficaError("MLP QP", i, errorAcumulado);
-                        iniciobp = true;;
+                        iniciobp = true;
                     }
                 }
                 combinacion_clases = new List<NDArray>();
@@ -226,7 +250,7 @@ namespace Algoritmos_IA.Class.MLP
                 primerEntrada[0, 0] = -1;
                 for (int i = 1; i <= e.listaValoresEntradaNormalizada.Count; i++)
                 {
-                    primerEntrada[i, 0] = e.arregloValoresEntradaNormalizada[i-1];
+                    primerEntrada[i, 0] = e.arregloValoresEntradaNormalizada[i - 1];
                 }
             }
             NDArray net;
@@ -310,7 +334,7 @@ namespace Algoritmos_IA.Class.MLP
                         {
                             relacion_numero_clase.Add(Convert.ToInt32(e.tipo));
                         }
-                        
+
                     }
                 }
 

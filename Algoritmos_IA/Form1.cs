@@ -733,30 +733,44 @@ namespace Algoritmos_IA
         {
             if (datosEntrenamiento!=null && datosEntrenamiento.tamanoFilas > 1)
             {
+                loader.Visible = true;
+
                 this.Error_cmp.Series["MLP BP"].Points.Clear();
                 this.Error_cmp.Series["MLP QP"].Points.Clear();
+
+                MLP mlp = new MLP(Int32.Parse(EpocasMaximasTb.Text), Capas, neuronasXcapa, float.Parse(LearningRateTb.Text), datosEntrenamiento, double.Parse(ErrorTb.Text), true);
+                await mlp.Forward_Backward(bitmap_plano, respaldo, bitmap_solo_plano, this, plumas, null, false);
 
                 comboBoxDatosPruebas.Items.Clear();
                 treeColumnas.Nodes.Clear();
                 treeValores.Nodes.Clear();
 
-                MLP mlp = new MLP(Int32.Parse(EpocasMaximasTb.Text), Capas, neuronasXcapa, float.Parse(LearningRateTb.Text), datosEntrenamiento, double.Parse(ErrorTb.Text), true);
-                await mlp.Forward_Backward(bitmap_plano, respaldo, bitmap_solo_plano, this, plumas, null, false);
-
-                for (int i = 0; i < datosPruebas.elementosImportados.Count; i++)
-                {
-                    comboBoxDatosPruebas.Items.Add(i.ToString());    
-                }
-                comboBoxDatosPruebas.SelectedIndex = 0;
-
-                for (int i = 0; i< datosPruebas.nombresColumnas.Count; i++)
+                for (int i = 0; i < datosPruebas.nombresColumnas.Count; i++)
                 {
                     treeColumnas.Nodes.Add(datosPruebas.nombresColumnas[i]);
                 }
 
+                for (int i = 0; i < datosPruebas.tamanoFilas; i++)
+                {
+                    comboBoxDatosPruebas.Items.Add(i.ToString());
+                }
+                comboBoxDatosPruebas.SelectedIndex = 0;
+
                 this.mlp = mlp;
                 
                 ModalPruebas.Visible = true;
+                loader.Visible = false;
+
+                int clasificados_correcto_count = 0;
+                for (int i = 0; i < datosPruebas.tamanoFilas; i++)
+                {
+                    if(mlp.Forward(null, datosPruebas.elementosImportados[i], true, false) == Convert.ToInt32(datosPruebas.elementosImportados[i].tipo))
+                    {
+                        clasificados_correcto_count++;
+                    }
+                }
+
+                clasificados_correctamente.Text = clasificados_correcto_count.ToString() + "/" + datosPruebas.tamanoFilas.ToString();
             }
             else
             {
@@ -792,11 +806,33 @@ namespace Algoritmos_IA
             treeValores.Nodes.Add(datosPruebas.clasesDetectadasOriginal[Convert.ToInt32(datosPruebas.elementosImportados[Int32.Parse(comboBoxDatosPruebas.SelectedItem.ToString())].tipo)]);
 
             PruebasSalidaEsperada.Text = datosPruebas.clasesDetectadasOriginal[Convert.ToInt32(datosPruebas.elementosImportados[Int32.Parse(comboBoxDatosPruebas.SelectedItem.ToString())].tipo)];
+
+            if (mlp != null)
+            {
+                PruebasSalidaObtenida.Text = datosPruebas.clasesDetectadasOriginal[mlp.Forward(null, datosPruebas.elementosImportados[Int32.Parse(comboBoxDatosPruebas.SelectedItem.ToString())], true, false)];
+                
+                if (PruebasSalidaObtenida.Text == PruebasSalidaEsperada.Text)
+                {
+                    img_correcto.Visible = true;
+                    img_incorrecto.Visible = false;
+                } else
+                {
+                    img_correcto.Visible = false;
+                    img_incorrecto.Visible = true;
+                }
+
+                error_alcanza_qp.Text = mlp.errorMinQP.ToString();
+                error_alcanza_bp.Text = mlp.errorMinBP.ToString();
+
+                epocas_max_qp.Text = mlp.epocaMaxQP.ToString();
+                epocas_max_bp.Text = mlp.epocaMaxBP.ToString();
+            }
         }
 
         private void bunifuImageButton3_Click(object sender, EventArgs e)
         {
             ModalPruebas.Visible = false;
+            //plano.Visible = true;
             mlp = null;
         }
 
@@ -911,6 +947,7 @@ namespace Algoritmos_IA
                 treeValores.Nodes.Clear();
 
                 plano.Visible = true;
+                loader.Visible = false;
                 ModalPruebas.Visible = false;
 
                 p = null;

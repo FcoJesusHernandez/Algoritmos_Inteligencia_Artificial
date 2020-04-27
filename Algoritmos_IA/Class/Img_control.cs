@@ -208,7 +208,7 @@ namespace Algoritmos_IA.Class
 
         public void ActualizarGraficaError(string series, double x, double y)
         {
-            this.mainForm.ErrorComponent(series, x, y);
+            this.mainForm.ErrorComponent(series, x + 1, y);
         }
 
         public void Dibujar_Clases(Punto p)
