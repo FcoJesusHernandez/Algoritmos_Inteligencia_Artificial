@@ -11,6 +11,9 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using NumSharp;
 using System.IO;
+using Algoritmos_IA.Class.LV;
+using NUnit.Framework;
+using System.Diagnostics;
 
 namespace Algoritmos_IA
 {
@@ -834,6 +837,40 @@ namespace Algoritmos_IA
             ModalPruebas.Visible = false;
             //plano.Visible = true;
             mlp = null;
+        }
+
+        private void bunifuImageButton2_Click(object sender, EventArgs e)
+        {
+            double[] x = new double[lista_puntos.Count];//= { 0, 2, 6, 8, 9 };
+            double[] y = new double[lista_puntos.Count];
+            double[] a = { 2, 0.51 };
+
+            LMAFunction f = new LineFunction();
+
+            for (int i = 0; i<lista_puntos.Count; i++)
+            {
+                x[i] = lista_puntos[i].getPosicionAdaptadaX();
+                y[i] = lista_puntos[i].getPosicionAdaptadaY();
+            }
+
+            double[][] dataPoints = new Double[][]{ x, y };//f.GenerateData(a, x);
+
+            LMA algorithm = new LMA(f, new double[] { 100, -100 },
+                dataPoints, null, new GeneralMatrix(2, 2), 1d - 20, 100);
+
+            algorithm.Fit();
+
+            for (int i = 0; i < a.Length; i++)
+            {
+                Assert.IsTrue(System.Math.Abs(algorithm.Parameters[i] - a[i]) < 0.0001);
+                Trace.WriteLine("Parameter : " + i.ToString() + " " + algorithm.Parameters[i].ToString());
+                Trace.WriteLine("Error :" + algorithm.Chi2.ToString());
+            }
+
+            Trace.WriteLine("# of iterations =" + algorithm.Iterations.ToString());
+            Trace.WriteLine("Pesos finales =" + algorithm.Weights[0].ToString());
+            Trace.WriteLine("Pesos finales =" + algorithm.Weights[1].ToString());
+            Trace.WriteLine("Pesos finales =" + algorithm.Weights[2].ToString());
         }
 
         public void manejarCSV(string path)
