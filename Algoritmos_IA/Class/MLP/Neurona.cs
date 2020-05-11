@@ -19,22 +19,19 @@ namespace Algoritmos_IA.Class.MLP
             pesos = new List<Double>();
         }
 
-        public void inicializaPesos(int entradas) 
+        public void inicializaPesos(int entradas)
         {
-            for (int i = 0; i < entradas; i++) 
+            for (int i = 0; i < entradas; i++)
             {
-                
-                    if (r.Next(0, 50) > 25)
-                    {
-                        pesos.Add(r.NextDouble() * -1);
-                    }
-                    else
-                    {
-                        pesos.Add(r.NextDouble());
-                    }
-                
+                if (r.Next(0, 50) > 25)
+                {
+                    pesos.Add(r.NextDouble() * -1);
+                }
+                else
+                {
+                    pesos.Add(r.NextDouble());
+                }
             }
         }
-
     }
 }

@@ -844,35 +844,14 @@ namespace Algoritmos_IA
         {
             // Suppose we would like to map the continuous values in the
             // second column to the integer values in the first column.
-            double[] outputs =
-            new double[]{
-                 3 ,
-                 1 ,
-                 2 ,
-                 4,/*
-                 32474.8888888889 ,
-                 32474.8888888889 ,
-                 9060.8888888889 ,
-                 -11628.1111111111 ,
-                 -15129.6111111111 ,*/
-            };
+            double[] outputs = new Double[lista_puntos.Count];
+            double[][] inputs = new Double[lista_puntos.Count][];
 
-            double[][] inputs =
+            for (int i = 0; i < lista_puntos.Count; i++)
             {
-                new Double[]{ -4, -4 },
-                new Double[]{ -4, 4 },
-                new Double[]{ 4, 4 },
-                new Double[]{ 4, -4 }/*,
-                new Double[]{ 0, 0 }, 
-                new Double[]{ 10, 10 },
-                new Double[]{ 20, 20 },
-                new Double[]{ 30, 30 },
-                new Double[]{ 40, 40 },*/
-            };
-
-            // Extract inputs and outputs
-            //double[][] inputs = data.GetColumn(0).ToJagged();
-            //double[] outputs = data.GetColumn(1).ToJagged();
+                outputs[i] = lista_puntos[i].getTipo();
+                inputs[i] = new Double[] { lista_puntos[i].getPosicionAdaptadaX(), lista_puntos[i].getPosicionAdaptadaY() };
+            }
 
             // Create a Nonlinear regression using 
             var nls = new NonlinearLeastSquares()
@@ -896,15 +875,67 @@ namespace Algoritmos_IA
                 Algorithm = new LevenbergMarquardt()
                 {
                     MaxIterations = 1000,
-                    Tolerance = 0
+                    Tolerance = 0.002
                 }
             };
-
 
             var regression = nls.Learn(inputs, outputs);
 
             // Use the function to compute the input values
             double[] predict = regression.Transform(inputs);
+
+            int index = lista_puntos_dibujar.Count;
+            for (float x = -5; x < 5; x = x + 0.3f)
+            {
+                for (float y = 5; y > -5; y = y - 0.3f)
+                {
+                    Punto punto_dibujar = new Punto(x, y, 5, CoordenadaAdaptadaToReal(x), CoordenadaAdaptadaToReal((y) * -1));
+                    int tipo = 0;
+                    if (regression.Transform(new Double[] { x, y }) < 0)
+                    {
+                        tipo = 0;
+                    }
+                    else
+                    {
+                        tipo = 1;
+                    }
+                    punto_dibujar.setTipo(tipo);
+                    lista_puntos_dibujar.Add(punto_dibujar);
+                    //Dibujar_Clases(punto_dibujar);
+                }
+            }
+            lista_puntos_dibujar.Reverse();
+            DibujarPuntos_Mapeo(plumas, lista_puntos_dibujar, index);
+            //Plano_Paint();
+        }
+
+        public void DibujarPuntos_Mapeo(List<Pen> plumas, List<Punto> ListPoints, int index)
+        {
+            Graphics bitmap_temp = Graphics.FromImage(bitmap_plano);
+            Graphics bitmap_temp_respaldo = Graphics.FromImage(respaldo);
+            //Pen pluma;
+            int i = 0;
+            foreach (Punto p in ListPoints)
+            {
+                if (i < (ListPoints.Count - index))
+                {
+                    SolidBrush pluma = new SolidBrush(plumas[p.getTipo()].Color);
+                    bitmap_temp.FillRectangle(pluma, new Rectangle(p.getPosicionOriginalX(), p.getPosicionOriginalY(), 20, 20));
+
+                }
+                else
+                {
+                    SolidBrush pluma = new SolidBrush(plumas[p.getTipo()].Color);
+
+                    Pen pluma_border = new Pen(Color.Black, 1);
+
+                    bitmap_temp.FillEllipse(pluma, new Rectangle(p.getPosicionOriginalX() - 4, p.getPosicionOriginalY() - 4, 8, 8));
+                    bitmap_temp.DrawEllipse(pluma_border, new Rectangle(p.getPosicionOriginalX() - 4, p.getPosicionOriginalY() - 4, 8, 8));
+                }
+                i++;
+
+            }
+            ImagePlano = bitmap_plano;
         }
 
         public void manejarCSV(string path)
@@ -1040,6 +1071,5 @@ namespace Algoritmos_IA
                 plano.Refresh();
             }
         }
-
     }
 }
