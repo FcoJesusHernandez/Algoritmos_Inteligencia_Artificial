@@ -11,6 +11,10 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using NumSharp;
 using System.IO;
+using Accord.MachineLearning;
+using Accord.Math.Optimization;
+using Accord.Statistics.Models.Regression.Fitting;
+using Accord.Math;
 
 namespace Algoritmos_IA
 {
@@ -834,6 +838,73 @@ namespace Algoritmos_IA
             ModalPruebas.Visible = false;
             //plano.Visible = true;
             mlp = null;
+        }
+
+        private void bunifuImageButton2_Click(object sender, EventArgs e)
+        {
+            // Suppose we would like to map the continuous values in the
+            // second column to the integer values in the first column.
+            double[] outputs =
+            new double[]{
+                 3 ,
+                 1 ,
+                 2 ,
+                 4,/*
+                 32474.8888888889 ,
+                 32474.8888888889 ,
+                 9060.8888888889 ,
+                 -11628.1111111111 ,
+                 -15129.6111111111 ,*/
+            };
+
+            double[][] inputs =
+            {
+                new Double[]{ -4, -4 },
+                new Double[]{ -4, 4 },
+                new Double[]{ 4, 4 },
+                new Double[]{ 4, -4 }/*,
+                new Double[]{ 0, 0 }, 
+                new Double[]{ 10, 10 },
+                new Double[]{ 20, 20 },
+                new Double[]{ 30, 30 },
+                new Double[]{ 40, 40 },*/
+            };
+
+            // Extract inputs and outputs
+            //double[][] inputs = data.GetColumn(0).ToJagged();
+            //double[] outputs = data.GetColumn(1).ToJagged();
+
+            // Create a Nonlinear regression using 
+            var nls = new NonlinearLeastSquares()
+            {
+                NumberOfParameters = 3,
+
+                // Initialize to some random values
+                StartValues = new[] { 4.2, 0.3, 1 },
+
+                // Let's assume a quadratic model function: ax² + bx + c
+                Function = (w, x) => w[0] * x[0] * x[0] + w[1] * x[0] + w[2],
+
+                // Derivative in respect to the weights:
+                Gradient = (w, x, r) =>
+                {
+                    r[0] = w[0] * w[0]; // w.r.t a: a²  // https://www.wolframalpha.com/input/?i=diff+ax²+%2B+bx+%2B+c+w.r.t.+a
+                    r[1] = w[0];       // w.r.t b: b   // https://www.wolframalpha.com/input/?i=diff+ax²+%2B+bx+%2B+c+w.r.t.+b
+                    r[2] = 1;          // w.r.t c: 1   // https://www.wolframalpha.com/input/?i=diff+ax²+%2B+bx+%2B+c+w.r.t.+c
+                },
+
+                Algorithm = new LevenbergMarquardt()
+                {
+                    MaxIterations = 1000,
+                    Tolerance = 0
+                }
+            };
+
+
+            var regression = nls.Learn(inputs, outputs);
+
+            // Use the function to compute the input values
+            double[] predict = regression.Transform(inputs);
         }
 
         public void manejarCSV(string path)

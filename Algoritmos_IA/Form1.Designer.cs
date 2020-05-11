@@ -48,6 +48,16 @@
             this.labelAlerta = new System.Windows.Forms.Label();
             this.bunifuGradientPanel1 = new Bunifu.Framework.UI.BunifuGradientPanel();
             this.ModalPruebas = new Bunifu.Framework.UI.BunifuGradientPanel();
+            this.clasificados_correctamente = new Bunifu.Framework.UI.BunifuMaterialTextbox();
+            this.bunifuCustomLabel28 = new Bunifu.Framework.UI.BunifuCustomLabel();
+            this.bunifuCustomLabel27 = new Bunifu.Framework.UI.BunifuCustomLabel();
+            this.bunifuCustomLabel26 = new Bunifu.Framework.UI.BunifuCustomLabel();
+            this.bunifuCustomLabel25 = new Bunifu.Framework.UI.BunifuCustomLabel();
+            this.epocas_max_bp = new Bunifu.Framework.UI.BunifuMaterialTextbox();
+            this.epocas_max_qp = new Bunifu.Framework.UI.BunifuMaterialTextbox();
+            this.bunifuCustomLabel24 = new Bunifu.Framework.UI.BunifuCustomLabel();
+            this.error_alcanza_bp = new Bunifu.Framework.UI.BunifuMaterialTextbox();
+            this.error_alcanza_qp = new Bunifu.Framework.UI.BunifuMaterialTextbox();
             this.img_incorrecto = new System.Windows.Forms.PictureBox();
             this.img_correcto = new System.Windows.Forms.PictureBox();
             this.bunifuSeparator17 = new Bunifu.Framework.UI.BunifuSeparator();
@@ -127,16 +137,7 @@
             this.EpocasMaximasTb = new Bunifu.Framework.UI.BunifuMaterialTextbox();
             this.loader = new System.Windows.Forms.PictureBox();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.error_alcanza_qp = new Bunifu.Framework.UI.BunifuMaterialTextbox();
-            this.error_alcanza_bp = new Bunifu.Framework.UI.BunifuMaterialTextbox();
-            this.bunifuCustomLabel24 = new Bunifu.Framework.UI.BunifuCustomLabel();
-            this.bunifuCustomLabel25 = new Bunifu.Framework.UI.BunifuCustomLabel();
-            this.epocas_max_bp = new Bunifu.Framework.UI.BunifuMaterialTextbox();
-            this.epocas_max_qp = new Bunifu.Framework.UI.BunifuMaterialTextbox();
-            this.bunifuCustomLabel26 = new Bunifu.Framework.UI.BunifuCustomLabel();
-            this.bunifuCustomLabel27 = new Bunifu.Framework.UI.BunifuCustomLabel();
-            this.clasificados_correctamente = new Bunifu.Framework.UI.BunifuMaterialTextbox();
-            this.bunifuCustomLabel28 = new Bunifu.Framework.UI.BunifuCustomLabel();
+            this.bunifuImageButton2 = new Bunifu.Framework.UI.BunifuImageButton();
             ((System.ComponentModel.ISupportInitialize)(this.plano)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Error_cmp)).BeginInit();
             this.bunifuGradientPanel1.SuspendLayout();
@@ -155,6 +156,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.bunifuImageButtonDataset)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NextBtn)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.loader)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bunifuImageButton2)).BeginInit();
             this.SuspendLayout();
             // 
             // plano
@@ -370,6 +372,166 @@
             this.ModalPruebas.Size = new System.Drawing.Size(576, 323);
             this.ModalPruebas.TabIndex = 55;
             this.ModalPruebas.Visible = false;
+            // 
+            // clasificados_correctamente
+            // 
+            this.clasificados_correctamente.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.clasificados_correctamente.Enabled = false;
+            this.clasificados_correctamente.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
+            this.clasificados_correctamente.ForeColor = System.Drawing.SystemColors.Control;
+            this.clasificados_correctamente.HintForeColor = System.Drawing.Color.Empty;
+            this.clasificados_correctamente.HintText = "";
+            this.clasificados_correctamente.isPassword = false;
+            this.clasificados_correctamente.LineFocusedColor = System.Drawing.Color.Blue;
+            this.clasificados_correctamente.LineIdleColor = System.Drawing.Color.Gray;
+            this.clasificados_correctamente.LineMouseHoverColor = System.Drawing.Color.Blue;
+            this.clasificados_correctamente.LineThickness = 3;
+            this.clasificados_correctamente.Location = new System.Drawing.Point(219, 279);
+            this.clasificados_correctamente.Margin = new System.Windows.Forms.Padding(4);
+            this.clasificados_correctamente.Name = "clasificados_correctamente";
+            this.clasificados_correctamente.Size = new System.Drawing.Size(76, 25);
+            this.clasificados_correctamente.TabIndex = 81;
+            this.clasificados_correctamente.Text = "-";
+            this.clasificados_correctamente.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            // 
+            // bunifuCustomLabel28
+            // 
+            this.bunifuCustomLabel28.AutoSize = true;
+            this.bunifuCustomLabel28.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bunifuCustomLabel28.ForeColor = System.Drawing.SystemColors.Control;
+            this.bunifuCustomLabel28.Location = new System.Drawing.Point(15, 285);
+            this.bunifuCustomLabel28.Name = "bunifuCustomLabel28";
+            this.bunifuCustomLabel28.Size = new System.Drawing.Size(197, 16);
+            this.bunifuCustomLabel28.TabIndex = 80;
+            this.bunifuCustomLabel28.Text = "Clasificados correctamente";
+            // 
+            // bunifuCustomLabel27
+            // 
+            this.bunifuCustomLabel27.AutoSize = true;
+            this.bunifuCustomLabel27.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bunifuCustomLabel27.ForeColor = System.Drawing.SystemColors.Control;
+            this.bunifuCustomLabel27.Location = new System.Drawing.Point(252, 179);
+            this.bunifuCustomLabel27.Name = "bunifuCustomLabel27";
+            this.bunifuCustomLabel27.Size = new System.Drawing.Size(28, 16);
+            this.bunifuCustomLabel27.TabIndex = 79;
+            this.bunifuCustomLabel27.Text = "BP";
+            // 
+            // bunifuCustomLabel26
+            // 
+            this.bunifuCustomLabel26.AutoSize = true;
+            this.bunifuCustomLabel26.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bunifuCustomLabel26.ForeColor = System.Drawing.SystemColors.Control;
+            this.bunifuCustomLabel26.Location = new System.Drawing.Point(41, 179);
+            this.bunifuCustomLabel26.Name = "bunifuCustomLabel26";
+            this.bunifuCustomLabel26.Size = new System.Drawing.Size(29, 16);
+            this.bunifuCustomLabel26.TabIndex = 78;
+            this.bunifuCustomLabel26.Text = "QP";
+            // 
+            // bunifuCustomLabel25
+            // 
+            this.bunifuCustomLabel25.AutoSize = true;
+            this.bunifuCustomLabel25.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bunifuCustomLabel25.ForeColor = System.Drawing.SystemColors.Control;
+            this.bunifuCustomLabel25.Location = new System.Drawing.Point(99, 243);
+            this.bunifuCustomLabel25.Name = "bunifuCustomLabel25";
+            this.bunifuCustomLabel25.Size = new System.Drawing.Size(129, 16);
+            this.bunifuCustomLabel25.TabIndex = 77;
+            this.bunifuCustomLabel25.Text = "Epoca alcanzada";
+            // 
+            // epocas_max_bp
+            // 
+            this.epocas_max_bp.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.epocas_max_bp.Enabled = false;
+            this.epocas_max_bp.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
+            this.epocas_max_bp.ForeColor = System.Drawing.SystemColors.Control;
+            this.epocas_max_bp.HintForeColor = System.Drawing.Color.Empty;
+            this.epocas_max_bp.HintText = "";
+            this.epocas_max_bp.isPassword = false;
+            this.epocas_max_bp.LineFocusedColor = System.Drawing.Color.Blue;
+            this.epocas_max_bp.LineIdleColor = System.Drawing.Color.Gray;
+            this.epocas_max_bp.LineMouseHoverColor = System.Drawing.Color.Blue;
+            this.epocas_max_bp.LineThickness = 3;
+            this.epocas_max_bp.Location = new System.Drawing.Point(232, 229);
+            this.epocas_max_bp.Margin = new System.Windows.Forms.Padding(4);
+            this.epocas_max_bp.Name = "epocas_max_bp";
+            this.epocas_max_bp.Size = new System.Drawing.Size(76, 25);
+            this.epocas_max_bp.TabIndex = 76;
+            this.epocas_max_bp.Text = "-";
+            this.epocas_max_bp.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            // 
+            // epocas_max_qp
+            // 
+            this.epocas_max_qp.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.epocas_max_qp.Enabled = false;
+            this.epocas_max_qp.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
+            this.epocas_max_qp.ForeColor = System.Drawing.SystemColors.Control;
+            this.epocas_max_qp.HintForeColor = System.Drawing.Color.Empty;
+            this.epocas_max_qp.HintText = "";
+            this.epocas_max_qp.isPassword = false;
+            this.epocas_max_qp.LineFocusedColor = System.Drawing.Color.Blue;
+            this.epocas_max_qp.LineIdleColor = System.Drawing.Color.Gray;
+            this.epocas_max_qp.LineMouseHoverColor = System.Drawing.Color.Blue;
+            this.epocas_max_qp.LineThickness = 3;
+            this.epocas_max_qp.Location = new System.Drawing.Point(16, 229);
+            this.epocas_max_qp.Margin = new System.Windows.Forms.Padding(4);
+            this.epocas_max_qp.Name = "epocas_max_qp";
+            this.epocas_max_qp.Size = new System.Drawing.Size(76, 25);
+            this.epocas_max_qp.TabIndex = 75;
+            this.epocas_max_qp.Text = "-";
+            this.epocas_max_qp.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            // 
+            // bunifuCustomLabel24
+            // 
+            this.bunifuCustomLabel24.AutoSize = true;
+            this.bunifuCustomLabel24.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bunifuCustomLabel24.ForeColor = System.Drawing.SystemColors.Control;
+            this.bunifuCustomLabel24.Location = new System.Drawing.Point(102, 207);
+            this.bunifuCustomLabel24.Name = "bunifuCustomLabel24";
+            this.bunifuCustomLabel24.Size = new System.Drawing.Size(118, 16);
+            this.bunifuCustomLabel24.TabIndex = 74;
+            this.bunifuCustomLabel24.Text = "Error alcanzado";
+            // 
+            // error_alcanza_bp
+            // 
+            this.error_alcanza_bp.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.error_alcanza_bp.Enabled = false;
+            this.error_alcanza_bp.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
+            this.error_alcanza_bp.ForeColor = System.Drawing.SystemColors.Control;
+            this.error_alcanza_bp.HintForeColor = System.Drawing.Color.Empty;
+            this.error_alcanza_bp.HintText = "";
+            this.error_alcanza_bp.isPassword = false;
+            this.error_alcanza_bp.LineFocusedColor = System.Drawing.Color.Blue;
+            this.error_alcanza_bp.LineIdleColor = System.Drawing.Color.Gray;
+            this.error_alcanza_bp.LineMouseHoverColor = System.Drawing.Color.Blue;
+            this.error_alcanza_bp.LineThickness = 3;
+            this.error_alcanza_bp.Location = new System.Drawing.Point(232, 194);
+            this.error_alcanza_bp.Margin = new System.Windows.Forms.Padding(4);
+            this.error_alcanza_bp.Name = "error_alcanza_bp";
+            this.error_alcanza_bp.Size = new System.Drawing.Size(76, 25);
+            this.error_alcanza_bp.TabIndex = 73;
+            this.error_alcanza_bp.Text = "-";
+            this.error_alcanza_bp.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            // 
+            // error_alcanza_qp
+            // 
+            this.error_alcanza_qp.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.error_alcanza_qp.Enabled = false;
+            this.error_alcanza_qp.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
+            this.error_alcanza_qp.ForeColor = System.Drawing.SystemColors.Control;
+            this.error_alcanza_qp.HintForeColor = System.Drawing.Color.Empty;
+            this.error_alcanza_qp.HintText = "";
+            this.error_alcanza_qp.isPassword = false;
+            this.error_alcanza_qp.LineFocusedColor = System.Drawing.Color.Blue;
+            this.error_alcanza_qp.LineIdleColor = System.Drawing.Color.Gray;
+            this.error_alcanza_qp.LineMouseHoverColor = System.Drawing.Color.Blue;
+            this.error_alcanza_qp.LineThickness = 3;
+            this.error_alcanza_qp.Location = new System.Drawing.Point(16, 194);
+            this.error_alcanza_qp.Margin = new System.Windows.Forms.Padding(4);
+            this.error_alcanza_qp.Name = "error_alcanza_qp";
+            this.error_alcanza_qp.Size = new System.Drawing.Size(76, 25);
+            this.error_alcanza_qp.TabIndex = 72;
+            this.error_alcanza_qp.Text = "-";
+            this.error_alcanza_qp.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             // 
             // img_incorrecto
             // 
@@ -657,6 +819,7 @@
             // 
             this.bunifuGradientPanel3.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("bunifuGradientPanel3.BackgroundImage")));
             this.bunifuGradientPanel3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.bunifuGradientPanel3.Controls.Add(this.bunifuImageButton2);
             this.bunifuGradientPanel3.Controls.Add(this.bunifuSeparator12);
             this.bunifuGradientPanel3.Controls.Add(this.bunifuCustomLabel15);
             this.bunifuGradientPanel3.Controls.Add(this.bunifuImageButton1);
@@ -1498,165 +1661,19 @@
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
-            // error_alcanza_qp
+            // bunifuImageButton2
             // 
-            this.error_alcanza_qp.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.error_alcanza_qp.Enabled = false;
-            this.error_alcanza_qp.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
-            this.error_alcanza_qp.ForeColor = System.Drawing.SystemColors.Control;
-            this.error_alcanza_qp.HintForeColor = System.Drawing.Color.Empty;
-            this.error_alcanza_qp.HintText = "";
-            this.error_alcanza_qp.isPassword = false;
-            this.error_alcanza_qp.LineFocusedColor = System.Drawing.Color.Blue;
-            this.error_alcanza_qp.LineIdleColor = System.Drawing.Color.Gray;
-            this.error_alcanza_qp.LineMouseHoverColor = System.Drawing.Color.Blue;
-            this.error_alcanza_qp.LineThickness = 3;
-            this.error_alcanza_qp.Location = new System.Drawing.Point(16, 194);
-            this.error_alcanza_qp.Margin = new System.Windows.Forms.Padding(4);
-            this.error_alcanza_qp.Name = "error_alcanza_qp";
-            this.error_alcanza_qp.Size = new System.Drawing.Size(76, 25);
-            this.error_alcanza_qp.TabIndex = 72;
-            this.error_alcanza_qp.Text = "-";
-            this.error_alcanza_qp.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            // 
-            // error_alcanza_bp
-            // 
-            this.error_alcanza_bp.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.error_alcanza_bp.Enabled = false;
-            this.error_alcanza_bp.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
-            this.error_alcanza_bp.ForeColor = System.Drawing.SystemColors.Control;
-            this.error_alcanza_bp.HintForeColor = System.Drawing.Color.Empty;
-            this.error_alcanza_bp.HintText = "";
-            this.error_alcanza_bp.isPassword = false;
-            this.error_alcanza_bp.LineFocusedColor = System.Drawing.Color.Blue;
-            this.error_alcanza_bp.LineIdleColor = System.Drawing.Color.Gray;
-            this.error_alcanza_bp.LineMouseHoverColor = System.Drawing.Color.Blue;
-            this.error_alcanza_bp.LineThickness = 3;
-            this.error_alcanza_bp.Location = new System.Drawing.Point(232, 194);
-            this.error_alcanza_bp.Margin = new System.Windows.Forms.Padding(4);
-            this.error_alcanza_bp.Name = "error_alcanza_bp";
-            this.error_alcanza_bp.Size = new System.Drawing.Size(76, 25);
-            this.error_alcanza_bp.TabIndex = 73;
-            this.error_alcanza_bp.Text = "-";
-            this.error_alcanza_bp.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            // 
-            // bunifuCustomLabel24
-            // 
-            this.bunifuCustomLabel24.AutoSize = true;
-            this.bunifuCustomLabel24.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bunifuCustomLabel24.ForeColor = System.Drawing.SystemColors.Control;
-            this.bunifuCustomLabel24.Location = new System.Drawing.Point(102, 207);
-            this.bunifuCustomLabel24.Name = "bunifuCustomLabel24";
-            this.bunifuCustomLabel24.Size = new System.Drawing.Size(118, 16);
-            this.bunifuCustomLabel24.TabIndex = 74;
-            this.bunifuCustomLabel24.Text = "Error alcanzado";
-            // 
-            // bunifuCustomLabel25
-            // 
-            this.bunifuCustomLabel25.AutoSize = true;
-            this.bunifuCustomLabel25.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bunifuCustomLabel25.ForeColor = System.Drawing.SystemColors.Control;
-            this.bunifuCustomLabel25.Location = new System.Drawing.Point(99, 243);
-            this.bunifuCustomLabel25.Name = "bunifuCustomLabel25";
-            this.bunifuCustomLabel25.Size = new System.Drawing.Size(129, 16);
-            this.bunifuCustomLabel25.TabIndex = 77;
-            this.bunifuCustomLabel25.Text = "Epoca alcanzada";
-            // 
-            // epocas_max_bp
-            // 
-            this.epocas_max_bp.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.epocas_max_bp.Enabled = false;
-            this.epocas_max_bp.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
-            this.epocas_max_bp.ForeColor = System.Drawing.SystemColors.Control;
-            this.epocas_max_bp.HintForeColor = System.Drawing.Color.Empty;
-            this.epocas_max_bp.HintText = "";
-            this.epocas_max_bp.isPassword = false;
-            this.epocas_max_bp.LineFocusedColor = System.Drawing.Color.Blue;
-            this.epocas_max_bp.LineIdleColor = System.Drawing.Color.Gray;
-            this.epocas_max_bp.LineMouseHoverColor = System.Drawing.Color.Blue;
-            this.epocas_max_bp.LineThickness = 3;
-            this.epocas_max_bp.Location = new System.Drawing.Point(232, 229);
-            this.epocas_max_bp.Margin = new System.Windows.Forms.Padding(4);
-            this.epocas_max_bp.Name = "epocas_max_bp";
-            this.epocas_max_bp.Size = new System.Drawing.Size(76, 25);
-            this.epocas_max_bp.TabIndex = 76;
-            this.epocas_max_bp.Text = "-";
-            this.epocas_max_bp.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            // 
-            // epocas_max_qp
-            // 
-            this.epocas_max_qp.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.epocas_max_qp.Enabled = false;
-            this.epocas_max_qp.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
-            this.epocas_max_qp.ForeColor = System.Drawing.SystemColors.Control;
-            this.epocas_max_qp.HintForeColor = System.Drawing.Color.Empty;
-            this.epocas_max_qp.HintText = "";
-            this.epocas_max_qp.isPassword = false;
-            this.epocas_max_qp.LineFocusedColor = System.Drawing.Color.Blue;
-            this.epocas_max_qp.LineIdleColor = System.Drawing.Color.Gray;
-            this.epocas_max_qp.LineMouseHoverColor = System.Drawing.Color.Blue;
-            this.epocas_max_qp.LineThickness = 3;
-            this.epocas_max_qp.Location = new System.Drawing.Point(16, 229);
-            this.epocas_max_qp.Margin = new System.Windows.Forms.Padding(4);
-            this.epocas_max_qp.Name = "epocas_max_qp";
-            this.epocas_max_qp.Size = new System.Drawing.Size(76, 25);
-            this.epocas_max_qp.TabIndex = 75;
-            this.epocas_max_qp.Text = "-";
-            this.epocas_max_qp.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            // 
-            // bunifuCustomLabel26
-            // 
-            this.bunifuCustomLabel26.AutoSize = true;
-            this.bunifuCustomLabel26.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bunifuCustomLabel26.ForeColor = System.Drawing.SystemColors.Control;
-            this.bunifuCustomLabel26.Location = new System.Drawing.Point(41, 179);
-            this.bunifuCustomLabel26.Name = "bunifuCustomLabel26";
-            this.bunifuCustomLabel26.Size = new System.Drawing.Size(29, 16);
-            this.bunifuCustomLabel26.TabIndex = 78;
-            this.bunifuCustomLabel26.Text = "QP";
-            // 
-            // bunifuCustomLabel27
-            // 
-            this.bunifuCustomLabel27.AutoSize = true;
-            this.bunifuCustomLabel27.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bunifuCustomLabel27.ForeColor = System.Drawing.SystemColors.Control;
-            this.bunifuCustomLabel27.Location = new System.Drawing.Point(252, 179);
-            this.bunifuCustomLabel27.Name = "bunifuCustomLabel27";
-            this.bunifuCustomLabel27.Size = new System.Drawing.Size(28, 16);
-            this.bunifuCustomLabel27.TabIndex = 79;
-            this.bunifuCustomLabel27.Text = "BP";
-            // 
-            // clasificados_correctamente
-            // 
-            this.clasificados_correctamente.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.clasificados_correctamente.Enabled = false;
-            this.clasificados_correctamente.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
-            this.clasificados_correctamente.ForeColor = System.Drawing.SystemColors.Control;
-            this.clasificados_correctamente.HintForeColor = System.Drawing.Color.Empty;
-            this.clasificados_correctamente.HintText = "";
-            this.clasificados_correctamente.isPassword = false;
-            this.clasificados_correctamente.LineFocusedColor = System.Drawing.Color.Blue;
-            this.clasificados_correctamente.LineIdleColor = System.Drawing.Color.Gray;
-            this.clasificados_correctamente.LineMouseHoverColor = System.Drawing.Color.Blue;
-            this.clasificados_correctamente.LineThickness = 3;
-            this.clasificados_correctamente.Location = new System.Drawing.Point(219, 279);
-            this.clasificados_correctamente.Margin = new System.Windows.Forms.Padding(4);
-            this.clasificados_correctamente.Name = "clasificados_correctamente";
-            this.clasificados_correctamente.Size = new System.Drawing.Size(76, 25);
-            this.clasificados_correctamente.TabIndex = 81;
-            this.clasificados_correctamente.Text = "-";
-            this.clasificados_correctamente.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            // 
-            // bunifuCustomLabel28
-            // 
-            this.bunifuCustomLabel28.AutoSize = true;
-            this.bunifuCustomLabel28.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bunifuCustomLabel28.ForeColor = System.Drawing.SystemColors.Control;
-            this.bunifuCustomLabel28.Location = new System.Drawing.Point(15, 285);
-            this.bunifuCustomLabel28.Name = "bunifuCustomLabel28";
-            this.bunifuCustomLabel28.Size = new System.Drawing.Size(197, 16);
-            this.bunifuCustomLabel28.TabIndex = 80;
-            this.bunifuCustomLabel28.Text = "Clasificados correctamente";
+            this.bunifuImageButton2.BackColor = System.Drawing.Color.Transparent;
+            this.bunifuImageButton2.Image = ((System.Drawing.Image)(resources.GetObject("bunifuImageButton2.Image")));
+            this.bunifuImageButton2.ImageActive = null;
+            this.bunifuImageButton2.Location = new System.Drawing.Point(89, 252);
+            this.bunifuImageButton2.Name = "bunifuImageButton2";
+            this.bunifuImageButton2.Size = new System.Drawing.Size(50, 50);
+            this.bunifuImageButton2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.bunifuImageButton2.TabIndex = 62;
+            this.bunifuImageButton2.TabStop = false;
+            this.bunifuImageButton2.Zoom = 10;
+            this.bunifuImageButton2.Click += new System.EventHandler(this.bunifuImageButton2_Click);
             // 
             // Form1
             // 
@@ -1691,6 +1708,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.bunifuImageButtonDataset)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NextBtn)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.loader)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bunifuImageButton2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1796,6 +1814,7 @@
         private Bunifu.Framework.UI.BunifuCustomLabel bunifuCustomLabel24;
         private Bunifu.Framework.UI.BunifuMaterialTextbox clasificados_correctamente;
         private Bunifu.Framework.UI.BunifuCustomLabel bunifuCustomLabel28;
+        private Bunifu.Framework.UI.BunifuImageButton bunifuImageButton2;
     }
 }
 
