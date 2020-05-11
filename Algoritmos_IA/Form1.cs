@@ -1,5 +1,6 @@
 ﻿using Algoritmos_IA.Class;
 using Algoritmos_IA.Class.MLP;
+using Algoritmos_IA.Class.LV;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -12,9 +13,8 @@ using System.Windows.Forms;
 using NumSharp;
 using System.IO;
 using Accord.MachineLearning;
-using Accord.Math.Optimization;
-using Accord.Statistics.Models.Regression.Fitting;
 using Accord.Math;
+using Accord.Neuro.Learning;
 
 namespace Algoritmos_IA
 {
@@ -840,73 +840,10 @@ namespace Algoritmos_IA
             mlp = null;
         }
 
-        private void bunifuImageButton2_Click(object sender, EventArgs e)
+        private async void bunifuImageButton2_Click(object sender, EventArgs e)
         {
-            // Suppose we would like to map the continuous values in the
-            // second column to the integer values in the first column.
-            double[] outputs = new Double[lista_puntos.Count];
-            double[][] inputs = new Double[lista_puntos.Count][];
-
-            for (int i = 0; i < lista_puntos.Count; i++)
-            {
-                outputs[i] = lista_puntos[i].getTipo();
-                inputs[i] = new Double[] { lista_puntos[i].getPosicionAdaptadaX(), lista_puntos[i].getPosicionAdaptadaY() };
-            }
-
-            // Create a Nonlinear regression using 
-            var nls = new NonlinearLeastSquares()
-            {
-                NumberOfParameters = 3,
-
-                // Initialize to some random values
-                StartValues = new[] { 4.2, 0.3, 1 },
-
-                // Let's assume a quadratic model function: ax² + bx + c
-                Function = (w, x) => w[0] * x[0] * x[0] + w[1] * x[0] + w[2],
-
-                // Derivative in respect to the weights:
-                Gradient = (w, x, r) =>
-                {
-                    r[0] = w[0] * w[0]; // w.r.t a: a²  // https://www.wolframalpha.com/input/?i=diff+ax²+%2B+bx+%2B+c+w.r.t.+a
-                    r[1] = w[0];       // w.r.t b: b   // https://www.wolframalpha.com/input/?i=diff+ax²+%2B+bx+%2B+c+w.r.t.+b
-                    r[2] = 1;          // w.r.t c: 1   // https://www.wolframalpha.com/input/?i=diff+ax²+%2B+bx+%2B+c+w.r.t.+c
-                },
-
-                Algorithm = new LevenbergMarquardt()
-                {
-                    MaxIterations = 1000,
-                    Tolerance = 0.002
-                }
-            };
-
-            var regression = nls.Learn(inputs, outputs);
-
-            // Use the function to compute the input values
-            double[] predict = regression.Transform(inputs);
-
-            int index = lista_puntos_dibujar.Count;
-            for (float x = -5; x < 5; x = x + 0.3f)
-            {
-                for (float y = 5; y > -5; y = y - 0.3f)
-                {
-                    Punto punto_dibujar = new Punto(x, y, 5, CoordenadaAdaptadaToReal(x), CoordenadaAdaptadaToReal((y) * -1));
-                    int tipo = 0;
-                    if (regression.Transform(new Double[] { x, y }) < 0)
-                    {
-                        tipo = 0;
-                    }
-                    else
-                    {
-                        tipo = 1;
-                    }
-                    punto_dibujar.setTipo(tipo);
-                    lista_puntos_dibujar.Add(punto_dibujar);
-                    //Dibujar_Clases(punto_dibujar);
-                }
-            }
-            lista_puntos_dibujar.Reverse();
-            DibujarPuntos_Mapeo(plumas, lista_puntos_dibujar, index);
-            //Plano_Paint();
+            LM lm = new LM(Int32.Parse(EpocasMaximasTb.Text), neuronasXcapa, float.Parse(LearningRateTb.Text), lista_puntos, double.Parse(ErrorTb.Text));
+            await lm.entrenar(bitmap_plano, respaldo, bitmap_solo_plano, this, plumas);
         }
 
         public void DibujarPuntos_Mapeo(List<Pen> plumas, List<Punto> ListPoints, int index)

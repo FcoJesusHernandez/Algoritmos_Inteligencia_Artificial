@@ -247,6 +247,22 @@ namespace Algoritmos_IA.Class
             }
         }
 
+        public void Dibujar_bitmap_lv(LV.LM lm, List<Punto> lista_puntos_dibujar)
+        {
+            int index = lista_puntos_dibujar.Count;
+            for (float x = -5; x < 5; x = x + 0.3f)
+            {
+                for (float y = 5; y > -5; y = y - 0.3f)
+                {
+                    Punto punto_dibujar = new Punto(x, y, 5, CoordenadaAdaptadaToReal(x), CoordenadaAdaptadaToReal((y) * -1));
+                    punto_dibujar.setTipo(lm.prueba(punto_dibujar));
+                    lista_puntos_dibujar.Add(punto_dibujar);
+                }
+            }
+            lista_puntos_dibujar.Reverse();
+            DibujarPuntos_Mapeo(plumas, lista_puntos_dibujar, index);
+        }
+
         public void Plano_Paint()
         {
             Graphics bitmap_temp = Graphics.FromImage(bitmap_plano);
