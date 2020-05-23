@@ -76,7 +76,7 @@ namespace Algoritmos_IA.Class.LV
                 for (int i = 0; i < epocasMaximas; i++)
                 {
                     error = lm.RunEpoch(input, outputs);
-                    ImgControl.ActualizarGraficaError("MLP QP", i, error);
+                    ImgControl.ActualizarGraficaError("MLP LM", i, error);
                     if (error < errorDeseado)
                     {
                         i = epocasMaximas;

@@ -35,6 +35,7 @@
             System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataVisualization.Charting.Title title1 = new System.Windows.Forms.DataVisualization.Charting.Title();
             System.Windows.Forms.DataVisualization.Charting.Title title2 = new System.Windows.Forms.DataVisualization.Charting.Title();
             System.Windows.Forms.DataVisualization.Charting.Title title3 = new System.Windows.Forms.DataVisualization.Charting.Title();
@@ -80,6 +81,7 @@
             this.bunifuCustomLabel19 = new Bunifu.Framework.UI.BunifuCustomLabel();
             this.bunifuImageButton3 = new Bunifu.Framework.UI.BunifuImageButton();
             this.bunifuGradientPanel3 = new Bunifu.Framework.UI.BunifuGradientPanel();
+            this.bunifuImageButton2 = new Bunifu.Framework.UI.BunifuImageButton();
             this.bunifuSeparator12 = new Bunifu.Framework.UI.BunifuSeparator();
             this.bunifuCustomLabel15 = new Bunifu.Framework.UI.BunifuCustomLabel();
             this.bunifuImageButton1 = new Bunifu.Framework.UI.BunifuImageButton();
@@ -137,7 +139,8 @@
             this.EpocasMaximasTb = new Bunifu.Framework.UI.BunifuMaterialTextbox();
             this.loader = new System.Windows.Forms.PictureBox();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.bunifuImageButton2 = new Bunifu.Framework.UI.BunifuImageButton();
+            this.bunifuSeparator16 = new Bunifu.Framework.UI.BunifuSeparator();
+            this.bunifuCustomLabel29 = new Bunifu.Framework.UI.BunifuCustomLabel();
             ((System.ComponentModel.ISupportInitialize)(this.plano)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Error_cmp)).BeginInit();
             this.bunifuGradientPanel1.SuspendLayout();
@@ -147,6 +150,7 @@
             this.bunifuGradientPanel4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bunifuImageButton3)).BeginInit();
             this.bunifuGradientPanel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.bunifuImageButton2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bunifuImageButton1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.MlpBtn)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.InicializarBtn)).BeginInit();
@@ -156,7 +160,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.bunifuImageButtonDataset)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NextBtn)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.loader)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bunifuImageButton2)).BeginInit();
             this.SuspendLayout();
             // 
             // plano
@@ -274,11 +277,16 @@
             series5.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
             series5.Legend = "Legend1";
             series5.Name = "MLP QP";
+            series6.ChartArea = "ChartArea1";
+            series6.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series6.Legend = "Legend1";
+            series6.Name = "MLP LM";
             this.Error_cmp.Series.Add(series1);
             this.Error_cmp.Series.Add(series2);
             this.Error_cmp.Series.Add(series3);
             this.Error_cmp.Series.Add(series4);
             this.Error_cmp.Series.Add(series5);
+            this.Error_cmp.Series.Add(series6);
             this.Error_cmp.Size = new System.Drawing.Size(654, 273);
             this.Error_cmp.TabIndex = 10;
             this.Error_cmp.Text = "Error";
@@ -819,6 +827,8 @@
             // 
             this.bunifuGradientPanel3.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("bunifuGradientPanel3.BackgroundImage")));
             this.bunifuGradientPanel3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.bunifuGradientPanel3.Controls.Add(this.bunifuSeparator16);
+            this.bunifuGradientPanel3.Controls.Add(this.bunifuCustomLabel29);
             this.bunifuGradientPanel3.Controls.Add(this.bunifuImageButton2);
             this.bunifuGradientPanel3.Controls.Add(this.bunifuSeparator12);
             this.bunifuGradientPanel3.Controls.Add(this.bunifuCustomLabel15);
@@ -850,6 +860,20 @@
             this.bunifuGradientPanel3.TabIndex = 24;
             this.bunifuGradientPanel3.Paint += new System.Windows.Forms.PaintEventHandler(this.bunifuGradientPanel3_Paint);
             // 
+            // bunifuImageButton2
+            // 
+            this.bunifuImageButton2.BackColor = System.Drawing.Color.Transparent;
+            this.bunifuImageButton2.Image = ((System.Drawing.Image)(resources.GetObject("bunifuImageButton2.Image")));
+            this.bunifuImageButton2.ImageActive = null;
+            this.bunifuImageButton2.Location = new System.Drawing.Point(46, 252);
+            this.bunifuImageButton2.Name = "bunifuImageButton2";
+            this.bunifuImageButton2.Size = new System.Drawing.Size(50, 50);
+            this.bunifuImageButton2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.bunifuImageButton2.TabIndex = 62;
+            this.bunifuImageButton2.TabStop = false;
+            this.bunifuImageButton2.Zoom = 10;
+            this.bunifuImageButton2.Click += new System.EventHandler(this.bunifuImageButton2_Click);
+            // 
             // bunifuSeparator12
             // 
             this.bunifuSeparator12.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -860,7 +884,7 @@
             this.bunifuSeparator12.LineThickness = 2;
             this.bunifuSeparator12.Location = new System.Drawing.Point(12, 266);
             this.bunifuSeparator12.Name = "bunifuSeparator12";
-            this.bunifuSeparator12.Size = new System.Drawing.Size(49, 10);
+            this.bunifuSeparator12.Size = new System.Drawing.Size(24, 10);
             this.bunifuSeparator12.TabIndex = 61;
             this.bunifuSeparator12.Transparency = 255;
             this.bunifuSeparator12.Vertical = false;
@@ -872,16 +896,16 @@
             this.bunifuCustomLabel15.ForeColor = System.Drawing.SystemColors.Control;
             this.bunifuCustomLabel15.Location = new System.Drawing.Point(10, 252);
             this.bunifuCustomLabel15.Name = "bunifuCustomLabel15";
-            this.bunifuCustomLabel15.Size = new System.Drawing.Size(51, 16);
+            this.bunifuCustomLabel15.Size = new System.Drawing.Size(28, 16);
             this.bunifuCustomLabel15.TabIndex = 60;
-            this.bunifuCustomLabel15.Text = "Quick ";
+            this.bunifuCustomLabel15.Text = "LM";
             // 
             // bunifuImageButton1
             // 
             this.bunifuImageButton1.BackColor = System.Drawing.Color.Transparent;
             this.bunifuImageButton1.Image = ((System.Drawing.Image)(resources.GetObject("bunifuImageButton1.Image")));
             this.bunifuImageButton1.ImageActive = null;
-            this.bunifuImageButton1.Location = new System.Drawing.Point(184, 255);
+            this.bunifuImageButton1.Location = new System.Drawing.Point(183, 255);
             this.bunifuImageButton1.Name = "bunifuImageButton1";
             this.bunifuImageButton1.Size = new System.Drawing.Size(50, 50);
             this.bunifuImageButton1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -1661,19 +1685,31 @@
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
-            // bunifuImageButton2
+            // bunifuSeparator16
             // 
-            this.bunifuImageButton2.BackColor = System.Drawing.Color.Transparent;
-            this.bunifuImageButton2.Image = ((System.Drawing.Image)(resources.GetObject("bunifuImageButton2.Image")));
-            this.bunifuImageButton2.ImageActive = null;
-            this.bunifuImageButton2.Location = new System.Drawing.Point(89, 252);
-            this.bunifuImageButton2.Name = "bunifuImageButton2";
-            this.bunifuImageButton2.Size = new System.Drawing.Size(50, 50);
-            this.bunifuImageButton2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.bunifuImageButton2.TabIndex = 62;
-            this.bunifuImageButton2.TabStop = false;
-            this.bunifuImageButton2.Zoom = 10;
-            this.bunifuImageButton2.Click += new System.EventHandler(this.bunifuImageButton2_Click);
+            this.bunifuSeparator16.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.bunifuSeparator16.BackColor = System.Drawing.Color.Transparent;
+            this.bunifuSeparator16.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(105)))), ((int)(((byte)(105)))), ((int)(((byte)(105)))));
+            this.bunifuSeparator16.LineThickness = 2;
+            this.bunifuSeparator16.Location = new System.Drawing.Point(126, 266);
+            this.bunifuSeparator16.Name = "bunifuSeparator16";
+            this.bunifuSeparator16.Size = new System.Drawing.Size(49, 10);
+            this.bunifuSeparator16.TabIndex = 64;
+            this.bunifuSeparator16.Transparency = 255;
+            this.bunifuSeparator16.Vertical = false;
+            // 
+            // bunifuCustomLabel29
+            // 
+            this.bunifuCustomLabel29.AutoSize = true;
+            this.bunifuCustomLabel29.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bunifuCustomLabel29.ForeColor = System.Drawing.SystemColors.Control;
+            this.bunifuCustomLabel29.Location = new System.Drawing.Point(126, 252);
+            this.bunifuCustomLabel29.Name = "bunifuCustomLabel29";
+            this.bunifuCustomLabel29.Size = new System.Drawing.Size(51, 16);
+            this.bunifuCustomLabel29.TabIndex = 63;
+            this.bunifuCustomLabel29.Text = "Quick ";
             // 
             // Form1
             // 
@@ -1698,6 +1734,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.bunifuImageButton3)).EndInit();
             this.bunifuGradientPanel3.ResumeLayout(false);
             this.bunifuGradientPanel3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.bunifuImageButton2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bunifuImageButton1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.MlpBtn)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.InicializarBtn)).EndInit();
@@ -1708,7 +1745,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.bunifuImageButtonDataset)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NextBtn)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.loader)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bunifuImageButton2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1815,6 +1851,8 @@
         private Bunifu.Framework.UI.BunifuMaterialTextbox clasificados_correctamente;
         private Bunifu.Framework.UI.BunifuCustomLabel bunifuCustomLabel28;
         private Bunifu.Framework.UI.BunifuImageButton bunifuImageButton2;
+        private Bunifu.Framework.UI.BunifuSeparator bunifuSeparator16;
+        private Bunifu.Framework.UI.BunifuCustomLabel bunifuCustomLabel29;
     }
 }
 

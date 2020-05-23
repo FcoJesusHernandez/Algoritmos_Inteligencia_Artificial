@@ -741,6 +741,7 @@ namespace Algoritmos_IA
 
                 this.Error_cmp.Series["MLP BP"].Points.Clear();
                 this.Error_cmp.Series["MLP QP"].Points.Clear();
+                this.Error_cmp.Series["MLP LM"].Points.Clear();
 
                 MLP mlp = new MLP(Int32.Parse(EpocasMaximasTb.Text), Capas, neuronasXcapa, float.Parse(LearningRateTb.Text), datosEntrenamiento, double.Parse(ErrorTb.Text), true);
                 await mlp.Forward_Backward(bitmap_plano, respaldo, bitmap_solo_plano, this, plumas, null, false);
@@ -780,6 +781,7 @@ namespace Algoritmos_IA
             {
                 this.Error_cmp.Series["MLP BP"].Points.Clear();
                 this.Error_cmp.Series["MLP QP"].Points.Clear();
+                this.Error_cmp.Series["MLP LM"].Points.Clear();
                 MLP mlp = new MLP(Int32.Parse(EpocasMaximasTb.Text), Capas, neuronasXcapa, float.Parse(LearningRateTb.Text), lista_puntos, double.Parse(ErrorTb.Text), true);
                 await mlp.Forward_Backward(bitmap_plano, respaldo, bitmap_solo_plano, this, plumas, lista_puntos, LineasSwitch.Value);
             }
@@ -980,6 +982,7 @@ namespace Algoritmos_IA
                 this.Error_cmp.Series["Regresión logistica"].Points.Clear();
                 this.Error_cmp.Series["MLP BP"].Points.Clear();
                 this.Error_cmp.Series["MLP QP"].Points.Clear();
+                this.Error_cmp.Series["MLP LM"].Points.Clear();
 
                 comboBoxDatosPruebas.Items.Clear();
                 treeColumnas.Nodes.Clear();
